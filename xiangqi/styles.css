@@ -1,0 +1,218 @@
+:root {
+  --bg: #1a1a1e;
+  --panel: #25252b;
+  --text: #ececf1;
+  --muted: #9898a6;
+  --accent: #c45c26;
+  --red: #c62828;
+  --black: #212121;
+  --line: #5c4033;
+  --palace: rgba(196, 92, 38, 0.12);
+  --river: rgba(120, 160, 200, 0.08);
+  --selected: rgba(255, 220, 100, 0.45);
+  --last-move: rgba(100, 200, 255, 0.25);
+  --legal: rgba(76, 175, 80, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family:
+    "Noto Sans SC",
+    "PingFang SC",
+    "Microsoft YaHei",
+    sans-serif;
+  background: radial-gradient(ellipse at top, #2a2a32 0%, var(--bg) 55%);
+  color: var(--text);
+}
+
+.app {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.subtitle {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.6rem 0.85rem;
+  background: var(--panel);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.status {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.status.red-turn {
+  color: #ff8a80;
+}
+
+.status.black-turn {
+  color: #b0bec5;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actions button {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.board-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.board {
+  position: relative;
+  width: min(100vw - 2rem, 440px);
+  aspect-ratio: 9 / 10;
+  background:
+    linear-gradient(180deg, var(--palace) 0%, var(--palace) 40%, var(--river) 40%, var(--river) 60%, var(--palace) 60%, var(--palace) 100%),
+    #f0e6d8;
+  border-radius: 6px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 2px #8d6e63;
+}
+
+.board svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.intersection {
+  position: absolute;
+  width: 12%;
+  height: 10%;
+  margin-left: -6%;
+  margin-top: -5%;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.intersection:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.intersection:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.intersection.selected {
+  box-shadow: inset 0 0 0 3px var(--selected);
+}
+
+.intersection.last-from,
+.intersection.last-to {
+  background: var(--last-move);
+}
+
+.intersection.legal-target::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 28%;
+  height: 28%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--legal);
+  pointer-events: none;
+}
+
+.piece-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.piece {
+  position: absolute;
+  width: 10.5%;
+  height: 9.5%;
+  margin-left: -5.25%;
+  margin-top: -4.75%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.65rem, 3.8vw, 1.05rem);
+  font-weight: 700;
+  pointer-events: none;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  border: 2px solid;
+}
+
+.piece.red {
+  background: linear-gradient(145deg, #fff8f5 0%, #ffd9cc 100%);
+  color: var(--red);
+  border-color: #b71c1c;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.piece.black {
+  background: linear-gradient(145deg, #fafafa 0%, #bdbdbd 100%);
+  color: #1a1a1a;
+  border-color: #424242;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.intersection:disabled {
+  cursor: default;
+}
+
+@media (max-width: 380px) {
+  .toolbar {
+    flex-wrap: wrap;
+  }
+}

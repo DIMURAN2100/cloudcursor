@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>中国象棋 · 本地双人对弈</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <h1>中国象棋</h1>
+        <p class="subtitle">本地双人对弈 · 红方先行</p>
+      </header>
+
+      <div class="toolbar">
+        <div class="status" id="status" aria-live="polite">红方行棋</div>
+        <div class="actions">
+          <button type="button" id="btn-undo" title="悔棋一步（双方各退一步）">悔棋</button>
+          <button type="button" id="btn-reset">重新开始</button>
+        </div>
+      </div>
+
+      <div class="board-wrap">
+        <div
+          class="board"
+          id="board"
+          role="grid"
+          aria-label="象棋棋盘，九列十行"
+        ></div>
+      </div>
+
+      <footer class="hint">
+        <p>点击己方棋子选中，再点击目标格走子。将死对方将/帅即胜。</p>
+      </footer>
+    </div>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>
