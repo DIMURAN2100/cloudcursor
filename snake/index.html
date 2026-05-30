@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>贪吃蛇 · 一分钟速吃挑战</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <h1>贪吃蛇</h1>
+        <p class="subtitle">一分钟内尽可能多地吃掉果子 · 方向键或 WASD 控制</p>
+      </header>
+
+      <div class="toolbar">
+        <div class="stat">
+          <span class="stat-label">剩余时间</span>
+          <span class="stat-value timer" id="timer">01:00</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">已吃果子</span>
+          <span class="stat-value score" id="score">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">目标</span>
+          <span class="stat-value target" id="target">30</span>
+        </div>
+      </div>
+
+      <div class="status-bar" id="status" aria-live="polite">按「开始游戏」或空格键启动</div>
+
+      <div class="board-wrap">
+        <canvas id="game" width="480" height="480" aria-label="贪吃蛇游戏区域"></canvas>
+        <div class="overlay hidden" id="overlay">
+          <div class="overlay-card">
+            <h2 id="overlay-title">游戏结束</h2>
+            <p id="overlay-message">再试一次吧！</p>
+            <button type="button" id="btn-overlay">再来一局</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="btn-start" class="primary">开始游戏</button>
+        <button type="button" id="btn-pause">暂停</button>
+        <button type="button" id="btn-reset">重新开始</button>
+      </div>
+
+      <footer class="hint">
+        <p>在 60 秒内吃掉 <strong>30</strong> 个果子即胜利。每吃一个果子蛇会变长、速度也会略微加快。</p>
+        <p class="controls">手机玩家：在棋盘上滑动即可转向。</p>
+      </footer>
+    </div>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>
