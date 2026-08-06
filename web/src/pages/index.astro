@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HighlightItem from '../components/HighlightItem.astro';
 import ThreatSurfaceDiagram from '../components/ThreatSurfaceDiagram.astro';
 import { brand } from '../lib/site';
 import { regions, themes } from '../lib/taxonomy';
@@ -17,7 +18,6 @@ const latest = getLatestBriefing(all);
 const recent = briefingsInLastDays(7, all);
 const highlights = latest?.highlights.slice(0, 5) ?? [];
 
-// 优先使用每日智能加工的管理层摘要；缺失时退化为要点截断。
 const enrichment = latest ? loadDailyEnrichment(latest.date) : null;
 const execBullets =
   enrichment?.execSummary.map((e) => ({
@@ -72,18 +72,27 @@ const topRegions = regions
               <div>
                 <div class="panel" style="border-top:0;padding-top:0">
                   <h3>安全岗 · 可行动要点</h3>
-                  <p>从今日简报提取可跟进的技术与流程动作。</p>
+                  <p>从今日简报提取可跟进的技术与流程动作；可点「针对这条对话」深入问。</p>
                 </div>
                 <ol class="highlight-list" style="margin-top:1.25rem">
                   {highlights.map((h) => (
-                    <li>
-                      <div class="highlight-list__meta">
-                        <span class="tag">{h.type}</span>
-                        <a href={`/themes/${h.themeSlug}/#${h.dimensionSlug}`}>进入维度</a>
-                      </div>
-                      <h3>{h.title}</h3>
-                      <p>{h.summary}</p>
-                    </li>
+                    <HighlightItem
+                      title={h.title}
+                      summary={h.summary}
+                      type={h.type}
+                      themeHref={`/themes/${h.themeSlug}/#${h.dimensionSlug}`}
+                      sources={h.sources}
+                      askPayload={{
+                        id: `${latest.slug}#${h.index}`,
+                        title: h.title,
+                        summary: h.summary,
+                        date: latest.date,
+                        type: h.type,
+                        theme: h.themeSlug,
+                        dimension: h.dimensionSlug,
+                        sources: h.sources,
+                      }}
+                    />
                   ))}
                 </ol>
                 <p style="margin-top:1.25rem">
@@ -109,6 +118,22 @@ const topRegions = regions
                           {b.action}
                         </p>
                       )}
+                      <p class="ask-row">
+                        <button
+                          type="button"
+                          class="ask-btn"
+                          data-ask={JSON.stringify({
+                            id: `exec-${b.title}`,
+                            title: b.title,
+                            summary: `${b.text}${b.action ? ` 建议动作：${b.action}` : ''}`,
+                            type: '决策要点',
+                            date: latest.date,
+                            sources: [],
+                          })}
+                        >
+                          针对这条对话
+                        </button>
+                      </p>
                     </li>
                   ))}
                 </ul>

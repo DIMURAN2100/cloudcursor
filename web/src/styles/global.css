@@ -841,6 +841,210 @@ img {
   font-size: 0.85rem;
 }
 
+/* 原文来源与对话入口 */
+.source-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.5rem;
+  margin: 0.35rem 0 0 !important;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.source-row a {
+  color: var(--signal);
+}
+
+.source-row__label {
+  color: var(--warn);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+
+.source-row__sep {
+  opacity: 0.45;
+}
+
+.ask-row {
+  margin: 0.55rem 0 0 !important;
+}
+
+.ask-btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.ask-btn:hover {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+/* 对话面板 */
+.chat-panel[hidden] {
+  display: none !important;
+}
+
+.chat-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+}
+
+.chat-panel__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 10, 8, 0.62);
+}
+
+.chat-panel__sheet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(100%, 440px);
+  height: 100%;
+  background: #0b1713;
+  border-left: 1px solid var(--line);
+  display: grid;
+  grid-template-rows: auto auto 1fr auto auto;
+  padding: 1.1rem 1.15rem 1.25rem;
+  gap: 0.85rem;
+}
+
+.chat-panel__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem;
+}
+
+.chat-panel__eyebrow {
+  margin: 0;
+  color: var(--signal);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chat-panel__head h2 {
+  margin: 0.2rem 0 0;
+  font-family: var(--font-brand);
+  font-size: 1.25rem;
+}
+
+.chat-panel__close {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.chat-panel__context {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.85rem;
+  background: rgba(16, 35, 28, 0.55);
+  font-size: 0.9rem;
+}
+
+.chat-panel__context strong {
+  display: block;
+  margin: 0.4rem 0;
+  font-family: var(--font-serif);
+}
+
+.chat-panel__context p {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+}
+
+.chat-panel__messages {
+  overflow: auto;
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  padding-right: 0.2rem;
+}
+
+.chat-bubble {
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.chat-bubble--user {
+  background: var(--signal-dim);
+  border: 1px solid rgba(94, 224, 181, 0.28);
+  justify-self: end;
+  max-width: 92%;
+}
+
+.chat-bubble--bot {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+}
+
+.chat-bubble p {
+  margin: 0.35rem 0;
+}
+
+.chat-hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0.7rem 0;
+}
+
+.chat-note {
+  color: var(--muted);
+  font-size: 0.82rem !important;
+}
+
+.chat-panel__form textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #07120f;
+  color: var(--ink);
+  font: inherit;
+  padding: 0.7rem 0.8rem;
+}
+
+.chat-panel__actions {
+  display: flex;
+  gap: 0.55rem;
+  margin-top: 0.55rem;
+}
+
+.chat-panel__hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
 @media (max-width: 720px) {
   .nav {
     justify-content: flex-end;
@@ -855,5 +1059,9 @@ img {
   .instrument-table {
     display: block;
     overflow-x: auto;
+  }
+
+  .chat-panel__sheet {
+    width: 100%;
   }
 }

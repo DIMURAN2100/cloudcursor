@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import HighlightItem from '../../components/HighlightItem.astro';
 import { getTheme, themes } from '../../lib/taxonomy';
 import { collectDimensionHighlights } from '../../lib/briefings';
 
@@ -32,11 +33,7 @@ if (!theme) {
       </div>
 
       <nav class="dimension-toc" aria-label="研究维度">
-        {
-          theme.dimensions.map((dim) => (
-            <a href={`#${dim.slug}`}>{dim.name}</a>
-          ))
-        }
+        {theme.dimensions.map((dim) => <a href={`#${dim.slug}`}>{dim.name}</a>)}
       </nav>
 
       <div style="display:grid;gap:3rem;margin-top:2.5rem">
@@ -54,14 +51,24 @@ if (!theme) {
                 {items.length ? (
                   <ol class="highlight-list">
                     {items.map(({ briefing, highlight }) => (
-                      <li>
-                        <div class="highlight-list__meta">
-                          <span class="tag">{highlight.type}</span>
-                          <a href={`/briefings/${briefing.slug}/`}>{briefing.date}</a>
-                        </div>
-                        <h3>{highlight.title}</h3>
-                        <p>{highlight.summary}</p>
-                      </li>
+                      <HighlightItem
+                        title={highlight.title}
+                        summary={highlight.summary}
+                        type={highlight.type}
+                        date={briefing.date}
+                        dateHref={`/briefings/${briefing.slug}/`}
+                        sources={highlight.sources}
+                        askPayload={{
+                          id: `${briefing.slug}#${highlight.index}`,
+                          title: highlight.title,
+                          summary: highlight.summary,
+                          date: briefing.date,
+                          type: highlight.type,
+                          theme: highlight.themeSlug,
+                          dimension: highlight.dimensionSlug,
+                          sources: highlight.sources,
+                        }}
+                      />
                     ))}
                   </ol>
                 ) : (

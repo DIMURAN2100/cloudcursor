@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import HighlightItem from '../../components/HighlightItem.astro';
 import { regions, standards } from '../../lib/taxonomy';
 import { regionIntel, standardIntel, countMatches } from '../../lib/briefings';
 ---
@@ -59,13 +60,28 @@ import { regionIntel, standardIntel, countMatches } from '../../lib/briefings';
                     <summary>来自简报的最新动态（{intel.length} 条）</summary>
                     <ul class="highlight-list" style="margin-top:1rem">
                       {intel.map(({ briefing, highlight }) => (
-                        <li>
-                          <div class="highlight-list__meta">
-                            <a href={`/briefings/${briefing.slug}/`}>{briefing.date}</a>
-                          </div>
-                          <h3>{highlight.title}</h3>
-                          <p>{highlight.summary.slice(0, 160)}…</p>
-                        </li>
+                        <HighlightItem
+                          title={highlight.title}
+                          summary={
+                            highlight.summary.length > 160
+                              ? `${highlight.summary.slice(0, 160)}…`
+                              : highlight.summary
+                          }
+                          type={highlight.type}
+                          date={briefing.date}
+                          dateHref={`/briefings/${briefing.slug}/`}
+                          sources={highlight.sources}
+                          askPayload={{
+                            id: `${briefing.slug}#${highlight.index}`,
+                            title: highlight.title,
+                            summary: highlight.summary,
+                            date: briefing.date,
+                            type: highlight.type,
+                            theme: highlight.themeSlug,
+                            dimension: highlight.dimensionSlug,
+                            sources: highlight.sources,
+                          }}
+                        />
                       ))}
                     </ul>
                   </details>

@@ -74,9 +74,19 @@ function extractHighlights(raw: string): Highlight[] {
     );
     if (!m) continue;
     const summary = m[4].replace(/\n+/g, ' ').replace(/\s+/g, ' ').trim();
-    const sources = [...block.matchAll(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g)].map(
-      (s) => ({ label: s[1], href: s[2] }),
-    );
+    // 优先取「🔗 来源」行；若无则回退到块内全部 Markdown 链接。
+    const sourceLine =
+      block.match(/🔗\s*来源[：:]\s*(.+)$/m)?.[1] ||
+      block.match(/来源[：:]\s*(.+)$/m)?.[1] ||
+      block;
+    const seen = new Set<string>();
+    const sources = [...sourceLine.matchAll(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g)]
+      .map((s) => ({ label: s[1].trim(), href: s[2].trim() }))
+      .filter((s) => {
+        if (seen.has(s.href)) return false;
+        seen.add(s.href);
+        return true;
+      });
     const type = m[3].trim();
     const title = m[2].trim();
     const themeSlug = typeToTheme(type, title, summary);

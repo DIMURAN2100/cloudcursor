@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import HighlightItem from '../../components/HighlightItem.astro';
 import { loadBriefings } from '../../lib/briefings';
 
 const briefings = loadBriefings();
@@ -10,7 +11,7 @@ const latest = briefings[0];
   <section class="page-hero">
     <div class="container">
       <h1>今日简报台</h1>
-      <p>日更要点服务安全运营节奏；完整正文可深读，历史日报永久归档。</p>
+      <p>日更要点服务安全运营节奏；完整正文可深读，历史日报永久归档。每条均可溯源原文并对话。</p>
     </div>
   </section>
 
@@ -26,14 +27,23 @@ const latest = briefings[0];
             </div>
             <ol class="highlight-list">
               {latest.highlights.map((h) => (
-                <li>
-                  <div class="highlight-list__meta">
-                    <span class="tag">{h.type}</span>
-                    <a href={`/themes/${h.themeSlug}/#${h.dimensionSlug}`}>进入维度</a>
-                  </div>
-                  <h3>{h.title}</h3>
-                  <p>{h.summary}</p>
-                </li>
+                <HighlightItem
+                  title={h.title}
+                  summary={h.summary}
+                  type={h.type}
+                  themeHref={`/themes/${h.themeSlug}/#${h.dimensionSlug}`}
+                  sources={h.sources}
+                  askPayload={{
+                    id: `${latest.slug}#${h.index}`,
+                    title: h.title,
+                    summary: h.summary,
+                    date: latest.date,
+                    type: h.type,
+                    theme: h.themeSlug,
+                    dimension: h.dimensionSlug,
+                    sources: h.sources,
+                  }}
+                />
               ))}
             </ol>
           </>
