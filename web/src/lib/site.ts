@@ -11,6 +11,7 @@ export const nav = [
   { href: '/themes/', label: '知识体系' },
   { href: '/governance/', label: '全球治理' },
   { href: '/landscape/', label: '产业图谱' },
+  { href: '/glossary/', label: '术语墙' },
   { href: '/path/', label: '学习路径' },
   { href: '/about/', label: '方法' },
 ];

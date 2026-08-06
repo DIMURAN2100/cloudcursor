@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadGlossary } from '../../lib/enrichment';
+import { getTheme } from '../../lib/taxonomy';
+
+const terms = loadGlossary();
+---
+
+<BaseLayout title="术语墙" description="AI 安全高频术语：一句定义 + 关联主题维度。">
+  <section class="page-hero">
+    <div class="container">
+      <h1>术语墙</h1>
+      <p>
+        每个术语一句话说清「是什么、为什么重要」，并链接到对应的研究维度。由每日智能加工持续补充。
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="standard-grid">
+        {
+          terms.map((t) => {
+            const theme = t.theme ? getTheme(t.theme) : undefined;
+            const dim = theme?.dimensions.find((d) => d.slug === t.dimension);
+            return (
+              <article class="standard-card">
+                <h3>{t.term}</h3>
+                <p class="standard-card__org">{t.en}</p>
+                <p>{t.definition}</p>
+                {theme && (
+                  <p class="standard-card__intel">
+                    <a href={`/themes/${theme.slug}/${dim ? `#${dim.slug}` : ''}`}>
+                      {theme.name}
+                      {dim ? ` · ${dim.name}` : ''}
+                    </a>
+                  </p>
+                )}
+              </article>
+            );
+          })
+        }
+      </div>
+      {terms.length === 0 && <p class="section__desc">术语数据待每日加工生成。</p>}
+    </div>
+  </section>
+</BaseLayout>

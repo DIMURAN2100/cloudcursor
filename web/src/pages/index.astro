@@ -10,17 +10,29 @@ import {
   getLatestBriefing,
   loadBriefings,
 } from '../lib/briefings';
+import { loadDailyEnrichment } from '../lib/enrichment';
 
 const all = loadBriefings();
 const latest = getLatestBriefing(all);
 const recent = briefingsInLastDays(7, all);
 const highlights = latest?.highlights.slice(0, 5) ?? [];
 
-const execBullets = highlights.slice(0, 3).map((h) => ({
-  title: h.title,
-  text: h.summary.slice(0, 90) + (h.summary.length > 90 ? '…' : ''),
-  type: h.type,
-}));
+// 优先使用每日智能加工的管理层摘要；缺失时退化为要点截断。
+const enrichment = latest ? loadDailyEnrichment(latest.date) : null;
+const execBullets =
+  enrichment?.execSummary.map((e) => ({
+    title: e.title,
+    text: e.insight,
+    action: e.action,
+    type: '决策要点',
+  })) ??
+  highlights.slice(0, 3).map((h) => ({
+    title: h.title,
+    text: h.summary.slice(0, 90) + (h.summary.length > 90 ? '…' : ''),
+    action: '',
+    type: h.type,
+  }));
+const headline = enrichment?.headline;
 
 const topRegions = regions
   .map((r) => ({ region: r, count: countMatches(r.match) }))
@@ -53,7 +65,8 @@ const topRegions = regions
         latest ? (
           <>
             <p class="section__desc">
-              <strong>{latest.date}</strong> · {latest.lede}
+              <strong>{latest.date}</strong>
+              {headline ? ` · ${headline}` : ` · ${latest.lede}`}
             </p>
             <div class="split">
               <div>
@@ -90,6 +103,12 @@ const topRegions = regions
                       </div>
                       <h3>{b.title}</h3>
                       <p>{b.text}</p>
+                      {b.action && (
+                        <p style="color:var(--warn)">
+                          <strong>建议动作：</strong>
+                          {b.action}
+                        </p>
+                      )}
                     </li>
                   ))}
                 </ul>

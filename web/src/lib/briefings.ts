@@ -8,6 +8,7 @@ import {
   standards,
   themes,
 } from './taxonomy';
+import { loadAllClassificationOverrides } from './enrichment';
 
 export type Highlight = {
   index: number;
@@ -103,19 +104,33 @@ export function loadBriefings(): Briefing[] {
     .sort()
     .reverse();
 
+  const overrides = loadAllClassificationOverrides();
+
   cache = files.map((filename) => {
     const raw = fs.readFileSync(path.join(BRIEFINGS_DIR, filename), 'utf8');
     const dateMatch = filename.match(/^(\d{4}-\d{2}-\d{2})/);
     const date = dateMatch?.[1] ?? '1970-01-01';
     const slug = filename.replace(/\.md$/, '');
     const titleLine = raw.split('\n').find((l) => l.trim()) || slug;
+    const highlights = extractHighlights(raw).map((h) => {
+      const override = overrides[`${slug}#${h.index}`];
+      return override
+        ? {
+            ...h,
+            themeSlug: override.theme,
+            dimensionSlug:
+              override.dimension ??
+              classifyDimension(override.theme, `${h.title} ${h.summary}`),
+          }
+        : h;
+    });
     return {
       slug,
       filename,
       date,
       title: titleLine.trim(),
       lede: extractLede(raw),
-      highlights: extractHighlights(raw),
+      highlights,
       bodyHtml: marked.parse(raw, { async: false }) as string,
       raw,
     };
