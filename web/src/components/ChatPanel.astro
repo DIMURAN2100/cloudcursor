@@ -15,7 +15,15 @@ const chatEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT || '/api/chat';
   aria-live="polite"
 >
   <div class="chat-panel__backdrop" data-chat-close></div>
-  <aside class="chat-panel__sheet" role="dialog" aria-labelledby="chat-panel-title">
+  <aside class="chat-panel__sheet" id="chat-sheet" role="dialog" aria-labelledby="chat-panel-title">
+    <div
+      class="chat-panel__resizer"
+      id="chat-resizer"
+      role="separator"
+      aria-orientation="vertical"
+      aria-label="拖拽调整对话栏宽度"
+      title="拖拽调整宽度"
+    ></div>
     <header class="chat-panel__head">
       <div>
         <p class="chat-panel__eyebrow">智能对话</p>
@@ -70,16 +78,62 @@ const chatEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT || '/api/chat';
   };
 
   const panel = document.getElementById('chat-panel');
+  const sheet = document.getElementById('chat-sheet') as HTMLElement | null;
+  const resizer = document.getElementById('chat-resizer');
   const contextEl = document.getElementById('chat-context');
   const messagesEl = document.getElementById('chat-messages');
   const form = document.getElementById('chat-form') as HTMLFormElement | null;
   const input = document.getElementById('chat-input') as HTMLTextAreaElement | null;
   const hint = document.getElementById('chat-hint');
   const endpoint = panel?.dataset.endpoint || '';
+  const WIDTH_KEY = 'ai-simplify-chat-width';
+  const MIN_W = 360;
+  const MAX_W = () => Math.min(960, Math.floor(window.innerWidth * 0.92));
 
   let active: Item | null = null;
   let knowledge: KnowledgeItem[] = [];
   let knowledgeLoaded = false;
+
+  function applyChatWidth(px: number) {
+    if (!sheet) return;
+    const w = Math.max(MIN_W, Math.min(MAX_W(), Math.round(px)));
+    sheet.style.width = `${w}px`;
+    try {
+      localStorage.setItem(WIDTH_KEY, String(w));
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function restoreChatWidth() {
+    try {
+      const saved = Number(localStorage.getItem(WIDTH_KEY) || 520);
+      if (saved) applyChatWidth(saved);
+    } catch {
+      applyChatWidth(520);
+    }
+  }
+
+  restoreChatWidth();
+
+  // 左侧拖拽调宽
+  resizer?.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    const startX = e.clientX;
+    const startW = sheet?.getBoundingClientRect().width || 520;
+    const onMove = (ev: PointerEvent) => {
+      // 侧栏贴右，向左拖 = 变宽
+      applyChatWidth(startW + (startX - ev.clientX));
+    };
+    const onUp = () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      document.body.classList.remove('is-resizing-chat');
+    };
+    document.body.classList.add('is-resizing-chat');
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  });
 
   async function ensureKnowledge() {
     if (knowledgeLoaded) return;
