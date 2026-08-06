@@ -1,4 +1,5 @@
 ---
+import { u } from '../../lib/urls';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { companyCategories } from '../../lib/taxonomy';
 import { companyMentionCount, matchHighlights } from '../../lib/briefings';
@@ -41,7 +42,7 @@ import { companyMentionCount, matchHighlights } from '../../lib/briefings';
                         {recent.map(({ briefing, highlight }, i) => (
                           <>
                             {i > 0 && ' · '}
-                            <a href={`/briefings/${briefing.slug}/`} title={highlight.title}>
+                            <a href={u(`briefings/${briefing.slug}/`)} title={highlight.title}>
                               {briefing.date}
                             </a>
                           </>

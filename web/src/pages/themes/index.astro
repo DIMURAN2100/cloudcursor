@@ -1,4 +1,5 @@
 ---
+import { u } from '../../lib/urls';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { themes } from '../../lib/taxonomy';
 import { countDimensionHighlights, countThemeHighlights } from '../../lib/briefings';
@@ -20,7 +21,7 @@ import { countDimensionHighlights, countThemeHighlights } from '../../lib/briefi
         themes.map((theme) => (
           <div>
             <h2 class="section__title">
-              <a href={`/themes/${theme.slug}/`} style="text-decoration:none">
+              <a href={u(`themes/${theme.slug}/`)} style="text-decoration:none">
                 {theme.name}
               </a>
             </h2>
@@ -29,7 +30,7 @@ import { countDimensionHighlights, countThemeHighlights } from '../../lib/briefi
             </p>
             <div class="dimension-grid">
               {theme.dimensions.map((dim) => (
-                <a class="dimension-card" href={`/themes/${theme.slug}/#${dim.slug}`}>
+                <a class="dimension-card" href={u(`themes/${theme.slug}/#${dim.slug}`)}>
                   <h3>{dim.name}</h3>
                   <p>{dim.question}</p>
                   <span class="dimension-card__count">

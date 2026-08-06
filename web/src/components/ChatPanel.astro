@@ -3,8 +3,11 @@
  * 全站对话面板：针对某条简报要点提问。
  * 默认用构建期知识索引做本地检索回答；若配置 PUBLIC_CHAT_ENDPOINT 则走 LLM。
  */
-// 默认走同源 /api/chat（由 astro dev 或 preview:chat 反代到 chat-proxy）
-const chatEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT || '/api/chat';
+const base = import.meta.env.BASE_URL || '/';
+const chatEndpoint =
+  import.meta.env.PUBLIC_CHAT_ENDPOINT ||
+  `${base}api/chat`.replace(/\/{2,}/g, '/').replace(':/', '://');
+const knowledgeUrl = `${base}knowledge.json`.replace(/\/{2,}/g, '/').replace(':/', '://');
 ---
 
 <div
@@ -12,6 +15,7 @@ const chatEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT || '/api/chat';
   class="chat-panel"
   hidden
   data-endpoint={chatEndpoint}
+  data-knowledge={knowledgeUrl}
   aria-live="polite"
 >
   <div class="chat-panel__backdrop" data-chat-close></div>
@@ -86,6 +90,7 @@ const chatEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT || '/api/chat';
   const input = document.getElementById('chat-input') as HTMLTextAreaElement | null;
   const hint = document.getElementById('chat-hint');
   const endpoint = panel?.dataset.endpoint || '';
+  const knowledgePath = panel?.dataset.knowledge || '/knowledge.json';
   const WIDTH_KEY = 'ai-simplify-chat-width';
   const MIN_W = 360;
   const MAX_W = () => Math.min(960, Math.floor(window.innerWidth * 0.92));
@@ -138,7 +143,7 @@ const chatEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT || '/api/chat';
   async function ensureKnowledge() {
     if (knowledgeLoaded) return;
     try {
-      const res = await fetch('/knowledge.json');
+      const res = await fetch(knowledgePath);
       if (res.ok) {
         const data = await res.json();
         knowledge = data.items || [];

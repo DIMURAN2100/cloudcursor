@@ -1,4 +1,5 @@
 ---
+import { u } from '../../lib/urls';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadGlossary } from '../../lib/enrichment';
 import { getTheme } from '../../lib/taxonomy';
@@ -30,7 +31,7 @@ const terms = loadGlossary();
                 <p>{t.definition}</p>
                 {theme && (
                   <p class="standard-card__intel">
-                    <a href={`/themes/${theme.slug}/${dim ? `#${dim.slug}` : ''}`}>
+                    <a href={u(`themes/${theme.slug}/`) + (dim ? `#${dim.slug}` : '')}>
                       {theme.name}
                       {dim ? ` · ${dim.name}` : ''}
                     </a>

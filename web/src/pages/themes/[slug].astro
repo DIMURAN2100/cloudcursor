@@ -1,4 +1,5 @@
 ---
+import { u } from '../../lib/urls';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HighlightItem from '../../components/HighlightItem.astro';
 import { getTheme, themes } from '../../lib/taxonomy';
@@ -18,7 +19,7 @@ if (!theme) {
   <section class="page-hero">
     <div class="container">
       <div class="meta-row">
-        <a href="/themes/">知识体系</a>
+        <a href={u("themes/")}>知识体系</a>
       </div>
       <h1>{theme.name}</h1>
       <p>{theme.summary}</p>
@@ -56,7 +57,7 @@ if (!theme) {
                         summary={highlight.summary}
                         type={highlight.type}
                         date={briefing.date}
-                        dateHref={`/briefings/${briefing.slug}/`}
+                        dateHref={u(`briefings/${briefing.slug}/`)}
                         sources={highlight.sources}
                         askPayload={{
                           id: `${briefing.slug}#${highlight.index}`,

@@ -1,4 +1,5 @@
 ---
+import { u } from '../../lib/urls';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PathDiagram from '../../components/PathDiagram.astro';
 import { engineerPath } from '../../lib/site';
@@ -40,12 +41,12 @@ import { collectThemeHighlights } from '../../lib/briefings';
                 </p>
                 <p>
                   主题：
-                  {theme ? <a href={`/themes/${theme.slug}/`}>{theme.name}</a> : step.theme}
+                  {theme ? <a href={u(`themes/${theme.slug}/`)}>{theme.name}</a> : step.theme}
                   {
                     sample && (
                       <>
                         {' · 案例：'}
-                        <a href={`/briefings/${sample.briefing.slug}/`}>
+                        <a href={u(`briefings/${sample.briefing.slug}/`)}>
                           {sample.highlight.title}
                         </a>
                       </>

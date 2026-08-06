@@ -1,4 +1,5 @@
 ---
+import { u } from '../../lib/urls';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HighlightItem from '../../components/HighlightItem.astro';
 import { loadBriefings } from '../../lib/briefings';
@@ -23,7 +24,7 @@ const latest = briefings[0];
             <div class="meta-row">
               <span>最新：{latest.date}</span>
               <span>{latest.highlights.length} 条今日要点</span>
-              <a href={`/briefings/${latest.slug}/`}>打开完整日报</a>
+              <a href={u(`briefings/${latest.slug}/`)}>打开完整日报</a>
             </div>
             <ol class="highlight-list">
               {latest.highlights.map((h) => (
@@ -31,7 +32,7 @@ const latest = briefings[0];
                   title={h.title}
                   summary={h.summary}
                   type={h.type}
-                  themeHref={`/themes/${h.themeSlug}/#${h.dimensionSlug}`}
+                  themeHref={u(`themes/${h.themeSlug}/#${h.dimensionSlug}`)}
                   sources={h.sources}
                   askPayload={{
                     id: `${latest.slug}#${h.index}`,
@@ -58,7 +59,7 @@ const latest = briefings[0];
         {
           briefings.map((b) => (
             <li>
-              <a href={`/briefings/${b.slug}/`}>
+              <a href={u(`briefings/${b.slug}/`)}>
                 <span>{b.date}</span>
                 <strong>{b.highlights[0]?.title || b.title}</strong>
                 <span style="color:var(--muted)">{b.highlights.length} 条要点</span>

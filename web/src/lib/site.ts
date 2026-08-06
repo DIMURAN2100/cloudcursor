@@ -6,14 +6,15 @@ export const brand = {
     '面向企业安全岗与管理层的全球 AI 安全学习站：每日简报沉淀为知识体系、治理地图、产业图谱与学习路径。',
 };
 
+/** href 不含前导 /，由布局用 BASE_URL 拼接，兼容 GitHub Pages 子路径 */
 export const nav = [
-  { href: '/briefings/', label: '简报台' },
-  { href: '/themes/', label: '知识体系' },
-  { href: '/governance/', label: '全球治理' },
-  { href: '/landscape/', label: '产业图谱' },
-  { href: '/glossary/', label: '术语墙' },
-  { href: '/path/', label: '学习路径' },
-  { href: '/about/', label: '方法' },
+  { href: 'briefings/', label: '简报台' },
+  { href: 'themes/', label: '知识体系' },
+  { href: 'governance/', label: '全球治理' },
+  { href: 'landscape/', label: '产业图谱' },
+  { href: 'glossary/', label: '术语墙' },
+  { href: 'path/', label: '学习路径' },
+  { href: 'about/', label: '方法' },
 ];
 
 export const engineerPath = {

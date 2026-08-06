@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import ChatPanel from '../components/ChatPanel.astro';
 import { brand, nav } from '../lib/site';
+import { u } from '../lib/urls';
 
 const {
   title,
@@ -11,6 +12,7 @@ const {
 
 const pageTitle = title ? `${title} · ${brand.name}` : `${brand.name} · ${brand.tagline}`;
 const pathname = Astro.url.pathname;
+const home = u();
 ---
 
 <!doctype html>
@@ -19,7 +21,7 @@ const pathname = Astro.url.pathname;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={u('favicon.svg')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -31,17 +33,20 @@ const pathname = Astro.url.pathname;
   <body class:list={[{ 'is-editorial': editorial }]}>
     <header class="site-header">
       <div class="container site-header__inner">
-        <a class="brand" href="/">{brand.name.replace('安全', '')}<span>安全</span></a>
+        <a class="brand" href={home}>{brand.name.replace('安全', '')}<span>安全</span></a>
         <nav class="nav" aria-label="主导航">
           {
-            nav.map((item) => (
-              <a
-                href={item.href}
-                aria-current={pathname.startsWith(item.href) ? 'page' : undefined}
-              >
-                {item.label}
-              </a>
-            ))
+            nav.map((item) => {
+              const href = u(item.href);
+              return (
+                <a
+                  href={href}
+                  aria-current={pathname.includes(item.href.replace(/\/$/, '')) ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              );
+            })
           }
         </nav>
       </div>

@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/urls';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HighlightItem from '../components/HighlightItem.astro';
 import ThreatSurfaceDiagram from '../components/ThreatSurfaceDiagram.astro';
@@ -51,8 +52,8 @@ const topRegions = regions
         面向企业安全岗与管理层：每日全球简报，沉淀为知识体系、治理地图与产业图谱。
       </p>
       <div class="cta-row">
-        <a class="button" href="/briefings/">看今日态势</a>
-        <a class="button button--ghost" href="/themes/">进入知识体系</a>
+        <a class="button" href={u("briefings/")}>看今日态势</a>
+        <a class="button button--ghost" href={u("themes/")}>进入知识体系</a>
       </div>
     </div>
   </section>
@@ -80,7 +81,7 @@ const topRegions = regions
                       title={h.title}
                       summary={h.summary}
                       type={h.type}
-                      themeHref={`/themes/${h.themeSlug}/#${h.dimensionSlug}`}
+                      themeHref={u(`themes/${h.themeSlug}/#${h.dimensionSlug}`)}
                       sources={h.sources}
                       askPayload={{
                         id: `${latest.slug}#${h.index}`,
@@ -96,7 +97,7 @@ const topRegions = regions
                   ))}
                 </ol>
                 <p style="margin-top:1.25rem">
-                  <a class="button button--ghost" href={`/briefings/${latest.slug}/`}>
+                  <a class="button button--ghost" href={u(`briefings/${latest.slug}/`)}>
                     查看完整日报
                   </a>
                 </p>
@@ -138,7 +139,7 @@ const topRegions = regions
                   ))}
                 </ul>
                 <p style="margin-top:1.25rem">
-                  <a href="/governance/">看全球治理地图 →</a>
+                  <a href={u("governance/")}>看全球治理地图 →</a>
                 </p>
               </aside>
             </div>
@@ -157,7 +158,7 @@ const topRegions = regions
       <p class="section__desc">一张总图，避免把 AI 安全缩成单点提示词问题。</p>
       <ThreatSurfaceDiagram />
       <p style="margin-top:1rem">
-        <a href="/diagrams/">查看全部架构图 →</a>
+        <a href={u("diagrams/")}>查看全部架构图 →</a>
       </p>
     </div>
   </section>
@@ -172,7 +173,7 @@ const topRegions = regions
       <div class="theme-grid">
         {
           themes.map((theme) => (
-            <a class="theme-link" href={`/themes/${theme.slug}/`}>
+            <a class="theme-link" href={u(`themes/${theme.slug}/`)}>
               <h3>{theme.name}</h3>
               <p>{theme.summary}</p>
               <p style="margin-top:0.6rem;color:var(--signal);font-size:0.88rem">
@@ -205,7 +206,7 @@ const topRegions = regions
                     <span>{count} 条相关情报</span>
                   </div>
                   <h3>
-                    <a href={`/governance/#${region.slug}`} style="text-decoration:none">
+                    <a href={u(`governance/#${region.slug}`)} style="text-decoration:none">
                       {region.name}
                     </a>
                   </h3>
@@ -215,7 +216,7 @@ const topRegions = regions
             }
           </ul>
           <p style="margin-top:1rem">
-            <a href="/governance/">全部地区与标准框架 →</a>
+            <a href={u("governance/")}>全部地区与标准框架 →</a>
           </p>
         </div>
         <div class="panel">
@@ -224,7 +225,7 @@ const topRegions = regions
             模型厂商、AI 安全创业公司、传统安全巨头与研究机构：谁在做什么、最近被简报提到什么。
           </p>
           <p>
-            <a class="button button--ghost" href="/landscape/">
+            <a class="button button--ghost" href={u("landscape/")}>
               打开产业图谱
             </a>
           </p>
@@ -243,7 +244,7 @@ const topRegions = regions
             <article class="timeline__item">
               <div class="timeline__date">{b.date}</div>
               <h3 class="timeline__title">
-                <a href={`/briefings/${b.slug}/`}>{b.highlights[0]?.title || b.title}</a>
+                <a href={u(`briefings/${b.slug}/`)}>{b.highlights[0]?.title || b.title}</a>
               </h3>
               <p class="timeline__meta">
                 {b.highlights.length} 条要点 · {b.lede.slice(0, 80)}
@@ -254,7 +255,7 @@ const topRegions = regions
         }
       </div>
       <p style="margin-top:1.5rem">
-        <a class="button button--ghost" href="/briefings/">进入简报归档</a>
+        <a class="button button--ghost" href={u("briefings/")}>进入简报归档</a>
       </p>
     </div>
   </section>

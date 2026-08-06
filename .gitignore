@@ -3,3 +3,10 @@
 web/node_modules/
 web/dist/
 web/.astro/
+web/.env
+web/.env.*
+!web/.env.example
+
+# secrets
+**/DEEPSEEK_API_KEY*
+services/chat-proxy/.env

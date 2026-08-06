@@ -1,4 +1,5 @@
 ---
+import { u } from '../../lib/urls';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HighlightItem from '../../components/HighlightItem.astro';
 import { regions, standards } from '../../lib/taxonomy';
@@ -69,7 +70,7 @@ import { regionIntel, standardIntel, countMatches } from '../../lib/briefings';
                           }
                           type={highlight.type}
                           date={briefing.date}
-                          dateHref={`/briefings/${briefing.slug}/`}
+                          dateHref={u(`briefings/${briefing.slug}/`)}
                           sources={highlight.sources}
                           askPayload={{
                             id: `${briefing.slug}#${highlight.index}`,
@@ -113,7 +114,7 @@ import { regionIntel, standardIntel, countMatches } from '../../lib/briefings';
                     {intel.map(({ briefing }, i) => (
                       <>
                         {i > 0 && ' · '}
-                        <a href={`/briefings/${briefing.slug}/`}>{briefing.date}</a>
+                        <a href={u(`briefings/${briefing.slug}/`)}>{briefing.date}</a>
                       </>
                     ))}
                   </p>
