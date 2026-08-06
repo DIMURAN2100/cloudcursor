@@ -34,27 +34,33 @@ npm start
 
 ---
 
-## 3. 让网站指向代理
+## 3. 让网站指向代理（重要）
 
-在 `web/` 下创建 `.env`（已被 gitignore，勿提交）：
+不要让浏览器直接访问 `http://127.0.0.1:8787`：  
+如果你是通过端口转发看网站，浏览器里的 `127.0.0.1` 是**你自己的电脑**，不是跑 proxy 的机器，会静默失败并退回站内检索。
+
+在 `web/.env` 写同源路径：
 
 ```bash
-# web/.env
-PUBLIC_CHAT_ENDPOINT=http://127.0.0.1:8787/chat
+PUBLIC_CHAT_ENDPOINT=/api/chat
 ```
 
-然后重新构建并预览：
+然后：
 
 ```bash
 cd web
 npm run build
-npm run preview
+npm run preview:chat   # 静态站 + 把 /api/chat 反代到 8787
+# 或开发模式：
+# npm run dev
 ```
 
-打开站点 → 任意要点点「针对这条对话」→ 提问。  
-底部提示变为「当前为接口模型回答…」即表示 DeepSeek 已接通。
+**两个进程都要开着：**
+1. `services/chat-proxy` → `npm start`（8787）
+2. `web` → `npm run preview:chat`（4321）
 
-> `PUBLIC_*` 变量会打进前端包，这里只暴露**代理地址**，不暴露密钥。
+打开站点 →「针对这条对话」→ 提问。  
+底部提示「当前为 DeepSeek 模型回答」即成功。
 
 ---
 

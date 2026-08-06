@@ -3,7 +3,8 @@
  * 全站对话面板：针对某条简报要点提问。
  * 默认用构建期知识索引做本地检索回答；若配置 PUBLIC_CHAT_ENDPOINT 则走 LLM。
  */
-const chatEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT ?? '';
+// 默认走同源 /api/chat（由 astro dev 或 preview:chat 反代到 chat-proxy）
+const chatEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT || '/api/chat';
 ---
 
 <div
@@ -199,8 +200,12 @@ const chatEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT ?? '';
     `;
   }
 
-  async function llmAnswer(question: string): Promise<string | null> {
-    if (!endpoint || !active) return null;
+  async function llmAnswer(
+    question: string,
+  ): Promise<{ ok: true; html: string } | { ok: false; error: string }> {
+    if (!endpoint || !active) {
+      return { ok: false, error: '未配置对话接口' };
+    }
     try {
       const res = await fetch(endpoint, {
         method: 'POST',
@@ -211,11 +216,21 @@ const chatEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT ?? '';
           related: related(`${active.title} ${question}`, 5),
         }),
       });
-      if (!res.ok) return null;
-      const data = await res.json();
-      return data.answer || data.html || null;
-    } catch {
-      return null;
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        return {
+          ok: false,
+          error: data?.error || `对话接口返回 ${res.status}（请确认 chat-proxy 已启动）`,
+        };
+      }
+      const html = data.answer || data.html;
+      if (!html) return { ok: false, error: '对话接口返回空内容' };
+      return { ok: true, html };
+    } catch (err) {
+      return {
+        ok: false,
+        error: `无法连接对话接口 ${endpoint}：${err?.message || err}`,
+      };
     }
   }
 
@@ -248,16 +263,27 @@ const chatEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT ?? '';
     if (!q) return;
     addBubble('user', q);
     if (input) input.value = '';
-    addBubble('bot', '检索中…');
+    addBubble('bot', '正在调用模型…');
     await ensureKnowledge();
     const llm = await llmAnswer(q);
-    const answer = llm || localAnswer(q);
     const last = messagesEl?.querySelector('.chat-bubble--bot:last-child');
-    if (last) last.innerHTML = answer;
-    if (hint) {
-      hint.textContent = llm
-        ? '当前为接口模型回答，并附带站内相关简报上下文。'
-        : '当前为站内知识库检索回答；设置 PUBLIC_CHAT_ENDPOINT 可启用完整 LLM。';
+    if (llm.ok) {
+      if (last) last.innerHTML = llm.html;
+      if (hint) hint.textContent = '当前为 DeepSeek 模型回答（经 chat-proxy）。';
+    } else {
+      // 模型失败时展示原因，并附带站内检索兜底，避免静默退化让人误判
+      const fallback = localAnswer(q);
+      if (last) {
+        last.innerHTML = `
+          <p class="chat-note"><strong>模型未接通：</strong>${llm.error}</p>
+          <hr class="chat-hr" />
+          ${fallback}
+        `;
+      }
+      if (hint) {
+        hint.textContent =
+          '模型调用失败，已回退站内检索。请确认 chat-proxy 在跑，并用 npm run preview:chat 或 npm run dev 打开网站。';
+      }
     }
   });
 
