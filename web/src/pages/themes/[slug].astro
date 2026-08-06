@@ -59,16 +59,6 @@ if (!theme) {
                         date={briefing.date}
                         dateHref={u(`briefings/${briefing.slug}/`)}
                         sources={highlight.sources}
-                        askPayload={{
-                          id: `${briefing.slug}#${highlight.index}`,
-                          title: highlight.title,
-                          summary: highlight.summary,
-                          date: briefing.date,
-                          type: highlight.type,
-                          theme: highlight.themeSlug,
-                          dimension: highlight.dimensionSlug,
-                          sources: highlight.sources,
-                        }}
                       />
                     ))}
                   </ol>

@@ -1,6 +1,0 @@
-name = "ai-simplify-chat-proxy"
-main = "worker.js"
-compatibility_date = "2026-04-01"
-
-# 密钥不要写进本文件，用：
-#   wrangler secret put DEEPSEEK_API_KEY

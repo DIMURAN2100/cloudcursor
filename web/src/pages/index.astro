@@ -73,7 +73,7 @@ const topRegions = regions
               <div>
                 <div class="panel" style="border-top:0;padding-top:0">
                   <h3>安全岗 · 可行动要点</h3>
-                  <p>从今日简报提取可跟进的技术与流程动作；可点「针对这条对话」深入问。</p>
+                  <p>从今日简报提取可跟进的技术与流程动作。</p>
                 </div>
                 <ol class="highlight-list" style="margin-top:1.25rem">
                   {highlights.map((h) => (
@@ -83,16 +83,6 @@ const topRegions = regions
                       type={h.type}
                       themeHref={u(`themes/${h.themeSlug}/#${h.dimensionSlug}`)}
                       sources={h.sources}
-                      askPayload={{
-                        id: `${latest.slug}#${h.index}`,
-                        title: h.title,
-                        summary: h.summary,
-                        date: latest.date,
-                        type: h.type,
-                        theme: h.themeSlug,
-                        dimension: h.dimensionSlug,
-                        sources: h.sources,
-                      }}
                     />
                   ))}
                 </ol>
@@ -119,22 +109,6 @@ const topRegions = regions
                           {b.action}
                         </p>
                       )}
-                      <p class="ask-row">
-                        <button
-                          type="button"
-                          class="ask-btn"
-                          data-ask={JSON.stringify({
-                            id: `exec-${b.title}`,
-                            title: b.title,
-                            summary: `${b.text}${b.action ? ` 建议动作：${b.action}` : ''}`,
-                            type: '决策要点',
-                            date: latest.date,
-                            sources: [],
-                          })}
-                        >
-                          针对这条对话
-                        </button>
-                      </p>
                     </li>
                   ))}
                 </ul>

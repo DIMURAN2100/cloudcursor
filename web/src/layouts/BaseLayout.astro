@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import ChatPanel from '../components/ChatPanel.astro';
 import { brand, nav } from '../lib/site';
 import { u } from '../lib/urls';
 
@@ -60,7 +59,6 @@ const home = u();
         <p>全球 AI 安全简报驱动的学习站 · 本地预览版</p>
       </div>
     </footer>
-    <ChatPanel />
     <script>
       const items = document.querySelectorAll('.timeline__item');
       if (items.length && 'IntersectionObserver' in window) {

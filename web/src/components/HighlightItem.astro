@@ -1,6 +1,6 @@
 ---
 /**
- * 统一渲染简报要点：摘要 + 原文来源 + 对话入口
+ * 统一渲染简报要点：摘要 + 原文来源
  */
 type Source = { label: string; href: string };
 type Props = {
@@ -12,16 +12,6 @@ type Props = {
   themeHref?: string;
   themeLabel?: string;
   sources?: Source[];
-  askPayload?: {
-    id: string;
-    title: string;
-    summary: string;
-    date?: string;
-    type?: string;
-    theme?: string;
-    dimension?: string;
-    sources?: Source[];
-  };
 };
 
 const {
@@ -33,7 +23,6 @@ const {
   themeHref,
   themeLabel = '进入维度',
   sources = [],
-  askPayload,
 } = Astro.props;
 ---
 
@@ -64,19 +53,6 @@ const {
             </a>
           </>
         ))}
-      </p>
-    )
-  }
-  {
-    askPayload && (
-      <p class="ask-row">
-        <button
-          type="button"
-          class="ask-btn"
-          data-ask={JSON.stringify(askPayload)}
-        >
-          针对这条对话
-        </button>
       </p>
     )
   }

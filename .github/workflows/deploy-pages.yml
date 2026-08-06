@@ -37,8 +37,6 @@ jobs:
           # 项目站路径：https://<user>.github.io/cloudcursor/
           SITE_URL: https://dimuran2100.github.io
           BASE_PATH: /cloudcursor/
-          # 可选：DeepSeek 代理公网地址（Actions Secret）
-          PUBLIC_CHAT_ENDPOINT: ${{ secrets.PUBLIC_CHAT_ENDPOINT }}
         run: |
           npm ci
           npm run build
