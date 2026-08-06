@@ -1,30 +1,45 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { themes } from '../../lib/site';
-import { countThemeHighlights } from '../../lib/briefings';
+import { themes } from '../../lib/taxonomy';
+import { countDimensionHighlights, countThemeHighlights } from '../../lib/briefings';
 ---
 
-<BaseLayout title="主题学堂" description="把多日 AI 安全简报沉淀为稳定主题框架。">
+<BaseLayout title="知识体系" description="四大主题、多维研究框架：把日更简报沉淀为可学习的结构。">
   <section class="page-hero">
     <div class="container">
-      <h1>主题学堂</h1>
-      <p>四个核心主题覆盖自身安全、赋能防御、基础设施与治理。简报是案例，主题是骨架。</p>
+      <h1>知识体系</h1>
+      <p>
+        每个主题按「研究维度」拆分：先知道这个领域有哪些问题，再用简报案例逐个看懂。
+      </p>
     </div>
   </section>
 
   <section class="section" style="padding-top:0">
-    <div class="container theme-grid">
+    <div class="container" style="display:grid;gap:3rem">
       {
-        themes.map((theme) => {
-          const count = countThemeHighlights(theme.slug);
-          return (
-            <a class="theme-link" href={`/themes/${theme.slug}/`}>
-              <h3>{theme.name}</h3>
-              <p>{theme.summary}</p>
-              <p style="margin-top:0.65rem;color:var(--signal)">已挂接 {count} 条简报要点</p>
-            </a>
-          );
-        })
+        themes.map((theme) => (
+          <div>
+            <h2 class="section__title">
+              <a href={`/themes/${theme.slug}/`} style="text-decoration:none">
+                {theme.name}
+              </a>
+            </h2>
+            <p class="section__desc" style="margin-bottom:1.25rem">
+              {theme.summary} · 已挂接 {countThemeHighlights(theme.slug)} 条简报要点
+            </p>
+            <div class="dimension-grid">
+              {theme.dimensions.map((dim) => (
+                <a class="dimension-card" href={`/themes/${theme.slug}/#${dim.slug}`}>
+                  <h3>{dim.name}</h3>
+                  <p>{dim.question}</p>
+                  <span class="dimension-card__count">
+                    {countDimensionHighlights(theme.slug, dim.slug)} 条情报
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))
       }
     </div>
   </section>

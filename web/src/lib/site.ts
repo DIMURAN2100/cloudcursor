@@ -3,41 +3,17 @@ export const brand = {
   nameEn: 'AI Simplify Security',
   tagline: '用全球 AI 安全情报，训练可执行的防御判断',
   description:
-    '面向企业安全岗与管理层的全球 AI 安全学习站：把每日简报沉淀为主题路径、事件复盘与行动清单。',
+    '面向企业安全岗与管理层的全球 AI 安全学习站：每日简报沉淀为知识体系、治理地图、产业图谱与学习路径。',
 };
 
-export const themes = [
-  {
-    slug: 'ai-self',
-    name: 'AI 自身安全',
-    summary: '提示注入、过度代理、多会话规避与模型边界失效。',
-    focus: '把「模型会被绕过」当成设计前提，收紧工具与数据权限。',
-  },
-  {
-    slug: 'ai-defense',
-    name: 'AI 赋能防御',
-    summary: 'Agentic SOC、AI 红队、告警编排与防御自动化。',
-    focus: '关注信号质量、验证闭环，而不是工具堆叠。',
-  },
-  {
-    slug: 'infra-cve',
-    name: '基础设施与 CVE',
-    summary: 'AI 网关、MCP、模型供应链与开发依赖风险。',
-    focus: '把 AI 运行时与软件供应链纳入同一套补丁与监测节奏。',
-  },
-  {
-    slug: 'governance',
-    name: '治理与合规',
-    summary: '监管动态、框架映射、采购资质与责任边界。',
-    focus: '把公开情报翻译成可汇报的决策与控制项。',
-  },
-] as const;
-
-export type ThemeSlug = (typeof themes)[number]['slug'];
-
-export function getTheme(slug: string) {
-  return themes.find((t) => t.slug === slug);
-}
+export const nav = [
+  { href: '/briefings/', label: '简报台' },
+  { href: '/themes/', label: '知识体系' },
+  { href: '/governance/', label: '全球治理' },
+  { href: '/landscape/', label: '产业图谱' },
+  { href: '/path/', label: '学习路径' },
+  { href: '/about/', label: '方法' },
+];
 
 export const engineerPath = {
   title: '安全工程师路径',
@@ -80,11 +56,3 @@ export const engineerPath = {
     },
   ],
 };
-
-export const nav = [
-  { href: '/briefings/', label: '今日简报台' },
-  { href: '/themes/', label: '主题学堂' },
-  { href: '/path/', label: '学习路径' },
-  { href: '/diagrams/', label: '架构图' },
-  { href: '/about/', label: '方法' },
-];

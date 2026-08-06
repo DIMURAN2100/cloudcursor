@@ -592,6 +592,255 @@ img {
   font-weight: 600;
 }
 
+/* 知识体系：维度卡片与目录 */
+.dimension-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 760px) {
+  .dimension-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
+.dimension-card {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  text-decoration: none;
+  background: linear-gradient(180deg, rgba(16, 35, 28, 0.5), transparent);
+  transition: border-color 200ms ease;
+}
+
+.dimension-card:hover {
+  border-color: var(--signal);
+}
+
+.dimension-card h3 {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 1.02rem;
+}
+
+.dimension-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.dimension-card__count {
+  color: var(--signal);
+  font-size: 0.8rem;
+}
+
+.dimension-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dimension-toc a {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.dimension-toc a:hover {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+/* 全球治理：地区卡片与法规表 */
+.region-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+  background: linear-gradient(180deg, rgba(16, 35, 28, 0.45), transparent);
+}
+
+.region-card__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.region-card__head h3 {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 1.35rem;
+}
+
+.region-card__flag {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: var(--signal);
+  border: 1px solid var(--signal-dim);
+  background: var(--signal-dim);
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+}
+
+.region-card__count {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.region-card__stance {
+  color: var(--muted);
+  margin: 0.6rem 0 1rem;
+}
+
+.instrument-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.instrument-table th,
+.instrument-table td {
+  text-align: left;
+  padding: 0.55rem 0.75rem 0.55rem 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.instrument-table th {
+  color: var(--signal);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+}
+
+.instrument-table td:first-child {
+  font-weight: 600;
+  min-width: 11em;
+}
+
+.instrument-table td:nth-child(2) {
+  color: var(--warn);
+  white-space: nowrap;
+}
+
+.instrument-table td:last-child {
+  color: var(--muted);
+}
+
+.intel-fold {
+  margin-top: 1rem;
+}
+
+.intel-fold summary {
+  cursor: pointer;
+  color: var(--signal);
+  font-size: 0.92rem;
+}
+
+/* 标准与框架 */
+.standard-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 760px) {
+  .standard-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+.standard-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+}
+
+.standard-card h3 {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 1.05rem;
+}
+
+.standard-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.standard-card__org {
+  color: var(--signal);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.standard-card__usage strong {
+  color: var(--ink);
+}
+
+.standard-card__intel {
+  font-size: 0.85rem;
+}
+
+/* 产业图谱 */
+.company-grid {
+  display: grid;
+  gap: 1.1rem;
+}
+
+@media (min-width: 700px) {
+  .company-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}
+
+.company-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem;
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+}
+
+.company-card header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.company-card h3 {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 1.02rem;
+}
+
+.company-card__count {
+  color: var(--signal);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.company-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.company-card__recent {
+  font-size: 0.85rem;
+}
+
 @media (max-width: 720px) {
   .nav {
     justify-content: flex-end;
@@ -601,5 +850,10 @@ img {
 
   .hero__brand {
     max-width: none;
+  }
+
+  .instrument-table {
+    display: block;
+    overflow-x: auto;
   }
 }

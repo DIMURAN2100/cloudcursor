@@ -1,12 +1,20 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { marked } from 'marked';
+import {
+  classifyDimension,
+  companyCategories,
+  regions,
+  standards,
+  themes,
+} from './taxonomy';
 
 export type Highlight = {
   index: number;
   title: string;
   type: string;
   themeSlug: string;
+  dimensionSlug?: string;
   summary: string;
   sources: { label: string; href: string }[];
 };
@@ -20,30 +28,22 @@ export type Briefing = {
   highlights: Highlight[];
   bodyHtml: string;
   raw: string;
-  themeCounts: Record<string, number>;
 };
 
 const BRIEFINGS_DIR = path.resolve(process.cwd(), '../briefings');
 
-const THEME_MAP: { match: RegExp; slug: string }[] = [
-  { match: /赋能|升级安全|防御|检测|SOC|红队|渗透/i, slug: 'ai-defense' },
-  { match: /自身|提示注入|prompt|agent|代理|过度代理|幻觉/i, slug: 'ai-self' },
-  { match: /基础设施|CVE|供应链|npm|网关|MCP/i, slug: 'infra-cve' },
-  { match: /治理|合规|监管|法案|框架/i, slug: 'governance' },
-];
-
 export function typeToTheme(type: string, title = '', summary = ''): string {
-  // Prefer the explicit 📌 类型 label; only fall back to title/summary keywords.
+  // 优先使用简报中的显式「📌 类型」标签，正文关键词仅作兜底。
   if (/自身/.test(type)) return 'ai-self';
   if (/赋能|升级安全/.test(type)) return 'ai-defense';
-  if (/CVE|基础设施/.test(type)) return 'infra-cve';
-  if (/治理|合规|监管/.test(type)) return 'governance';
+  if (/CVE|基础设施|供应链/.test(type)) return 'infra-cve';
+  if (/治理|合规|监管|政策/.test(type)) return 'governance';
 
   const blob = `${title} ${summary}`;
-  for (const rule of THEME_MAP) {
-    if (rule.match.test(blob)) return rule.slug;
-  }
-  return 'governance';
+  if (/法案|监管|合规|标准|框架|政策/.test(blob)) return 'governance';
+  if (/CVE|供应链|npm|网关|漏洞利用/.test(blob)) return 'infra-cve';
+  if (/SOC|检测|防御|红队/.test(blob)) return 'ai-defense';
+  return 'ai-self';
 }
 
 function extractLede(raw: string): string {
@@ -78,11 +78,13 @@ function extractHighlights(raw: string): Highlight[] {
     );
     const type = m[3].trim();
     const title = m[2].trim();
+    const themeSlug = typeToTheme(type, title, summary);
     highlights.push({
       index: Number(m[1]),
       title,
       type,
-      themeSlug: typeToTheme(type, title, summary),
+      themeSlug,
+      dimensionSlug: classifyDimension(themeSlug, `${title} ${summary}`),
       summary,
       sources,
     });
@@ -90,45 +92,39 @@ function extractHighlights(raw: string): Highlight[] {
   return highlights;
 }
 
+let cache: Briefing[] | null = null;
+
 export function loadBriefings(): Briefing[] {
+  if (cache) return cache;
   if (!fs.existsSync(BRIEFINGS_DIR)) return [];
   const files = fs
     .readdirSync(BRIEFINGS_DIR)
-    .filter((f) => f.endsWith('.md') && f !== '.gitkeep')
+    .filter((f) => f.endsWith('.md'))
     .sort()
     .reverse();
 
-  return files.map((filename) => {
+  cache = files.map((filename) => {
     const raw = fs.readFileSync(path.join(BRIEFINGS_DIR, filename), 'utf8');
     const dateMatch = filename.match(/^(\d{4}-\d{2}-\d{2})/);
     const date = dateMatch?.[1] ?? '1970-01-01';
     const slug = filename.replace(/\.md$/, '');
     const titleLine = raw.split('\n').find((l) => l.trim()) || slug;
-    const highlights = extractHighlights(raw);
-    const themeCounts: Record<string, number> = {};
-    for (const h of highlights) {
-      themeCounts[h.themeSlug] = (themeCounts[h.themeSlug] || 0) + 1;
-    }
     return {
       slug,
       filename,
       date,
       title: titleLine.trim(),
       lede: extractLede(raw),
-      highlights,
+      highlights: extractHighlights(raw),
       bodyHtml: marked.parse(raw, { async: false }) as string,
       raw,
-      themeCounts,
     };
   });
+  return cache;
 }
 
 export function getLatestBriefing(briefings = loadBriefings()): Briefing | undefined {
   return briefings[0];
-}
-
-export function getBriefingBySlug(slug: string): Briefing | undefined {
-  return loadBriefings().find((b) => b.slug === slug);
 }
 
 export function briefingsInLastDays(days: number, briefings = loadBriefings()): Briefing[] {
@@ -139,11 +135,30 @@ export function briefingsInLastDays(days: number, briefings = loadBriefings()): 
   return briefings.filter((b) => new Date(`${b.date}T00:00:00Z`) >= min);
 }
 
-export function collectThemeHighlights(themeSlug: string, limit = 12) {
-  const items: { briefing: Briefing; highlight: Highlight }[] = [];
+export type HighlightRef = { briefing: Briefing; highlight: Highlight };
+
+export function collectThemeHighlights(themeSlug: string, limit = 12): HighlightRef[] {
+  const items: HighlightRef[] = [];
   for (const briefing of loadBriefings()) {
     for (const highlight of briefing.highlights) {
       if (highlight.themeSlug === themeSlug) {
+        items.push({ briefing, highlight });
+        if (items.length >= limit) return items;
+      }
+    }
+  }
+  return items;
+}
+
+export function collectDimensionHighlights(
+  themeSlug: string,
+  dimensionSlug: string,
+  limit = 10,
+): HighlightRef[] {
+  const items: HighlightRef[] = [];
+  for (const briefing of loadBriefings()) {
+    for (const highlight of briefing.highlights) {
+      if (highlight.themeSlug === themeSlug && highlight.dimensionSlug === dimensionSlug) {
         items.push({ briefing, highlight });
         if (items.length >= limit) return items;
       }
@@ -161,3 +176,55 @@ export function countThemeHighlights(themeSlug: string): number {
   }
   return count;
 }
+
+export function countDimensionHighlights(themeSlug: string, dimensionSlug: string): number {
+  let count = 0;
+  for (const briefing of loadBriefings()) {
+    for (const highlight of briefing.highlights) {
+      if (highlight.themeSlug === themeSlug && highlight.dimensionSlug === dimensionSlug) {
+        count += 1;
+      }
+    }
+  }
+  return count;
+}
+
+/** 按正则在全部简报要点中检索，供治理/标准/公司页挂接情报。 */
+export function matchHighlights(pattern: RegExp, limit = 8): HighlightRef[] {
+  const items: HighlightRef[] = [];
+  for (const briefing of loadBriefings()) {
+    for (const highlight of briefing.highlights) {
+      if (pattern.test(`${highlight.title} ${highlight.summary}`)) {
+        items.push({ briefing, highlight });
+        if (items.length >= limit) return items;
+      }
+    }
+  }
+  return items;
+}
+
+export function countMatches(pattern: RegExp): number {
+  let count = 0;
+  for (const briefing of loadBriefings()) {
+    for (const highlight of briefing.highlights) {
+      if (pattern.test(`${highlight.title} ${highlight.summary}`)) count += 1;
+    }
+  }
+  return count;
+}
+
+export function regionIntel(regionSlug: string, limit = 6): HighlightRef[] {
+  const region = regions.find((r) => r.slug === regionSlug);
+  return region ? matchHighlights(region.match, limit) : [];
+}
+
+export function standardIntel(standardSlug: string, limit = 5): HighlightRef[] {
+  const standard = standards.find((s) => s.slug === standardSlug);
+  return standard ? matchHighlights(standard.match, limit) : [];
+}
+
+export function companyMentionCount(pattern: RegExp): number {
+  return countMatches(pattern);
+}
+
+export { themes, regions, standards, companyCategories };

@@ -1,8 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ThreatSurfaceDiagram from '../components/ThreatSurfaceDiagram.astro';
-import { brand, themes } from '../lib/site';
-import { briefingsInLastDays, getLatestBriefing, loadBriefings } from '../lib/briefings';
+import { brand } from '../lib/site';
+import { regions, themes } from '../lib/taxonomy';
+import {
+  briefingsInLastDays,
+  countMatches,
+  countThemeHighlights,
+  getLatestBriefing,
+  loadBriefings,
+} from '../lib/briefings';
 
 const all = loadBriefings();
 const latest = getLatestBriefing(all);
@@ -14,6 +21,11 @@ const execBullets = highlights.slice(0, 3).map((h) => ({
   text: h.summary.slice(0, 90) + (h.summary.length > 90 ? '…' : ''),
   type: h.type,
 }));
+
+const topRegions = regions
+  .map((r) => ({ region: r, count: countMatches(r.match) }))
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 4);
 ---
 
 <BaseLayout>
@@ -24,18 +36,18 @@ const execBullets = highlights.slice(0, 3).map((h) => ({
       <p class="hero__brand">{brand.name.replace('安全', '')}<em>安全</em></p>
       <h1 class="hero__title">{brand.tagline}</h1>
       <p class="hero__lede">
-        面向企业安全岗与管理层：把全球 AI 安全日报，转成主题学习、事件复盘与可执行判断。
+        面向企业安全岗与管理层：每日全球简报，沉淀为知识体系、治理地图与产业图谱。
       </p>
       <div class="cta-row">
         <a class="button" href="/briefings/">看今日态势</a>
-        <a class="button button--ghost" href="#decision">看本周决策要点</a>
+        <a class="button button--ghost" href="/themes/">进入知识体系</a>
       </div>
     </div>
   </section>
 
   <section class="section" id="today">
     <div class="container">
-      <p class="section__eyebrow">Today</p>
+      <p class="section__eyebrow">01 · Today</p>
       <h2 class="section__title">今日主线</h2>
       {
         latest ? (
@@ -54,7 +66,7 @@ const execBullets = highlights.slice(0, 3).map((h) => ({
                     <li>
                       <div class="highlight-list__meta">
                         <span class="tag">{h.type}</span>
-                        <a href={`/themes/${h.themeSlug}/`}>进入主题</a>
+                        <a href={`/themes/${h.themeSlug}/#${h.dimensionSlug}`}>进入维度</a>
                       </div>
                       <h3>{h.title}</h3>
                       <p>{h.summary}</p>
@@ -69,9 +81,7 @@ const execBullets = highlights.slice(0, 3).map((h) => ({
               </div>
               <aside class="panel" id="decision">
                 <h3>管理层 · 决策摘要</h3>
-                <p style="margin-bottom:1rem">
-                  本周应关注的风险主线与治理含义（由今日要点提炼）。
-                </p>
+                <p style="margin-bottom:1rem">本周应关注的风险主线与治理含义。</p>
                 <ul class="highlight-list">
                   {execBullets.map((b) => (
                     <li>
@@ -84,13 +94,13 @@ const execBullets = highlights.slice(0, 3).map((h) => ({
                   ))}
                 </ul>
                 <p style="margin-top:1.25rem">
-                  <a href="/path/">从学习路径看落地顺序 →</a>
+                  <a href="/governance/">看全球治理地图 →</a>
                 </p>
               </aside>
             </div>
           </>
         ) : (
-          <p class="section__desc">暂无简报。请确认仓库 `briefings/` 目录已同步日报。</p>
+          <p class="section__desc">暂无简报。请先同步 `briefings/` 日报。</p>
         )
       }
     </div>
@@ -98,7 +108,7 @@ const execBullets = highlights.slice(0, 3).map((h) => ({
 
   <section class="section" style="padding-top:0">
     <div class="container">
-      <p class="section__eyebrow">Map</p>
+      <p class="section__eyebrow">02 · Map</p>
       <h2 class="section__title">先建立威胁面地图</h2>
       <p class="section__desc">一张总图，避免把 AI 安全缩成单点提示词问题。</p>
       <ThreatSurfaceDiagram />
@@ -110,15 +120,23 @@ const execBullets = highlights.slice(0, 3).map((h) => ({
 
   <section class="section" style="padding-top:0">
     <div class="container">
-      <p class="section__eyebrow">Learn</p>
-      <h2 class="section__title">主题学堂</h2>
-      <p class="section__desc">用多日简报沉淀稳定框架，而不是按日期堆新闻。</p>
+      <p class="section__eyebrow">03 · Learn</p>
+      <h2 class="section__title">知识体系：四大主题 × 研究维度</h2>
+      <p class="section__desc">
+        每个主题按研究维度拆分：先知道该问什么问题，再用简报案例逐个看懂。
+      </p>
       <div class="theme-grid">
         {
           themes.map((theme) => (
             <a class="theme-link" href={`/themes/${theme.slug}/`}>
               <h3>{theme.name}</h3>
               <p>{theme.summary}</p>
+              <p style="margin-top:0.6rem;color:var(--signal);font-size:0.88rem">
+                {theme.dimensions.map((d) => d.name).join(' / ')}
+              </p>
+              <p style="margin-top:0.4rem;color:var(--muted);font-size:0.85rem">
+                {countThemeHighlights(theme.slug)} 条简报要点
+              </p>
             </a>
           ))
         }
@@ -128,9 +146,53 @@ const execBullets = highlights.slice(0, 3).map((h) => ({
 
   <section class="section" style="padding-top:0">
     <div class="container">
-      <p class="section__eyebrow">Timeline</p>
+      <p class="section__eyebrow">04 · Governance</p>
+      <h2 class="section__title">全球治理与产业</h2>
+      <p class="section__desc">政策法规按地区、公司机构按角色，都由简报持续供血。</p>
+      <div class="split">
+        <div class="panel">
+          <h3>治理热区</h3>
+          <ul class="highlight-list" style="margin-top:1rem">
+            {
+              topRegions.map(({ region, count }) => (
+                <li>
+                  <div class="highlight-list__meta">
+                    <span class="tag">{region.flag}</span>
+                    <span>{count} 条相关情报</span>
+                  </div>
+                  <h3>
+                    <a href={`/governance/#${region.slug}`} style="text-decoration:none">
+                      {region.name}
+                    </a>
+                  </h3>
+                  <p>{region.stance}</p>
+                </li>
+              ))
+            }
+          </ul>
+          <p style="margin-top:1rem">
+            <a href="/governance/">全部地区与标准框架 →</a>
+          </p>
+        </div>
+        <div class="panel">
+          <h3>产业图谱</h3>
+          <p style="margin-bottom:1rem">
+            模型厂商、AI 安全创业公司、传统安全巨头与研究机构：谁在做什么、最近被简报提到什么。
+          </p>
+          <p>
+            <a class="button button--ghost" href="/landscape/">
+              打开产业图谱
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <p class="section__eyebrow">05 · Timeline</p>
       <h2 class="section__title">近七日情报推进</h2>
-      <p class="section__desc">滚动时节点依次确认，复盘本周主线演变。</p>
       <div class="timeline">
         {
           recent.map((b) => (

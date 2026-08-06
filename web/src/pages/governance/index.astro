@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { regions, standards } from '../../lib/taxonomy';
+import { regionIntel, standardIntel, countMatches } from '../../lib/briefings';
+---
+
+<BaseLayout
+  title="全球治理"
+  description="各国 AI 安全政策、法规与标准框架，配套简报中的最新动态。"
+>
+  <section class="page-hero">
+    <div class="container">
+      <h1>全球治理地图</h1>
+      <p>
+        政策法规看「义务从哪来、何时生效」，标准框架看「控制项怎么落」。每个条目下自动挂接简报里的相关动态。
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <h2 class="section__title">政策与法规 · 按地区</h2>
+      <p class="section__desc">
+        策展的基线信息 + 简报自动匹配的最新情报（数字为累计相关要点数）。
+      </p>
+      <div style="display:grid;gap:2.5rem">
+        {
+          regions.map((region) => {
+            const intel = regionIntel(region.slug, 4);
+            const total = countMatches(region.match);
+            return (
+              <article class="region-card" id={region.slug}>
+                <header class="region-card__head">
+                  <span class="region-card__flag">{region.flag}</span>
+                  <h3>{region.name}</h3>
+                  <span class="region-card__count">{total} 条相关情报</span>
+                </header>
+                <p class="region-card__stance">{region.stance}</p>
+                <table class="instrument-table">
+                  <thead>
+                    <tr>
+                      <th>法规 / 机制</th>
+                      <th>状态</th>
+                      <th>要点</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {region.instruments.map((ins) => (
+                      <tr>
+                        <td>{ins.name}</td>
+                        <td>{ins.status}</td>
+                        <td>{ins.note}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {intel.length > 0 && (
+                  <details class="intel-fold">
+                    <summary>来自简报的最新动态（{intel.length} 条）</summary>
+                    <ul class="highlight-list" style="margin-top:1rem">
+                      {intel.map(({ briefing, highlight }) => (
+                        <li>
+                          <div class="highlight-list__meta">
+                            <a href={`/briefings/${briefing.slug}/`}>{briefing.date}</a>
+                          </div>
+                          <h3>{highlight.title}</h3>
+                          <p>{highlight.summary.slice(0, 160)}…</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
+              </article>
+            );
+          })
+        }
+      </div>
+
+      <h2 class="section__title" style="margin-top:4rem">标准与框架</h2>
+      <p class="section__desc">从威胁清单到管理体系：不同框架回答不同层的问题。</p>
+      <div class="standard-grid">
+        {
+          standards.map((std) => {
+            const intel = standardIntel(std.slug, 3);
+            return (
+              <article class="standard-card" id={std.slug}>
+                <h3>{std.name}</h3>
+                <p class="standard-card__org">{std.org}</p>
+                <p>{std.purpose}</p>
+                <p class="standard-card__usage">
+                  <strong>怎么用：</strong>
+                  {std.usage}
+                </p>
+                {intel.length > 0 && (
+                  <p class="standard-card__intel">
+                    最近提及：
+                    {intel.map(({ briefing }, i) => (
+                      <>
+                        {i > 0 && ' · '}
+                        <a href={`/briefings/${briefing.slug}/`}>{briefing.date}</a>
+                      </>
+                    ))}
+                  </p>
+                )}
+              </article>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
