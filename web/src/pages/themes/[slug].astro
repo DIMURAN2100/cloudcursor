@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getTheme, themes } from '../../lib/site';
+import { collectThemeHighlights } from '../../lib/briefings';
+
+export function getStaticPaths() {
+  return themes.map((theme) => ({ params: { slug: theme.slug } }));
+}
+
+const theme = getTheme(Astro.params.slug!);
+if (!theme) {
+  throw new Error('Theme not found');
+}
+const items = collectThemeHighlights(theme.slug, 16);
+---
+
+<BaseLayout title={theme.name} description={theme.summary}>
+  <section class="page-hero">
+    <div class="container">
+      <div class="meta-row">
+        <a href="/themes/">全部主题</a>
+      </div>
+      <h1>{theme.name}</h1>
+      <p>{theme.summary}</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="panel" style="margin-bottom:2rem">
+        <h3>学习焦点</h3>
+        <p>{theme.focus}</p>
+      </div>
+
+      <h2 class="section__title">来自简报的案例</h2>
+      <p class="section__desc">以下要点由日报自动归类挂接，用于主题学习而非替代完整日报。</p>
+      <ol class="highlight-list">
+        {
+          items.map(({ briefing, highlight }) => (
+            <li>
+              <div class="highlight-list__meta">
+                <span class="tag">{highlight.type}</span>
+                <a href={`/briefings/${briefing.slug}/`}>{briefing.date}</a>
+              </div>
+              <h3>{highlight.title}</h3>
+              <p>{highlight.summary}</p>
+            </li>
+          ))
+        }
+      </ol>
+      {
+        items.length === 0 && (
+          <p class="section__desc">该主题暂未匹配到要点，可先阅读最新日报后回来。</p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

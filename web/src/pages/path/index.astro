@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PathDiagram from '../../components/PathDiagram.astro';
+import { engineerPath, getTheme } from '../../lib/site';
+import { collectThemeHighlights } from '../../lib/briefings';
+---
+
+<BaseLayout
+  title="学习路径"
+  description="安全工程师五步路径：从威胁面到检查清单，挂接全球 AI 安全简报案例。"
+>
+  <section class="page-hero">
+    <div class="container">
+      <h1>{engineerPath.title}</h1>
+      <p>{engineerPath.subtitle}</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <PathDiagram />
+
+      <div class="path-steps" style="margin-top:2rem">
+        {
+          engineerPath.steps.map((step, index) => {
+            const theme = getTheme(step.theme);
+            const sample = collectThemeHighlights(step.theme, 1)[0];
+            return (
+              <article class="path-step" id={step.id}>
+                <div class="path-step__index">STEP {String(index + 1).padStart(2, '0')}</div>
+                <h3>{step.title}</h3>
+                <p>
+                  <strong>学成标准：</strong>
+                  {step.outcome}
+                </p>
+                <p>
+                  <strong>今日动作：</strong>
+                  {step.action}
+                </p>
+                <p>
+                  主题：
+                  {theme ? <a href={`/themes/${theme.slug}/`}>{theme.name}</a> : step.theme}
+                  {
+                    sample && (
+                      <>
+                        {' · 案例：'}
+                        <a href={`/briefings/${sample.briefing.slug}/`}>
+                          {sample.highlight.title}
+                        </a>
+                      </>
+                    )
+                  }
+                </p>
+              </article>
+            );
+          })
+        }
+      </div>
+
+      <div class="panel" style="margin-top:2rem">
+        <h3>管理层如何使用这条路径</h3>
+        <p>
+          不必走完五步技术细节。关注第 1 步（暴露面）、第 3 步（供应链责任）与第 5 步（本周风险与建议动作），作为周会决策输入。
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

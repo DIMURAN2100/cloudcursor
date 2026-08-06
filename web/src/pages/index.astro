@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ThreatSurfaceDiagram from '../components/ThreatSurfaceDiagram.astro';
+import { brand, themes } from '../lib/site';
+import { briefingsInLastDays, getLatestBriefing, loadBriefings } from '../lib/briefings';
+
+const all = loadBriefings();
+const latest = getLatestBriefing(all);
+const recent = briefingsInLastDays(7, all);
+const highlights = latest?.highlights.slice(0, 5) ?? [];
+
+const execBullets = highlights.slice(0, 3).map((h) => ({
+  title: h.title,
+  text: h.summary.slice(0, 90) + (h.summary.length > 90 ? '…' : ''),
+  type: h.type,
+}));
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="hero__field" aria-hidden="true"></div>
+    <div class="hero__scan" aria-hidden="true"></div>
+    <div class="container hero__content">
+      <p class="hero__brand">{brand.name.replace('安全', '')}<em>安全</em></p>
+      <h1 class="hero__title">{brand.tagline}</h1>
+      <p class="hero__lede">
+        面向企业安全岗与管理层：把全球 AI 安全日报，转成主题学习、事件复盘与可执行判断。
+      </p>
+      <div class="cta-row">
+        <a class="button" href="/briefings/">看今日态势</a>
+        <a class="button button--ghost" href="#decision">看本周决策要点</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="today">
+    <div class="container">
+      <p class="section__eyebrow">Today</p>
+      <h2 class="section__title">今日主线</h2>
+      {
+        latest ? (
+          <>
+            <p class="section__desc">
+              <strong>{latest.date}</strong> · {latest.lede}
+            </p>
+            <div class="split">
+              <div>
+                <div class="panel" style="border-top:0;padding-top:0">
+                  <h3>安全岗 · 可行动要点</h3>
+                  <p>从今日简报提取可跟进的技术与流程动作。</p>
+                </div>
+                <ol class="highlight-list" style="margin-top:1.25rem">
+                  {highlights.map((h) => (
+                    <li>
+                      <div class="highlight-list__meta">
+                        <span class="tag">{h.type}</span>
+                        <a href={`/themes/${h.themeSlug}/`}>进入主题</a>
+                      </div>
+                      <h3>{h.title}</h3>
+                      <p>{h.summary}</p>
+                    </li>
+                  ))}
+                </ol>
+                <p style="margin-top:1.25rem">
+                  <a class="button button--ghost" href={`/briefings/${latest.slug}/`}>
+                    查看完整日报
+                  </a>
+                </p>
+              </div>
+              <aside class="panel" id="decision">
+                <h3>管理层 · 决策摘要</h3>
+                <p style="margin-bottom:1rem">
+                  本周应关注的风险主线与治理含义（由今日要点提炼）。
+                </p>
+                <ul class="highlight-list">
+                  {execBullets.map((b) => (
+                    <li>
+                      <div class="highlight-list__meta">
+                        <span class="tag">{b.type}</span>
+                      </div>
+                      <h3>{b.title}</h3>
+                      <p>{b.text}</p>
+                    </li>
+                  ))}
+                </ul>
+                <p style="margin-top:1.25rem">
+                  <a href="/path/">从学习路径看落地顺序 →</a>
+                </p>
+              </aside>
+            </div>
+          </>
+        ) : (
+          <p class="section__desc">暂无简报。请确认仓库 `briefings/` 目录已同步日报。</p>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <p class="section__eyebrow">Map</p>
+      <h2 class="section__title">先建立威胁面地图</h2>
+      <p class="section__desc">一张总图，避免把 AI 安全缩成单点提示词问题。</p>
+      <ThreatSurfaceDiagram />
+      <p style="margin-top:1rem">
+        <a href="/diagrams/">查看全部架构图 →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <p class="section__eyebrow">Learn</p>
+      <h2 class="section__title">主题学堂</h2>
+      <p class="section__desc">用多日简报沉淀稳定框架，而不是按日期堆新闻。</p>
+      <div class="theme-grid">
+        {
+          themes.map((theme) => (
+            <a class="theme-link" href={`/themes/${theme.slug}/`}>
+              <h3>{theme.name}</h3>
+              <p>{theme.summary}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <p class="section__eyebrow">Timeline</p>
+      <h2 class="section__title">近七日情报推进</h2>
+      <p class="section__desc">滚动时节点依次确认，复盘本周主线演变。</p>
+      <div class="timeline">
+        {
+          recent.map((b) => (
+            <article class="timeline__item">
+              <div class="timeline__date">{b.date}</div>
+              <h3 class="timeline__title">
+                <a href={`/briefings/${b.slug}/`}>{b.highlights[0]?.title || b.title}</a>
+              </h3>
+              <p class="timeline__meta">
+                {b.highlights.length} 条要点 · {b.lede.slice(0, 80)}
+                {b.lede.length > 80 ? '…' : ''}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+      <p style="margin-top:1.5rem">
+        <a class="button button--ghost" href="/briefings/">进入简报归档</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

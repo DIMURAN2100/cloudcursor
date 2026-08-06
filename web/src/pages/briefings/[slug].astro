@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadBriefings } from '../../lib/briefings';
+
+export function getStaticPaths() {
+  return loadBriefings().map((b) => ({
+    params: { slug: b.slug },
+    props: { briefing: b },
+  }));
+}
+
+const { briefing } = Astro.props;
+---
+
+<BaseLayout title={briefing.date} description={briefing.lede} editorial>
+  <article class="page-hero">
+    <div class="container">
+      <div class="meta-row">
+        <span>{briefing.date}</span>
+        <a href="/briefings/">返回简报台</a>
+      </div>
+      <h1>{briefing.title}</h1>
+      <p>{briefing.lede}</p>
+    </div>
+  </article>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="panel" style="margin-bottom:2rem">
+        <h3>学习入口</h3>
+        <p>
+          先看要点类型，再进入主题学堂或安全工程师路径，避免停在「读完即走」。
+        </p>
+        <p style="margin-top:0.75rem">
+          <a href="/themes/">主题学堂</a>
+          {' · '}
+          <a href="/path/">学习路径</a>
+        </p>
+      </div>
+      <div class="prose" set:html={briefing.bodyHtml} />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,99 @@
+---
+import '../styles/global.css';
+import { brand, nav } from '../lib/site';
+
+const {
+  title,
+  description = brand.description,
+  editorial = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} · ${brand.name}` : `${brand.name} · ${brand.tagline}`;
+const pathname = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,480;8..60,600&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>{pageTitle}</title>
+  </head>
+  <body class:list={[{ 'is-editorial': editorial }]}>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href="/">{brand.name.replace('安全', '')}<span>安全</span></a>
+        <nav class="nav" aria-label="主导航">
+          {
+            nav.map((item) => (
+              <a
+                href={item.href}
+                aria-current={pathname.startsWith(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <strong>{brand.name}</strong>
+        <p>全球 AI 安全简报驱动的学习站 · 本地预览版</p>
+      </div>
+    </footer>
+    <script>
+      const items = document.querySelectorAll('.timeline__item');
+      if (items.length && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) entry.target.classList.add('is-in');
+            }
+          },
+          { threshold: 0.35 },
+        );
+        items.forEach((el) => io.observe(el));
+      }
+
+      document.querySelectorAll('[data-diagram]').forEach((root) => {
+        const nodes = root.querySelectorAll('[data-node]');
+        const edges = root.querySelectorAll('[data-edge]');
+        const clear = () => {
+          root.removeAttribute('data-active');
+          nodes.forEach((n) => n.classList.remove('is-on'));
+          edges.forEach((e) => e.classList.remove('is-on'));
+        };
+        nodes.forEach((node) => {
+          node.addEventListener('mouseenter', () => {
+            const id = node.getAttribute('data-node');
+            root.setAttribute('data-active', 'true');
+            node.classList.add('is-on');
+            edges.forEach((edge) => {
+              const connects = (edge.getAttribute('data-edge') || '').split(',');
+              if (connects.includes(id || '')) {
+                edge.classList.add('is-on');
+                connects.forEach((cid) => {
+                  root.querySelector(`[data-node="${cid}"]`)?.classList.add('is-on');
+                });
+              }
+            });
+          });
+          node.addEventListener('mouseleave', clear);
+        });
+      });
+    </script>
+  </body>
+</html>

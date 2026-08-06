@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LearningLoopDiagram from '../../components/LearningLoopDiagram.astro';
+import { brand } from '../../lib/site';
+---
+
+<BaseLayout title="方法" description="AI简化安全的内容来源、更新节奏与使用方法。">
+  <section class="page-hero">
+    <div class="container">
+      <h1>方法说明</h1>
+      <p>
+        {brand.name} 不是新闻聚合站。它把全球 AI 安全简报当作原料，产出可学习的主题、路径与决策摘要。
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container" style="display:grid;gap:2rem">
+      <LearningLoopDiagram />
+
+      <div class="panel">
+        <h3>内容源</h3>
+        <p>
+          仓库 `briefings/` 中的全球 AI 安全日报（东八区日期命名）。站点在构建时解析要点、类型与来源链接。
+        </p>
+      </div>
+
+      <div class="panel">
+        <h3>更新节奏</h3>
+        <p>
+          日更：今日要点、日报详情、近七日时间线。周更：主题挂接复盘、路径案例刷新、管理层决策摘要。过期日报永不删除，进入归档与主题索引。
+        </p>
+      </div>
+
+      <div class="panel">
+        <h3>双用户阅读方式</h3>
+        <p>
+          安全岗走「要点 → 主题 → 路径动作」；管理层走「今日主线 → 决策摘要 → 治理闭环」。同一份简报，两层深度。
+        </p>
+      </div>
+
+      <div class="panel">
+        <h3>本地预览</h3>
+        <p>
+          当前阶段以本地开发预览为主。在 `web/` 目录执行 `npm run dev`，或 `npm run build && npm run preview`。
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

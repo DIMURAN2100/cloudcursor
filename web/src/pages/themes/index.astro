@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { themes } from '../../lib/site';
+import { countThemeHighlights } from '../../lib/briefings';
+---
+
+<BaseLayout title="主题学堂" description="把多日 AI 安全简报沉淀为稳定主题框架。">
+  <section class="page-hero">
+    <div class="container">
+      <h1>主题学堂</h1>
+      <p>四个核心主题覆盖自身安全、赋能防御、基础设施与治理。简报是案例，主题是骨架。</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container theme-grid">
+      {
+        themes.map((theme) => {
+          const count = countThemeHighlights(theme.slug);
+          return (
+            <a class="theme-link" href={`/themes/${theme.slug}/`}>
+              <h3>{theme.name}</h3>
+              <p>{theme.summary}</p>
+              <p style="margin-top:0.65rem;color:var(--signal)">已挂接 {count} 条简报要点</p>
+            </a>
+          );
+        })
+      }
+    </div>
+  </section>
+</BaseLayout>
