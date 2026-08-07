@@ -1,0 +1,66 @@
+{
+  "date": "2026-08-07",
+  "headline": "提示攻击防护产品化与「过度代理权」治理并进：检测器进网关，Agent 进 SIEM",
+  "execSummary": [
+    {
+      "title": "提示注入检测下沉为轻量分类器，但间接注入仍是盲区",
+      "insight": "0DIN SusFactor 以约 5.6 亿参数二分类器做越狱/直接注入打分，厂商称 JailbreakBench AUROC 0.954；消融显示去掉威胁情报样本后攻击成功率从约 12% 升至约 77%。公开基准不够用，生产护栏必须持续吃野外样本并分层阈值。",
+      "action": "为本周面向用户的 LLM/Agent 网关选定检测接入点，划定严阈值自动阻断与中置信人工复核队列，并确认间接提示注入是否在覆盖范围外。"
+    },
+    {
+      "title": "SIEM 开始把 AI 代理活动当作一等遥测",
+      "insight": "Securonix 在 Black Hat 期间推出 Governed AI Agent Detection and Response，并扩展 Microsoft Sentinel 侧威胁分析。Agent 已成为新的身份与执行主体；配置漂移、越权工具调用与异常会话需要与终端/身份同级的检测优先级。",
+      "action": "盘点企业内已上线的 AI 代理与工具权限，把代理会话、工具调用与配置变更接入现有 SIEM/UEBA，至少落一条「异常代理行为」狩猎用例。"
+    },
+    {
+      "title": "OWASP 用真实事件库确认：注入难根除，过度代理权升至第三",
+      "insight": "2026 版 LLM Top Ten 再次将提示注入置顶，并对照约 1 万条真实 AI 安全事件校准排序；「过度代理权」升至第三，说明工具/浏览/系统权限过宽会把模型失误放大成真实事故。控制目标应从「消灭注入」转向限制爆炸半径。",
+      "action": "对照 OWASP GenAI/LLM Top Ten 更新本周威胁建模清单：强制最小代理权、RAG 检索前授权校验、模型输出不可信校验，并禁用「读写删/外发」默认组合。"
+    }
+  ],
+  "classifications": {
+    "2026-08-07-brief-90cfe1d0773f#5": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  },
+  "entities": {
+    "regions": ["us"],
+    "standards": ["owasp-llm"],
+    "companies": [
+      "0DIN AI",
+      "Securonix",
+      "Microsoft",
+      "Nightfall AI",
+      "SentinelOne",
+      "OWASP",
+      "Gartner"
+    ]
+  },
+  "learningHooks": [
+    {
+      "highlightIndex": 1,
+      "theme": "ai-defense",
+      "dimension": "detection-intel",
+      "takeaway": "提示攻击检测要靠持续摄入野外威胁情报样本做再训练与阈值分层，不能只刷公开基准分数。"
+    },
+    {
+      "highlightIndex": 2,
+      "theme": "ai-defense",
+      "dimension": "agentic-soc",
+      "takeaway": "把 Agent 会话与工具调用接入 SIEM/UEBA，是把「新执行主体」纳入安全运营的最低可行动作。"
+    },
+    {
+      "highlightIndex": 3,
+      "theme": "ai-self",
+      "dimension": "prompt-injection",
+      "takeaway": "提示注入应按持续运营风险治理：护栏在权限、输出校验与人机审批，而不是指望一次提示词加固。"
+    },
+    {
+      "highlightIndex": 5,
+      "theme": "ai-self",
+      "dimension": "agent-security",
+      "takeaway": "影子 AI 与过宽代理权是同一问题的两端：先发现资产，再最小权限、人机协同与急停审计。"
+    }
+  ]
+}
