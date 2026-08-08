@@ -1,6 +1,20 @@
 {
-  "updatedAt": "2026-08-06",
+  "updatedAt": "2026-08-08",
   "terms": [
+    {
+      "term": "LLM-jacking",
+      "en": "LLM-jacking",
+      "definition": "劫持或滥用企业大模型 API/配额的攻击活动；CrowdStrike 报告曾记录单次行动两分钟内产生逾 20 万次 API 请求，使模型密钥、账单与端点成为常规狩猎与响应对象。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "Vibe Coding",
+      "en": "Vibe Coding",
+      "definition": "高度依赖 AI 生成代码、仅凭「看起来能跑」即上线的开发方式；DEVCORE 等实践指出其常伴随缺测试、不安全默认配置、过度信任部署与敏感信息泄漏，需纳入与人工代码同等的安全门禁。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
     {
       "term": "提示注入",
       "en": "Prompt Injection",
