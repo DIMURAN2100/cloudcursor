@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-06",
+  "updatedAt": "2026-08-09",
   "terms": [
     {
       "term": "提示注入",
@@ -84,6 +84,20 @@
       "definition": "以对抗方式测试模型与 Agent 的安全性：从提示注入演练到「生成并验证可运行 PoC」的自动化产品形态；CREST 已推出配套服务认证。",
       "theme": "ai-defense",
       "dimension": "ai-vuln-hunting"
+    },
+    {
+      "term": "零常驻权限",
+      "en": "Zero-Standing Privilege",
+      "definition": "Agent/机器身份不长期持有高权限凭证，仅在任务瞬时签发并回收；配合行为监控与不可逆动作的人机确认，用于遏制提示注入触发的未审 API/工作流操作。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "SAFE",
+      "en": "Shared AI Findings Exchange",
+      "definition": "Linux Foundation 提出的工作组机制（Open Secure AI Alliance 同步推进），拟机密汇聚 agentic AI 安全事件与险肇事故，识别反复控制失效并输出可操作防御建议，补齐传统 CVE 对 Agent 事故的覆盖缺口。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
     }
   ]
 }
