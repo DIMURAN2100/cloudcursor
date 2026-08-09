@@ -1,46 +1,74 @@
 ---
-const title = '全球 AI 威胁面分层';
+const title = 'AI 系统威胁面链路';
 ---
 
-<figure class="diagram" data-diagram aria-label={title}>
-  <svg viewBox="0 0 640 320" role="img">
-    <title>{title}</title>
-    <line class="diagram-edge" data-edge="model,app" x1="110" y1="70" x2="250" y2="70"></line>
-    <line class="diagram-edge" data-edge="app,data" x1="350" y1="70" x2="490" y2="70"></line>
-    <line class="diagram-edge" data-edge="model,tool" x1="110" y1="100" x2="190" y2="180"></line>
-    <line class="diagram-edge" data-edge="app,tool" x1="300" y1="100" x2="250" y2="180"></line>
-    <line class="diagram-edge" data-edge="data,tool" x1="490" y1="100" x2="310" y2="180"></line>
-    <line class="diagram-edge" data-edge="tool,infra" x1="250" y1="220" x2="190" y2="270"></line>
-    <line class="diagram-edge" data-edge="tool,gov" x1="250" y1="220" x2="430" y2="270"></line>
-    <line class="diagram-edge" data-edge="infra,gov" x1="230" y1="290" x2="390" y2="290"></line>
+<figure class="diagram threat-diagram" aria-labelledby="threat-diagram-title">
+  <div class="threat-diagram__body">
+    <div class="threat-chain" aria-label="AI 系统执行链路">
+      <article class="threat-stage">
+        <span class="threat-stage__number">01</span>
+        <div>
+          <strong>输入与知识</strong>
+          <p>用户提示 · 文档 · RAG · 训练数据</p>
+        </div>
+        <span class="threat-stage__risk">注入 / 投毒</span>
+      </article>
+      <span class="threat-arrow" aria-hidden="true">↓</span>
+      <article class="threat-stage">
+        <span class="threat-stage__number">02</span>
+        <div>
+          <strong>模型与推理</strong>
+          <p>基础模型 · 微调模型 · 上下文窗口</p>
+        </div>
+        <span class="threat-stage__risk">越狱 / 泄露</span>
+      </article>
+      <span class="threat-arrow" aria-hidden="true">↓</span>
+      <article class="threat-stage">
+        <span class="threat-stage__number">03</span>
+        <div>
+          <strong>Agent 编排</strong>
+          <p>目标规划 · 记忆 · 身份与权限</p>
+        </div>
+        <span class="threat-stage__risk">目标劫持</span>
+      </article>
+      <span class="threat-arrow" aria-hidden="true">↓</span>
+      <article class="threat-stage">
+        <span class="threat-stage__number">04</span>
+        <div>
+          <strong>工具与执行</strong>
+          <p>MCP · API · 代码执行 · 外部系统</p>
+        </div>
+        <span class="threat-stage__risk">权限滥用</span>
+      </article>
+      <span class="threat-arrow" aria-hidden="true">↓</span>
+      <article class="threat-stage">
+        <span class="threat-stage__number">05</span>
+        <div>
+          <strong>基础设施</strong>
+          <p>网关 · 推理服务 · 云与供应链</p>
+        </div>
+        <span class="threat-stage__risk">CVE / 供应链</span>
+      </article>
+    </div>
 
-    <g data-node="model">
-      <rect class="diagram-node" x="40" y="40" width="140" height="60" rx="4"></rect>
-      <text class="diagram-label" x="110" y="75" text-anchor="middle">模型层</text>
-    </g>
-    <g data-node="app">
-      <rect class="diagram-node" x="230" y="40" width="140" height="60" rx="4"></rect>
-      <text class="diagram-label" x="300" y="75" text-anchor="middle">应用 / Agent</text>
-    </g>
-    <g data-node="data">
-      <rect class="diagram-node" x="420" y="40" width="160" height="60" rx="4"></rect>
-      <text class="diagram-label" x="500" y="75" text-anchor="middle">数据 / RAG</text>
-    </g>
-    <g data-node="tool">
-      <rect class="diagram-node" x="180" y="170" width="140" height="60" rx="4"></rect>
-      <text class="diagram-label" x="250" y="205" text-anchor="middle">工具 / MCP</text>
-    </g>
-    <g data-node="infra">
-      <rect class="diagram-node" x="70" y="260" width="140" height="48" rx="4"></rect>
-      <text class="diagram-label" x="140" y="289" text-anchor="middle">基础设施</text>
-    </g>
-    <g data-node="gov">
-      <rect class="diagram-node" x="390" y="260" width="140" height="48" rx="4"></rect>
-      <text class="diagram-label" x="460" y="289" text-anchor="middle">治理层</text>
-    </g>
-  </svg>
-  <figcaption class="panel">
-    <h3>{title}</h3>
-    <p>悬停节点查看关联层，建立「不是单点 Prompt 问题」的整体认知。</p>
+    <aside class="control-plane">
+      <span class="control-plane__label">CROSS-LAYER CONTROL</span>
+      <strong>治理控制面</strong>
+      <p>贯穿执行链路，而不是独立的一层。</p>
+      <ul>
+        <li>资产与模型清单</li>
+        <li>身份与最小权限</li>
+        <li>输入输出审计</li>
+        <li>持续评测与红队</li>
+        <li>事件响应与合规</li>
+      </ul>
+    </aside>
+  </div>
+  <figcaption class="threat-diagram__caption">
+    <div>
+      <span>READING LOGIC</span>
+      <h3 id="threat-diagram-title">{title}</h3>
+    </div>
+    <p>纵向是一次 AI 任务从“接收信息”到“产生真实动作”的执行链；右侧治理控制面需要覆盖每一个阶段。</p>
   </figcaption>
 </figure>

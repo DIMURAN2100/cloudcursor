@@ -1,0 +1,81 @@
+---
+import type { BriefingDay } from '../lib/archive';
+import { u } from '../lib/urls';
+
+type Props = {
+  days: BriefingDay[];
+  currentPage: number;
+  totalPages: number;
+  totalDays: number;
+};
+
+const { days, currentPage, totalPages, totalDays } = Astro.props;
+const pageHref = (page: number) =>
+  page === 1 ? u('briefings/') : u(`briefings/page/${page}/`);
+
+const startDay = (currentPage - 1) * 15 + 1;
+const endDay = Math.min(startDay + days.length - 1, totalDays);
+---
+
+<section class="archive-section" aria-labelledby="archive-title">
+  <div class="archive-head">
+    <div>
+      <p class="section__eyebrow">ARCHIVE / PAGE {String(currentPage).padStart(2, '0')}</p>
+      <h2 class="section__title" id="archive-title">简报归档</h2>
+    </div>
+    <p>
+      每页展示 15 个自然日<br />
+      当前为第 {startDay}–{endDay} 天，共 {totalDays} 天
+    </p>
+  </div>
+
+  <ol class="archive-list">
+    {
+      days.map((day) => (
+        <li class="archive-day">
+          <time datetime={day.date}>{day.date}</time>
+          <div class="archive-day__entries">
+            {day.briefings.map((briefing) => (
+              <a href={u(`briefings/${briefing.slug}/`)}>
+                <strong>{briefing.highlights[0]?.title || briefing.title}</strong>
+                <span>{briefing.highlights.length} 条要点</span>
+              </a>
+            ))}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  {
+    totalPages > 1 && (
+      <nav class="pagination" aria-label="简报归档分页">
+        <a
+          class:list={['pagination__direction', { 'is-disabled': currentPage === 1 }]}
+          href={currentPage > 1 ? pageHref(currentPage - 1) : undefined}
+          aria-disabled={currentPage === 1 ? 'true' : undefined}
+        >
+          ← 上一页
+        </a>
+        <div class="pagination__pages">
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+            <a
+              class:list={{ 'is-current': page === currentPage }}
+              href={pageHref(page)}
+              aria-current={page === currentPage ? 'page' : undefined}
+            >
+              {String(page).padStart(2, '0')}
+            </a>
+          ))}
+        </div>
+        <a
+          class:list={['pagination__direction', { 'is-disabled': currentPage === totalPages }]}
+          href={currentPage < totalPages ? pageHref(currentPage + 1) : undefined}
+          aria-disabled={currentPage === totalPages ? 'true' : undefined}
+        >
+          下一页 →
+        </a>
+      </nav>
+    )
+  }
+</section>

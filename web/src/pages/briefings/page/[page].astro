@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BriefingArchive from '../../../components/BriefingArchive.astro';
+import {
+  ARCHIVE_DAYS_PER_PAGE,
+  groupBriefingsByDay,
+  paginateBriefingDays,
+} from '../../../lib/archive';
+import { loadBriefings } from '../../../lib/briefings';
+import { u } from '../../../lib/urls';
+
+export function getStaticPaths() {
+  const briefings = loadBriefings();
+  const totalPages = Math.ceil(
+    groupBriefingsByDay(briefings).length / ARCHIVE_DAYS_PER_PAGE,
+  );
+
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => {
+    const page = index + 2;
+    return {
+      params: { page: String(page) },
+      props: { page },
+    };
+  });
+}
+
+const { page } = Astro.props;
+const archive = paginateBriefingDays(loadBriefings(), page);
+---
+
+<BaseLayout
+  title={`简报归档 · 第 ${archive.currentPage} 页`}
+  description={`全球 AI 安全简报归档第 ${archive.currentPage} 页，每页展示 15 个自然日。`}
+>
+  <section class="page-hero page-hero--compact">
+    <div class="container">
+      <div class="meta-row">
+        <a href={u('briefings/')}>返回今日简报台</a>
+        <span>第 {archive.currentPage} / {archive.totalPages} 页</span>
+      </div>
+      <h1>历史简报</h1>
+      <p>按东八区日期归档，每页展示 15 个自然日；同一天的多份简报合并展示。</p>
+    </div>
+  </section>
+
+  <section class="section section--archive-page">
+    <div class="container">
+      <BriefingArchive {...archive} />
+    </div>
+  </section>
+</BaseLayout>

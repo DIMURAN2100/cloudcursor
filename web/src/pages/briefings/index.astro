@@ -2,10 +2,13 @@
 import { u } from '../../lib/urls';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HighlightItem from '../../components/HighlightItem.astro';
+import BriefingArchive from '../../components/BriefingArchive.astro';
+import { paginateBriefingDays } from '../../lib/archive';
 import { loadBriefings } from '../../lib/briefings';
 
 const briefings = loadBriefings();
 const latest = briefings[0];
+const archive = paginateBriefingDays(briefings, 1);
 ---
 
 <BaseLayout title="今日简报台" description="全球 AI 安全日报归档与今日要点入口。">
@@ -43,21 +46,7 @@ const latest = briefings[0];
         )
       }
 
-      <h2 class="section__title" style="margin-top:3rem">归档</h2>
-      <p class="section__desc">按东八区日期归档；首页强调近七日，更早内容从这里检索。</p>
-      <ul class="archive-list">
-        {
-          briefings.map((b) => (
-            <li>
-              <a href={u(`briefings/${b.slug}/`)}>
-                <span>{b.date}</span>
-                <strong>{b.highlights[0]?.title || b.title}</strong>
-                <span style="color:var(--muted)">{b.highlights.length} 条要点</span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      <BriefingArchive {...archive} />
     </div>
   </section>
 </BaseLayout>
