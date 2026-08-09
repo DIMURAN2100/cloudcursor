@@ -1,0 +1,35 @@
+{
+  "date": "2026-08-09",
+  "headline": "Agent 主风险转向「行动与权限」：持续红队、代理式 SOC 与注入致 RCE 同日落地",
+  "execSummary": [
+    {
+      "title": "Agent 安全重心从「输出风险」切到「行动风险」",
+      "insight": "Forcepoint 指出：对具备 API/工作流权限的 Agent，提示注入可在人类过目之前完成高影响操作；Gruve 同步强调 Zero-Standing-Privilege、即时凭证与行为监控。治理对象已从会话内容扩展到工具权限与执行边界。",
+      "action": "本周为生产 Agent 清点工具与密钥：取消长期凭证，高危/不可逆动作强制人机确认，其余调用加白名单与网络隔离。"
+    },
+    {
+      "title": "Flowise 提示注入可直达未沙箱 RCE",
+      "insight": "CVE-2026-70477（CVSS 9.8）显示 CSV Agent 节点可被未认证攻击者诱使执行恶意 Python，静态正则黑名单被绕过。这说明编排平台若把 LLM 输出直接送入未隔离执行器，模型侧护栏无法替代运行时隔离。",
+      "action": "立即盘点 Flowise / flowise-components 版本，升级至 3.1.3 及以上，并关闭未认证预测入口。"
+    },
+    {
+      "title": "AI 防御产品收敛为「持续红队」与「调查—处置闭环」",
+      "insight": "Snyk 将自主 pentest 与 agent 红队嵌入开发流水线并回验修复有效性；SentinelOne Purple AI 把跨遥测调查叙事接到 Hyperautomation 处置。AppSec/SOC 的竞争点变成可利用性验证与可审计自动处置门禁，而非再堆一个聊天助手。",
+      "action": "在一条互联网暴露或高权限服务路径上试点「可利用性」门禁，并书面定义哪些 SOC 处置允许机器执行、哪些必须人工批准。"
+    }
+  ],
+  "classifications": {
+    "2026-08-09-brief-329dc31eee35#1": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    "2026-08-09-brief-329dc31eee35#5": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-08-09-brief-329dc31eee35#6": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    }
+  }
+}
