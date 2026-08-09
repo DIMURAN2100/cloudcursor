@@ -1,0 +1,81 @@
+{
+  "date": "2026-08-09",
+  "headline": "Agent 主战场已从「说错话」切到「做错事」：持续红队进流水线，提示注入可直达未沙箱 RCE",
+  "execSummary": [
+    {
+      "title": "提示注入在 Agent/编排层可升级为未认证 RCE",
+      "insight": "Flowise CSV Agent（CVE-2026-70477，CVSS 9.8）证明：LLM 输出若直接进入未沙箱执行器，静态黑名单护栏挡不住；Forcepoint/Gruve 同期把同类风险定性为「行动风险」——注入可在人工过目前进发高权限 API 动作。",
+      "action": "本周清点 Flowise 等 LLM 编排组件版本（升级至已修复版），关闭未认证预测入口，并为生产 Agent 强制工具白名单与高危动作人工门禁。"
+    },
+    {
+      "title": "AI 防御产品收敛为「持续可利用性验证」与「调查—处置闭环」",
+      "insight": "Snyk Evo 把自主 pentest/agent 红队嵌进变更流水线并回验修复；SentinelOne Purple AI 则把代理式调查接到 Hyperautomation。两者把 AppSec/SOC 的竞争点从「多一个助手」推到「可利用证明」与「可审计自动处置」。",
+      "action": "在一条高暴露服务路径试点「可利用性」门禁，并书面定义哪些 SOC 处置允许机器执行、哪些必须人工批准。"
+    },
+    {
+      "title": "事故共享与小时级利用窗口同时施压运营 SLA",
+      "insight": "Linux Foundation SAFE RFC 试图把 agentic 近失/控制失效做成跨组织共享资产；奇安信年中监测则把「高危+AI诱导」与小时级利用窗口写成国内 CERT 基线判断。对外缺共享格式、对内仍按天级补丁的组织会被两端同时拉开差距。",
+      "action": "先建立内部 AI/Agent 事件分级与证据模板，并把暴露面中间件的补丁/狩猎 SLA 按小时级窗口重估一版。"
+    }
+  ],
+  "classifications": {
+    "2026-08-09-brief-329dc31eee35#1": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    "2026-08-09-brief-329dc31eee35#5": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-08-09-brief-329dc31eee35#6": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    }
+  },
+  "entities": {
+    "regions": ["us", "cn", "intl"],
+    "standards": [],
+    "companies": [
+      "Snyk",
+      "SentinelOne",
+      "Adaptive Security",
+      "Linux Foundation",
+      "NVIDIA",
+      "Cisco",
+      "CrowdStrike",
+      "Hugging Face",
+      "Red Hat",
+      "Forcepoint",
+      "Gruve",
+      "奇安信",
+      "Flowise",
+      "Trend Micro"
+    ]
+  },
+  "learningHooks": [
+    {
+      "highlightIndex": 7,
+      "theme": "infra-cve",
+      "dimension": "ai-runtime",
+      "takeaway": "编排节点若把模型输出送进未沙箱代码执行，提示注入就是基础设施 RCE，必须用隔离与鉴权而非正则黑名单兜底。"
+    },
+    {
+      "highlightIndex": 5,
+      "theme": "ai-self",
+      "dimension": "agent-security",
+      "takeaway": "Agent 安全要把「输出风险」与「行动风险」分开治理：最小权限、零常驻凭证、不可逆动作人机确认。"
+    },
+    {
+      "highlightIndex": 1,
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting",
+      "takeaway": "缺陷优先级应以「真实可利用」为硬门槛，持续红队/修复回验比一次性年审渗透更贴近变更节奏。"
+    },
+    {
+      "highlightIndex": 2,
+      "theme": "ai-defense",
+      "dimension": "agentic-soc",
+      "takeaway": "代理式 SOC 的下一步不是再加聊天框，而是把调查结论接入可审计、可回滚的自动处置策略。"
+    }
+  ]
+}
