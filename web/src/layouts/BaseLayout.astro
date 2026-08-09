@@ -24,7 +24,7 @@ const home = u();
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,480;8..60,600&family=Syne:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
     <title>{pageTitle}</title>
@@ -32,7 +32,10 @@ const home = u();
   <body class:list={[{ 'is-editorial': editorial }]}>
     <header class="site-header">
       <div class="container site-header__inner">
-        <a class="brand" href={home}>{brand.name.replace('安全', '')}<span>安全</span></a>
+        <a class="brand" href={home} aria-label="AI简化安全首页">
+          <span class="brand__mark" aria-hidden="true">A</span>
+          <span class="brand__name">{brand.name.replace('安全', '')}<b>安全</b></span>
+        </a>
         <nav class="nav" aria-label="主导航">
           {
             nav.map((item) => {
@@ -54,9 +57,15 @@ const home = u();
       <slot />
     </main>
     <footer class="site-footer">
-      <div class="container">
-        <strong>{brand.name}</strong>
-        <p>全球 AI 安全简报驱动的学习站 · 本地预览版</p>
+      <div class="container footer-grid">
+        <div>
+          <strong class="footer-brand">{brand.name}</strong>
+          <p>把全球 AI 安全情报，转化为可理解、可追踪、可执行的知识。</p>
+        </div>
+        <div class="footer-meta">
+          <span>每日更新 · GMT+8</span>
+          <a href={u('about/')}>方法与来源</a>
+        </div>
       </div>
     </footer>
     <script>
