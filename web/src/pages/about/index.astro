@@ -14,54 +14,220 @@ import { brand } from '../../lib/site';
     </div>
   </section>
 
-  <section class="section" style="padding-top:0">
-    <div class="container" style="display:grid;gap:2rem">
-      <LearningLoopDiagram />
+  <section class="section pt-0">
+    <div class="container about-layout">
+      <aside class="about-aside">
+        <LearningLoopDiagram />
+        <nav class="about-nav" aria-label="本页导航">
+          <a href="#source">01 · 内容源</a>
+          <a href="#rhythm">02 · 更新节奏</a>
+          <a href="#ingest">03 · 智能加工</a>
+          <a href="#reader">04 · 双视角阅读</a>
+          <a href="#local">05 · 本地预览</a>
+        </nav>
+      </aside>
 
-      <div class="panel">
-        <h3>内容源</h3>
-        <p>
-          仓库 `briefings/` 中的全球 AI 安全日报（东八区日期命名）。站点在构建时解析要点、类型与来源链接。
-        </p>
-      </div>
+      <div class="about-main">
+        <article id="source" class="about-block">
+          <span class="about-block__num">01</span>
+          <h2>内容源</h2>
+          <p>
+            仓库 <code>briefings/</code> 中的全球 AI 安全日报（东八区日期命名）。
+            站点在构建时解析要点、类型与来源链接，所有内容均可溯源到公开报道或官方通报。
+          </p>
+        </article>
 
-      <div class="panel">
-        <h3>更新节奏</h3>
-        <p>
-          日更：今日要点、日报详情、近七日时间线。周更：主题挂接复盘、路径案例刷新、管理层决策摘要。过期日报永不删除，进入归档与主题索引。
-        </p>
-      </div>
+        <article id="rhythm" class="about-block">
+          <span class="about-block__num">02</span>
+          <h2>更新节奏</h2>
+          <ul class="about-timeline">
+            <li>
+              <strong>日更</strong>
+              <span>今日要点、日报详情、近七日时间线</span>
+            </li>
+            <li>
+              <strong>周更</strong>
+              <span>主题挂接复盘、路径案例刷新、管理层决策摘要</span>
+            </li>
+            <li>
+              <strong>持续累积</strong>
+              <span>过期日报永不删除，进入归档与主题索引；知识结构随案例生长</span>
+            </li>
+          </ul>
+        </article>
 
-      <div class="panel">
-        <h3>如何吸收日更</h3>
-        <p>
-          简报由自动化流程直推 `AI安全新闻` 分支。站点分支执行
-          `./scripts/sync-briefings-to-site.sh` 即可拉取最新日报，重新构建后所有主题维度、治理地图与产业图谱自动刷新。
-        </p>
-      </div>
+        <article id="ingest" class="about-block">
+          <span class="about-block__num">03</span>
+          <h2>智能加工层</h2>
+          <p>
+            每日云端 Agent 阅读最新简报，生成头条、管理层决策摘要、术语与归类纠错
+            （存于 <code>data/enrichment/</code>），站点构建时消费。
+          </p>
+          <p>
+            智能只在流水线里，页面保持<strong>纯静态、零运行时成本</strong>。
+            流程详见仓库 <code>docs/AUTOMATION.md</code>。
+          </p>
+        </article>
 
-      <div class="panel">
-        <h3>智能加工层</h3>
-        <p>
-          每日云端 Agent 阅读最新简报，生成头条、管理层决策摘要、术语与归类纠错（存于
-          `data/enrichment/`），站点构建时消费。智能在流水线里，页面保持纯静态、零运行时成本。流程详见仓库
-          `docs/AUTOMATION.md`。
-        </p>
-      </div>
+        <article id="reader" class="about-block">
+          <span class="about-block__num">04</span>
+          <h2>双视角阅读</h2>
+          <div class="about-reader">
+            <div class="about-reader__col">
+              <span class="tag">FOR SECURITY TEAMS</span>
+              <h3>安全岗</h3>
+              <p>要点 → 主题 → 路径动作。从当日事件进入知识结构，再落到本周可执行动作。</p>
+            </div>
+            <div class="about-reader__col">
+              <span class="tag" data-theme="governance">FOR LEADERS</span>
+              <h3>管理层</h3>
+              <p>今日主线 → 决策摘要 → 治理闭环。不读技术细节也能拿到风险与建议动作。</p>
+            </div>
+          </div>
+        </article>
 
-      <div class="panel">
-        <h3>双用户阅读方式</h3>
-        <p>
-          安全岗走「要点 → 主题 → 路径动作」；管理层走「今日主线 → 决策摘要 → 治理闭环」。同一份简报，两层深度。
-        </p>
-      </div>
-
-      <div class="panel">
-        <h3>本地预览</h3>
-        <p>
-          当前阶段以本地开发预览为主。在 `web/` 目录执行 `npm run dev`，或 `npm run build && npm run preview`。
-        </p>
+        <article id="local" class="about-block">
+          <span class="about-block__num">05</span>
+          <h2>本地预览</h2>
+          <p>当前阶段以本地开发预览为主。在 <code>web/</code> 目录执行：</p>
+<pre><code>npm install
+npm run dev
+# 或构建预览
+npm run build &amp;&amp; npm run preview</code></pre>
+          <p>简报由自动化流程直推 <code>AI安全新闻</code> 分支，执行 <code>./scripts/sync-briefings-to-site.sh</code> 即可拉取最新日报。</p>
+        </article>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .about-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .about-aside {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+    display: grid;
+    gap: 1.5rem;
+  }
+  .about-nav {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+  }
+  .about-nav a {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-decoration: none;
+    padding: 0.35rem 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .about-nav a:last-child { border-bottom: 0; }
+  .about-nav a:hover { color: var(--signal); }
+
+  .about-main {
+    display: grid;
+    gap: 2.5rem;
+  }
+  .about-block {
+    position: relative;
+    padding: 1.5rem 0 1.5rem 4.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .about-block__num {
+    position: absolute;
+    left: 0;
+    top: 1.6rem;
+    color: var(--signal);
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .about-block h2 {
+    margin: 0 0 0.7rem;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+  }
+  .about-block p {
+    margin: 0 0 0.7rem;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .about-block code {
+    padding: 0.1rem 0.35rem;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.04);
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+  .about-block pre {
+    margin: 0.8rem 0;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #050c0a;
+    overflow-x: auto;
+  }
+  .about-block pre code {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+  }
+  .about-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .about-timeline li {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1.2rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 0.9rem;
+  }
+  .about-timeline li:last-child { border-bottom: 0; }
+  .about-timeline strong {
+    color: var(--signal);
+    font-family: var(--font-display);
+  }
+  .about-timeline span { color: var(--muted); }
+
+  .about-reader {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.6rem;
+  }
+  .about-reader__col {
+    padding: 1.2rem;
+    border: 1px solid var(--line);
+    background: linear-gradient(150deg, rgba(18,40,32,0.5), transparent);
+  }
+  .about-reader__col h3 {
+    margin: 0.6rem 0 0.4rem;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+  }
+  .about-reader__col p {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 900px) {
+    .about-layout { grid-template-columns: 1fr; }
+    .about-aside { position: static; }
+    .about-reader { grid-template-columns: 1fr; }
+  }
+</style>

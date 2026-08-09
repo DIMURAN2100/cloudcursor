@@ -3,32 +3,64 @@ import { u } from '../../lib/urls';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { companyCategories } from '../../lib/taxonomy';
 import { companyMentionCount, matchHighlights } from '../../lib/briefings';
+
+/** 产业分层：从上到下依次是模型/云平台、AI 安全专业厂、传统转型厂、研究机构/社区。 */
+const layers = [
+  { slug: 'model-labs', label: '模型厂商与云平台', sub: '前沿模型实验室与承载 AI 工作负载的云平台' },
+  { slug: 'ai-security', label: 'AI 安全专业厂商', sub: '围绕模型与 Agent 安全的新兴检测、红队、供应链公司' },
+  { slug: 'traditional', label: '传统安全厂商转型', sub: '既有安全巨头把 AI 纳入产品线，同时研究 AI 带来的新威胁' },
+  { slug: 'research', label: '研究机构与社区', sub: '提供方法论、标准与公共物品的研究力量' },
+];
 ---
 
 <BaseLayout
   title="产业图谱"
-  description="全球 AI 安全相关公司与研究机构，按角色分类并挂接简报提及。"
+  description="全球 AI 安全相关公司与研究机构，按角色分层并挂接简报提及。"
 >
   <section class="page-hero">
     <div class="container">
       <h1>产业图谱</h1>
       <p>
-        谁在做 AI 安全、各自扮演什么角色。「提及」数来自全部简报要点的自动统计，点击日期可回看上下文。
+        谁在做 AI 安全、各自扮演什么角色。先看分层图建立全局视角，再点进分类查看公司与简报中的最新提及。
       </p>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0">
+  <section class="section pt-0">
+    <div class="container">
+      <div class="stack" aria-label="AI 安全产业分层图">
+        {
+          layers.map((layer, i) => {
+            const cat = companyCategories.find((c) => c.slug === layer.slug)!;
+            const total = cat.companies.reduce((s, c) => s + companyMentionCount(c.match), 0);
+            return (
+              <a href={`#${layer.slug}`} class={`stack__layer stack__layer--${i}`}>
+                <span class="stack__index">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <strong>{layer.label}</strong>
+                  <p>{layer.sub}</p>
+                </div>
+                <span class="stack__count">{total} 次提及 · {cat.companies.length} 家</span>
+              </a>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0">
     <div class="container" style="display:grid;gap:3rem">
       {
         companyCategories.map((cat) => (
           <div id={cat.slug}>
-            <h2 class="section__title">{cat.name}</h2>
+            <h2 class="section__title" style="font-size:1.6rem">{cat.name}</h2>
             <p class="section__desc">{cat.description}</p>
             <div class="company-grid">
               {cat.companies.map((company) => {
                 const count = companyMentionCount(company.match);
-                const recent = matchHighlights(company.match, 2);
+                const recent = matchHighlights(company.match, 1);
+                const latest = recent[0];
                 return (
                   <article class="company-card">
                     <header>
@@ -36,17 +68,15 @@ import { companyMentionCount, matchHighlights } from '../../lib/briefings';
                       <span class="company-card__count">{count} 次提及</span>
                     </header>
                     <p>{company.note}</p>
-                    {recent.length > 0 && (
+                    {latest && (
                       <p class="company-card__recent">
                         最近：
-                        {recent.map(({ briefing, highlight }, i) => (
-                          <>
-                            {i > 0 && ' · '}
-                            <a href={u(`briefings/${briefing.slug}/`)} title={highlight.title}>
-                              {briefing.date}
-                            </a>
-                          </>
-                        ))}
+                        <a
+                          href={u(`briefings/${latest.briefing.slug}/`)}
+                          title={latest.highlight.title}
+                        >
+                          {latest.briefing.date} · {latest.highlight.title.slice(0, 28)}…
+                        </a>
                       </p>
                     )}
                   </article>
@@ -66,3 +96,66 @@ import { companyMentionCount, matchHighlights } from '../../lib/briefings';
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .stack {
+    display: grid;
+    gap: 0.6rem;
+    padding: 1.2rem;
+    border: 1px solid var(--line);
+    background: linear-gradient(160deg, rgba(18,40,32,.55), rgba(9,24,19,.6));
+  }
+  .stack__layer {
+    position: relative;
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    transition: all 180ms ease;
+  }
+  .stack__layer:hover {
+    border-color: var(--signal);
+    background: var(--signal-dim);
+    transform: translateX(4px);
+  }
+  .stack__layer--0 { border-left: 3px solid #78e8bd; }
+  .stack__layer--1 { border-left: 3px solid #6aa9ff; }
+  .stack__layer--2 { border-left: 3px solid #efad72; }
+  .stack__layer--3 { border-left: 3px solid #b592ff; }
+  .stack__index {
+    color: var(--signal);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+  .stack__layer strong {
+    font-family: var(--font-display);
+    font-size: 1rem;
+  }
+  .stack__layer p {
+    margin: 0.2rem 0 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  .stack__count {
+    color: var(--signal);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+  .company-card__recent a {
+    color: var(--signal);
+    text-decoration: none;
+  }
+  @media (max-width: 720px) {
+    .stack__layer {
+      grid-template-columns: 36px 1fr;
+    }
+    .stack__count {
+      grid-column: 2;
+    }
+  }
+</style>

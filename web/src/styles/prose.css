@@ -1,0 +1,103 @@
+/* ============================================================
+ * prose.css — markdown 正文样式（briefing 详情页等）
+ * ============================================================ */
+
+.prose {
+  max-width: var(--reading);
+  margin-inline: auto;
+  color: #dce8e1;
+  font-family: var(--font-editorial);
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  line-height: 2;
+}
+
+.prose :is(h1, h2, h3, h4) {
+  margin-top: 2.4em;
+  color: var(--ink);
+  font-family: var(--font-display);
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+}
+
+.prose h1 {
+  font-size: 2rem;
+}
+
+.prose h2 {
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 1.55rem;
+}
+
+.prose h3 {
+  font-size: 1.2rem;
+}
+
+.prose a {
+  color: var(--signal);
+}
+
+.prose blockquote {
+  margin: 2rem 0;
+  padding: 1rem 1.3rem;
+  border-left: 2px solid var(--signal);
+  color: var(--muted);
+  background: var(--signal-dim);
+}
+
+.prose img {
+  margin-block: 1.5rem;
+  border: 1px solid var(--line);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+
+.prose th,
+.prose td {
+  padding: 0.7rem;
+  border: 1px solid var(--line);
+  text-align: left;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.4rem;
+}
+
+.prose li {
+  margin: 0.35rem 0;
+}
+
+.prose code {
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+.prose pre {
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #050c0a;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.prose hr {
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}

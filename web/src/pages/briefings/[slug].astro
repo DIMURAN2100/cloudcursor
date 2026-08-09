@@ -2,6 +2,7 @@
 import { u } from '../../lib/urls';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadBriefings } from '../../lib/briefings';
+import { themes } from '../../lib/taxonomy';
 
 export function getStaticPaths() {
   return loadBriefings().map((b) => ({
@@ -11,34 +12,213 @@ export function getStaticPaths() {
 }
 
 const { briefing } = Astro.props;
+const all = loadBriefings();
+const idx = all.findIndex((b) => b.slug === briefing.slug);
+const prev = idx < all.length - 1 ? all[idx + 1] : undefined;
+const next = idx > 0 ? all[idx - 1] : undefined;
+
+// 按 theme 聚合本期要点
+const byTheme = themes.map((t) => ({
+  theme: t,
+  items: briefing.highlights.filter((h) => h.themeSlug === t.slug),
+})).filter((g) => g.items.length > 0);
 ---
 
 <BaseLayout title={briefing.date} description={briefing.lede} editorial>
-  <article class="page-hero">
-    <div class="container">
-      <div class="meta-row">
-        <span>{briefing.date}</span>
-        <a href={u("briefings/")}>返回简报台</a>
+  <article>
+    <section class="page-hero">
+      <div class="container">
+        <div class="meta-row">
+          <span>{briefing.date}</span>
+          <span>{briefing.highlights.length} 条要点</span>
+          <a href={u("briefings/")}>返回简报台</a>
+        </div>
+        <h1>{briefing.title}</h1>
+        <p>{briefing.lede}</p>
       </div>
-      <h1>{briefing.title}</h1>
-      <p>{briefing.lede}</p>
-    </div>
-  </article>
+    </section>
 
-  <section class="section" style="padding-top:0">
-    <div class="container">
-      <div class="panel" style="margin-bottom:2rem">
-        <h3>学习入口</h3>
-        <p>
-          先看要点类型，再进入主题学堂或安全工程师路径，避免停在「读完即走」。
-        </p>
-        <p style="margin-top:0.75rem">
-          <a href={u("themes/")}>主题学堂</a>
-          {' · '}
-          <a href={u("path/")}>学习路径</a>
-        </p>
+    <section class="section pt-0">
+      <div class="container">
+        <nav class="briefing-toc" aria-label="本期主题导航">
+          {
+            byTheme.map((g) => (
+              <a href={`#theme-${g.theme.slug}`}>
+                <span class="tag" data-theme={g.theme.slug}>{g.theme.name}</span>
+                <span class="briefing-toc__count">{g.items.length}</span>
+              </a>
+            ))
+          }
+        </nav>
+
+        {
+          byTheme.map((g) => (
+            <section id={`theme-${g.theme.slug}`} class="briefing-group">
+              <header class="briefing-group__head">
+                <span class="briefing-group__index" data-theme={g.theme.slug}></span>
+                <div>
+                  <p class="section__eyebrow" style={`color:var(--accent-${g.theme.slug === 'infra-cve' ? 'infra' : g.theme.slug})`}>
+                    {g.theme.focus}
+                  </p>
+                  <h2 class="section__title" style="font-size:1.6rem">{g.theme.name}</h2>
+                </div>
+              </header>
+              <ol class="highlight-list">
+                {g.items.map((h) => (
+                  <li>
+                    <div class="highlight-list__meta">
+                      <span class="tag" data-theme={h.themeSlug}>{h.type}</span>
+                      <a href={u(`themes/${h.themeSlug}/#${h.dimensionSlug}`)}>
+                        维度 →
+                      </a>
+                    </div>
+                    <h3>{h.title}</h3>
+                    <p>{h.summary}</p>
+                    {
+                      h.sources.length > 0 && (
+                        <p class="source-row">
+                          <span class="source-row__label">原文</span>
+                          {h.sources.map((s, i) => (
+                            <>
+                              {i > 0 && <span class="source-row__sep">·</span>}
+                              <a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
+                            </>
+                          ))}
+                        </p>
+                      )
+                    }
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ))
+        }
+
+        <div class="briefing-body">
+          <details>
+            <summary>阅读完整正文（含深度透视）</summary>
+            <div class="prose" set:html={briefing.bodyHtml} />
+          </details>
+        </div>
+
+        <nav class="briefing-nav" aria-label="日报翻页">
+          {
+            prev ? (
+              <a class="briefing-nav__item" href={u(`briefings/${prev.slug}/`)}>
+                <span>← 上一期</span>
+                <strong>{prev.date}</strong>
+              </a>
+            ) : <span />
+          }
+          {
+            next ? (
+              <a class="briefing-nav__item briefing-nav__item--next" href={u(`briefings/${next.slug}/`)}>
+                <span>下一期 →</span>
+                <strong>{next.date}</strong>
+              </a>
+            ) : <span />
+          }
+        </nav>
       </div>
-      <div class="prose" set:html={briefing.bodyHtml} />
-    </div>
-  </section>
+    </section>
+  </article>
 </BaseLayout>
+
+<style>
+  .briefing-toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .briefing-toc a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.5rem 0.3rem 0.35rem;
+    border: 1px solid var(--line);
+    text-decoration: none;
+    transition: border-color 180ms ease;
+  }
+  .briefing-toc a:hover {
+    border-color: var(--signal);
+  }
+  .briefing-toc__count {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+  .briefing-group {
+    margin-bottom: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line-strong);
+  }
+  .briefing-group__head {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  .briefing-group__index {
+    width: 4px;
+    align-self: stretch;
+    background: var(--signal);
+    border-radius: 2px;
+  }
+  .briefing-group__index[data-theme='ai-self']    { background: var(--accent-ai-self); }
+  .briefing-group__index[data-theme='ai-defense'] { background: var(--accent-ai-defense); }
+  .briefing-group__index[data-theme='infra-cve']  { background: var(--accent-infra); }
+  .briefing-group__index[data-theme='governance'] { background: var(--accent-gov); }
+  .briefing-body {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line-strong);
+  }
+  .briefing-body summary {
+    cursor: pointer;
+    color: var(--signal);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .briefing-body .prose {
+    margin-top: 1.5rem;
+  }
+  .briefing-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .briefing-nav__item {
+    display: grid;
+    gap: 0.3rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--line);
+    text-decoration: none;
+    transition: border-color 180ms ease, background 180ms ease;
+  }
+  .briefing-nav__item:hover {
+    border-color: var(--signal);
+    background: var(--signal-dim);
+  }
+  .briefing-nav__item span {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+  .briefing-nav__item strong {
+    font-family: var(--font-editorial);
+    font-size: 1rem;
+  }
+  .briefing-nav__item--next {
+    text-align: right;
+  }
+  @media (max-width: 640px) {
+    .briefing-nav { grid-template-columns: 1fr; }
+    .briefing-nav__item--next { text-align: left; }
+  }
+</style>

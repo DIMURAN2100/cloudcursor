@@ -1,0 +1,189 @@
+---
+import { u } from '../../lib/urls';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadBriefings } from '../../lib/briefings';
+
+const briefings = loadBriefings();
+
+// 构建搜索索引：每期每条 highlight 一条记录
+type SearchDoc = {
+  id: string;
+  date: string;
+  title: string;
+  summary: string;
+  type: string;
+  theme: string;
+  href: string;
+  sources: { label: string; href: string }[];
+};
+
+const docs: SearchDoc[] = [];
+for (const b of briefings) {
+  for (const h of b.highlights) {
+    docs.push({
+      id: `${b.slug}#${h.index}`,
+      date: b.date,
+      title: h.title,
+      summary: h.summary,
+      type: h.type,
+      theme: h.themeSlug,
+      href: u(`briefings/${b.slug}/`),
+      sources: h.sources,
+    });
+  }
+}
+---
+
+<BaseLayout title="搜索" description="在全部简报要点中检索：标题、摘要、类型。">
+  <section class="page-hero page-hero--compact">
+    <div class="container">
+      <h1>搜索</h1>
+      <p>在 {docs.length} 条简报要点中检索。纯前端，不依赖第三方服务。</p>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container">
+      <div class="search-bar">
+        <input
+          id="search-input"
+          type="search"
+          placeholder="输入关键词，例如：提示注入 / MCP / CVE / Agentic SOC"
+          autocomplete="off"
+          autofocus
+        />
+        <select id="search-theme" aria-label="按主题筛选">
+          <option value="">全部主题</option>
+          <option value="ai-self">AI 自身安全</option>
+          <option value="ai-defense">AI 赋能防御</option>
+          <option value="infra-cve">基础设施与供应链</option>
+          <option value="governance">治理与合规</option>
+        </select>
+      </div>
+      <div class="search-meta">
+        <span id="search-count">输入关键词开始检索</span>
+      </div>
+      <ol id="search-results" class="highlight-list"></ol>
+      <p id="search-empty" class="section__desc" hidden>没有匹配项，换个关键词试试。</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  type Doc = {
+    id: string;
+    date: string;
+    title: string;
+    summary: string;
+    type: string;
+    theme: string;
+    href: string;
+  };
+
+  const docs: Doc[] = await fetch(
+    (import.meta.env.BASE_URL || '/') + 'search-index.json',
+  ).then((r) => r.json());
+
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const themeSel = document.getElementById('search-theme') as HTMLSelectElement;
+  const list = document.getElementById('search-results') as HTMLOListElement;
+  const count = document.getElementById('search-count') as HTMLSpanElement;
+  const empty = document.getElementById('search-empty') as HTMLParagraphElement;
+
+  const themeLabel: Record<string, string> = {
+    'ai-self': 'AI 自身安全',
+    'ai-defense': 'AI 赋能防御',
+    'infra-cve': '基础设施与供应链',
+    governance: '治理与合规',
+  };
+
+  function escapeHtml(s: string) {
+    return s.replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]!));
+  }
+
+  function render(items: Doc[]) {
+    if (!items.length) {
+      list.innerHTML = '';
+      empty.hidden = false;
+      count.textContent = '0 条匹配';
+      return;
+    }
+    empty.hidden = true;
+    count.textContent = `${items.length} 条匹配`;
+    list.innerHTML = items
+      .slice(0, 60)
+      .map(
+        (d) => `
+        <li>
+          <div class="highlight-list__meta">
+            <span class="tag" data-theme="${d.theme}">${escapeHtml(d.type)}</span>
+            <a href="${d.href}">${d.date}</a>
+            <span style="color:var(--muted)">${themeLabel[d.theme] || ''}</span>
+          </div>
+          <h3><a href="${d.href}">${escapeHtml(d.title)}</a></h3>
+          <p>${escapeHtml(d.summary)}</p>
+        </li>`,
+      )
+      .join('');
+    if (items.length > 60) {
+      count.textContent += `（仅显示前 60 条，请用更精确的关键词）`;
+    }
+  }
+
+  function search() {
+    const q = input.value.trim().toLowerCase();
+    const theme = themeSel.value;
+    if (!q && !theme) {
+      list.innerHTML = '';
+      count.textContent = '输入关键词开始检索';
+      empty.hidden = true;
+      return;
+    }
+    const terms = q.split(/\s+/).filter(Boolean);
+    const matched = docs.filter((d) => {
+      if (theme && d.theme !== theme) return false;
+      if (!terms.length) return true;
+      const hay = `${d.title} ${d.summary} ${d.type}`.toLowerCase();
+      return terms.every((t) => hay.includes(t));
+    });
+    render(matched);
+  }
+
+  input.addEventListener('input', search);
+  themeSel.addEventListener('change', search);
+</script>
+
+<style>
+  .search-bar {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .search-bar input,
+  .search-bar select {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--line-strong);
+    background: var(--bg-2);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 160ms ease;
+  }
+  .search-bar input:focus,
+  .search-bar select:focus {
+    border-color: var(--signal);
+  }
+  .search-meta {
+    margin-bottom: 1rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+  @media (max-width: 640px) {
+    .search-bar { grid-template-columns: 1fr; }
+  }
+</style>

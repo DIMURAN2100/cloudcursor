@@ -6,16 +6,23 @@ export const brand = {
     '面向企业安全岗与管理层的全球 AI 安全学习站：每日简报沉淀为知识体系、治理地图、产业图谱与学习路径。',
 };
 
-/** href 不含前导 /，由布局用 BASE_URL 拼接，兼容 GitHub Pages 子路径 */
+/**
+ * 导航分两组：主线（每日必读）+ 参考（结构化知识）。
+ * href 不含前导 /，由布局用 BASE_URL 拼接。
+ */
 export const nav = [
-  { href: 'briefings/', label: '简报台' },
-  { href: 'themes/', label: '知识体系' },
-  { href: 'governance/', label: '全球治理' },
-  { href: 'landscape/', label: '产业图谱' },
-  { href: 'glossary/', label: '术语墙' },
-  { href: 'path/', label: '学习路径' },
-  { href: 'about/', label: '方法' },
-];
+  { href: 'briefings/', label: '简报台', group: 'main' },
+  { href: 'themes/', label: '知识体系', group: 'main' },
+  { href: 'topics/', label: '专题', group: 'main' },
+  { href: 'governance/', label: '全球治理', group: 'ref' },
+  { href: 'landscape/', label: '产业图谱', group: 'ref' },
+  { href: 'glossary/', label: '术语墙', group: 'ref' },
+  { href: 'path/', label: '学习路径', group: 'ref' },
+  { href: 'search/', label: '搜索', group: 'ref' },
+  { href: 'about/', label: '方法', group: 'ref' },
+] as const;
+
+export type NavItem = (typeof nav)[number];
 
 export const engineerPath = {
   title: '安全工程师路径',

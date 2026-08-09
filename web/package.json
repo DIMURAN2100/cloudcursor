@@ -9,10 +9,16 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "tsx scripts/check-content.ts",
+    "prebuild": "tsx scripts/check-content.ts"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.13",
     "astro": "^7.1.6",
     "marked": "^18.0.9"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.11"
   }
 }
