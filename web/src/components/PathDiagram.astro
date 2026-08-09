@@ -1,0 +1,45 @@
+---
+import { engineerPath } from '../lib/site';
+---
+
+<figure class="diagram" data-diagram aria-label="安全工程师学习路径">
+  <svg viewBox="0 0 680 180" role="img">
+    <title>安全工程师学习路径</title>
+    {
+      engineerPath.steps.slice(0, -1).map((_, i) => (
+        <line
+          class="diagram-edge"
+          data-edge={`${engineerPath.steps[i].id},${engineerPath.steps[i + 1].id}`}
+          x1={70 + i * 130}
+          y1="70"
+          x2={120 + i * 130}
+          y2="70"
+        />
+      ))
+    }
+    {
+      engineerPath.steps.map((step, i) => (
+        <g data-node={step.id}>
+          <rect
+            class="diagram-node"
+            x={20 + i * 130}
+            y="40"
+            width="100"
+            height="60"
+            rx="4"
+          ></rect>
+          <text class="diagram-label" x={70 + i * 130} y="68" text-anchor="middle">
+            {String(i + 1).padStart(2, '0')}
+          </text>
+          <text class="diagram-label" x={70 + i * 130} y="86" text-anchor="middle">
+            {step.title.slice(0, 4)}
+          </text>
+        </g>
+      ))
+    }
+  </svg>
+  <figcaption class="panel">
+    <h3>安全工程师路径图</h3>
+    <p>五步从威胁面到汇报，每一步挂接简报主题与行动项。</p>
+  </figcaption>
+</figure>

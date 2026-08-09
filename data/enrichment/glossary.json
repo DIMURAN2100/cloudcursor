@@ -1,0 +1,89 @@
+{
+  "updatedAt": "2026-08-06",
+  "terms": [
+    {
+      "term": "提示注入",
+      "en": "Prompt Injection",
+      "definition": "攻击者把恶意指令混入模型处理的内容中，劫持模型行为。OWASP LLM Top 10 连续三年将其列为首位风险。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
+    },
+    {
+      "term": "间接提示注入",
+      "en": "Indirect Prompt Injection",
+      "definition": "恶意指令藏在模型读取的外部内容（网页、邮件、文档、联系人卡片）里，无需用户交互即可触发；云端与本地部署均无法靠部署位置免疫。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
+    },
+    {
+      "term": "越狱",
+      "en": "Jailbreak",
+      "definition": "绕过模型安全护栏、诱导其输出被禁止内容的技术统称；多会话任务拆分是 2026 年被验证的新变体。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
+    },
+    {
+      "term": "过度代理",
+      "en": "Excessive Agency",
+      "definition": "智能体被赋予超出必要的工具、权限或自主性，使注入等上游攻击可以转化为真实业务破坏。OWASP 2026 榜单升至第三位。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "MCP",
+      "en": "Model Context Protocol",
+      "definition": "让模型连接外部数据源与工具的协议。被攻陷的 MCP 服务器可拦截、篡改路由流量，或成为向开发流水线投毒的跳板，应纳入与 CI/CD 同级的权限审计。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "Agentic SOC",
+      "en": "Agentic SOC",
+      "definition": "用自主调查代理完成告警关联、严重性判定与响应动作生成的安全运营模式；分析师角色转向 AI 监督与威胁叙事解读。",
+      "theme": "ai-defense",
+      "dimension": "agentic-soc"
+    },
+    {
+      "term": "RAG",
+      "en": "Retrieval-Augmented Generation",
+      "definition": "检索增强生成。外部文档进入模型上下文的通道，也因此成为间接注入与「记忆中毒」的高发攻击面。",
+      "theme": "ai-self",
+      "dimension": "data-model"
+    },
+    {
+      "term": "模型投毒",
+      "en": "Model Poisoning",
+      "definition": "在训练数据、微调样本或模型工件中植入后门或偏移行为；模型分发与部署链路（如托管平台自动加载工件）是现实入口。",
+      "theme": "infra-cve",
+      "dimension": "model-supply"
+    },
+    {
+      "term": "KEV",
+      "en": "Known Exploited Vulnerabilities",
+      "definition": "CISA 已知被利用漏洞目录。AI 基础设施 CVE（如 LiteLLM 命令注入）进入 KEV 后，美国联邦机构必须限期修复，是企业排补丁优先级的强信号。",
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    {
+      "term": "SBOM",
+      "en": "Software Bill of Materials",
+      "definition": "软件物料清单。Agent 时代建议扩展覆盖 MCP 服务器、插件与提示模板等自然语言组件，用于供应链审计与事故溯源。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    {
+      "term": "MAESTRO",
+      "en": "CSA MAESTRO",
+      "definition": "云安全联盟提出的智能体系统威胁建模框架，按基础设施、模型/API 等分层拆解 Agent 风险，适合架构评审时逐层对照。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    },
+    {
+      "term": "AI 红队",
+      "en": "AI Red Teaming",
+      "definition": "以对抗方式测试模型与 Agent 的安全性：从提示注入演练到「生成并验证可运行 PoC」的自动化产品形态；CREST 已推出配套服务认证。",
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    }
+  ]
+}

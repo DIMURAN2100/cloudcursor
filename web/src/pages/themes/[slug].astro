@@ -1,0 +1,75 @@
+---
+import { u } from '../../lib/urls';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HighlightItem from '../../components/HighlightItem.astro';
+import { getTheme, themes } from '../../lib/taxonomy';
+import { collectDimensionHighlights } from '../../lib/briefings';
+
+export function getStaticPaths() {
+  return themes.map((theme) => ({ params: { slug: theme.slug } }));
+}
+
+const theme = getTheme(Astro.params.slug!);
+if (!theme) {
+  throw new Error('Theme not found');
+}
+---
+
+<BaseLayout title={theme.name} description={theme.summary}>
+  <section class="page-hero">
+    <div class="container">
+      <div class="meta-row">
+        <a href={u("themes/")}>知识体系</a>
+      </div>
+      <h1>{theme.name}</h1>
+      <p>{theme.summary}</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="panel" style="margin-bottom:2.5rem">
+        <h3>学习焦点</h3>
+        <p>{theme.focus}</p>
+      </div>
+
+      <nav class="dimension-toc" aria-label="研究维度">
+        {theme.dimensions.map((dim) => <a href={`#${dim.slug}`}>{dim.name}</a>)}
+      </nav>
+
+      <div style="display:grid;gap:3rem;margin-top:2.5rem">
+        {
+          theme.dimensions.map((dim) => {
+            const items = collectDimensionHighlights(theme.slug, dim.slug, 8);
+            return (
+              <div id={dim.slug}>
+                <h2 class="section__title" style="font-size:1.5rem">
+                  {dim.name}
+                </h2>
+                <p class="section__desc" style="margin-bottom:1.25rem">
+                  {dim.question}
+                </p>
+                {items.length ? (
+                  <ol class="highlight-list">
+                    {items.map(({ briefing, highlight }) => (
+                      <HighlightItem
+                        title={highlight.title}
+                        summary={highlight.summary}
+                        type={highlight.type}
+                        date={briefing.date}
+                        dateHref={u(`briefings/${briefing.slug}/`)}
+                        sources={highlight.sources}
+                      />
+                    ))}
+                  </ol>
+                ) : (
+                  <p class="section__desc">该维度暂未匹配到简报要点，将随日更自动补充。</p>
+                )}
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

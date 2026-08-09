@@ -1,0 +1,8 @@
+
+# web
+web/node_modules/
+web/dist/
+web/.astro/
+web/.env
+web/.env.*
+!web/.env.example

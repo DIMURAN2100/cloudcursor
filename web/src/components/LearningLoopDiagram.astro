@@ -1,0 +1,34 @@
+---
+const title = '情报 → 学习 → 落地闭环';
+---
+
+<figure class="diagram" data-diagram aria-label={title}>
+  <svg viewBox="0 0 640 240" role="img">
+    <title>{title}</title>
+    <path class="diagram-edge" data-edge="brief,theme" d="M150 70 H250"></path>
+    <path class="diagram-edge" data-edge="theme,path" d="M370 70 H470"></path>
+    <path class="diagram-edge" data-edge="path,check" d="M530 100 V150"></path>
+    <path class="diagram-edge" data-edge="check,brief" d="M470 180 H150 150 100"></path>
+
+    <g data-node="brief">
+      <rect class="diagram-node" x="40" y="40" width="120" height="60" rx="4"></rect>
+      <text class="diagram-label" x="100" y="75" text-anchor="middle">每日简报</text>
+    </g>
+    <g data-node="theme">
+      <rect class="diagram-node" x="250" y="40" width="120" height="60" rx="4"></rect>
+      <text class="diagram-label" x="310" y="75" text-anchor="middle">主题沉淀</text>
+    </g>
+    <g data-node="path">
+      <rect class="diagram-node" x="470" y="40" width="120" height="60" rx="4"></rect>
+      <text class="diagram-label" x="530" y="75" text-anchor="middle">学习路径</text>
+    </g>
+    <g data-node="check">
+      <rect class="diagram-node" x="430" y="150" width="160" height="60" rx="4"></rect>
+      <text class="diagram-label" x="510" y="185" text-anchor="middle">清单 / 复盘</text>
+    </g>
+  </svg>
+  <figcaption class="panel">
+    <h3>{title}</h3>
+    <p>解释本站如何把新闻原料转成可学习、可执行的安全动作。</p>
+  </figcaption>
+</figure>

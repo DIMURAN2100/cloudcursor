@@ -1,0 +1,22 @@
+{
+  "date": "2026-08-06",
+  "headline": "Agent 安全进入「集中治理」阶段：可观测、红队化与供应链三线并进",
+  "execSummary": [
+    {
+      "title": "企业 AI 代理开始有了「统一控制平面」",
+      "insight": "Darktrace 与 Microsoft Agent 365 集成，把代理生命周期、行为审计与异常检测纳入统一可见性。此前代理跨应用、跨身份运行，传统 EDR/XDR 基本看不见。",
+      "action": "若已试点 Copilot Studio 或第三方 MCP 工具，把「代理可观测方案」列入下季度评估。"
+    },
+    {
+      "title": "OWASP 确认：提示注入连续第三年居首，「过度代理」升至第三",
+      "insight": "第三版 LLM Top 10 的核心结论是「模型指令边界终将被绕过」，防线应放在工具权限、输出通道与资源配额的系统级硬约束上，而非提示词加固。",
+      "action": "把 Agent 权限审计（谁能调什么工具、动什么数据）纳入季度安全议题。"
+    },
+    {
+      "title": "npm 供应链蠕虫波及 AI 开发工具链",
+      "insight": "「Mini Shai-Hulud」劫持高下载量依赖并窃取 CI、云凭证与开发者令牌，利用有效 OIDC provenance 掩护，使用 AI 编码助手的团队暴露面更大。",
+      "action": "本周核查 CI 凭证轮换与依赖锁定策略，确认 ESLint 等间接依赖链是否受影响。"
+    }
+  ],
+  "classifications": {}
+}

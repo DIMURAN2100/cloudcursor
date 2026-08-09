@@ -1,0 +1,47 @@
+---
+import { u } from '../../lib/urls';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { themes } from '../../lib/taxonomy';
+import { countDimensionHighlights, countThemeHighlights } from '../../lib/briefings';
+---
+
+<BaseLayout title="知识体系" description="四大主题、多维研究框架：把日更简报沉淀为可学习的结构。">
+  <section class="page-hero">
+    <div class="container">
+      <h1>知识体系</h1>
+      <p>
+        每个主题按「研究维度」拆分：先知道这个领域有哪些问题，再用简报案例逐个看懂。
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container" style="display:grid;gap:3rem">
+      {
+        themes.map((theme) => (
+          <div>
+            <h2 class="section__title">
+              <a href={u(`themes/${theme.slug}/`)} style="text-decoration:none">
+                {theme.name}
+              </a>
+            </h2>
+            <p class="section__desc" style="margin-bottom:1.25rem">
+              {theme.summary} · 已挂接 {countThemeHighlights(theme.slug)} 条简报要点
+            </p>
+            <div class="dimension-grid">
+              {theme.dimensions.map((dim) => (
+                <a class="dimension-card" href={u(`themes/${theme.slug}/#${dim.slug}`)}>
+                  <h3>{dim.name}</h3>
+                  <p>{dim.question}</p>
+                  <span class="dimension-card__count">
+                    {countDimensionHighlights(theme.slug, dim.slug)} 条情报
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

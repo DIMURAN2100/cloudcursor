@@ -1,0 +1,59 @@
+---
+/**
+ * 统一渲染简报要点：摘要 + 原文来源
+ */
+type Source = { label: string; href: string };
+type Props = {
+  title: string;
+  summary: string;
+  type?: string;
+  date?: string;
+  dateHref?: string;
+  themeHref?: string;
+  themeLabel?: string;
+  sources?: Source[];
+};
+
+const {
+  title,
+  summary,
+  type,
+  date,
+  dateHref,
+  themeHref,
+  themeLabel = '进入维度',
+  sources = [],
+} = Astro.props;
+---
+
+<li>
+  <div class="highlight-list__meta">
+    {type && <span class="tag">{type}</span>}
+    {
+      date &&
+        (dateHref ? (
+          <a href={dateHref}>{date}</a>
+        ) : (
+          <span>{date}</span>
+        ))
+    }
+    {themeHref && <a href={themeHref}>{themeLabel}</a>}
+  </div>
+  <h3>{title}</h3>
+  <p>{summary}</p>
+  {
+    sources.length > 0 && (
+      <p class="source-row">
+        <span class="source-row__label">原文</span>
+        {sources.map((s, i) => (
+          <>
+            {i > 0 && <span class="source-row__sep">·</span>}
+            <a href={s.href} target="_blank" rel="noopener noreferrer">
+              {s.label}
+            </a>
+          </>
+        ))}
+      </p>
+    )
+  }
+</li>

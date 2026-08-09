@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ThreatSurfaceDiagram from '../../components/ThreatSurfaceDiagram.astro';
+import LearningLoopDiagram from '../../components/LearningLoopDiagram.astro';
+import PathDiagram from '../../components/PathDiagram.astro';
+---
+
+<BaseLayout title="架构图" description="威胁面、学习闭环与角色路径三张认知图。">
+  <section class="page-hero">
+    <div class="container">
+      <h1>架构图</h1>
+      <p>每张图只解决一个认知问题：看清结构、理解机制、知道从哪学起。</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container" style="display:grid;gap:2.5rem">
+      <div>
+        <p class="section__eyebrow">01 · 首页 / 主题总览</p>
+        <ThreatSurfaceDiagram />
+      </div>
+      <div>
+        <p class="section__eyebrow">02 · 方法页 / 本站机制</p>
+        <LearningLoopDiagram />
+      </div>
+      <div>
+        <p class="section__eyebrow">03 · 学习路径页</p>
+        <PathDiagram />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

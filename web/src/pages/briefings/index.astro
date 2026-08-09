@@ -1,0 +1,52 @@
+---
+import { u } from '../../lib/urls';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HighlightItem from '../../components/HighlightItem.astro';
+import BriefingArchive from '../../components/BriefingArchive.astro';
+import { paginateBriefingDays } from '../../lib/archive';
+import { loadBriefings } from '../../lib/briefings';
+
+const briefings = loadBriefings();
+const latest = briefings[0];
+const archive = paginateBriefingDays(briefings, 1);
+---
+
+<BaseLayout title="今日简报台" description="全球 AI 安全日报归档与今日要点入口。">
+  <section class="page-hero">
+    <div class="container">
+      <h1>今日简报台</h1>
+      <p>日更要点服务安全运营节奏；完整正文可深读，历史日报永久归档。每条均可溯源原文。</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      {
+        latest ? (
+          <>
+            <div class="meta-row">
+              <span>最新：{latest.date}</span>
+              <span>{latest.highlights.length} 条今日要点</span>
+              <a href={u(`briefings/${latest.slug}/`)}>打开完整日报</a>
+            </div>
+            <ol class="highlight-list">
+              {latest.highlights.map((h) => (
+                <HighlightItem
+                  title={h.title}
+                  summary={h.summary}
+                  type={h.type}
+                  themeHref={u(`themes/${h.themeSlug}/#${h.dimensionSlug}`)}
+                  sources={h.sources}
+                />
+              ))}
+            </ol>
+          </>
+        ) : (
+          <p>暂无简报数据。</p>
+        )
+      }
+
+      <BriefingArchive {...archive} />
+    </div>
+  </section>
+</BaseLayout>

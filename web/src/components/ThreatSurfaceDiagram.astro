@@ -1,0 +1,74 @@
+---
+const title = 'AI 系统威胁面链路';
+---
+
+<figure class="diagram threat-diagram" aria-labelledby="threat-diagram-title">
+  <div class="threat-diagram__body">
+    <div class="threat-chain" aria-label="AI 系统执行链路">
+      <article class="threat-stage">
+        <span class="threat-stage__number">01</span>
+        <div>
+          <strong>输入与知识</strong>
+          <p>用户提示 · 文档 · RAG · 训练数据</p>
+        </div>
+        <span class="threat-stage__risk">注入 / 投毒</span>
+      </article>
+      <span class="threat-arrow" aria-hidden="true">↓</span>
+      <article class="threat-stage">
+        <span class="threat-stage__number">02</span>
+        <div>
+          <strong>模型与推理</strong>
+          <p>基础模型 · 微调模型 · 上下文窗口</p>
+        </div>
+        <span class="threat-stage__risk">越狱 / 泄露</span>
+      </article>
+      <span class="threat-arrow" aria-hidden="true">↓</span>
+      <article class="threat-stage">
+        <span class="threat-stage__number">03</span>
+        <div>
+          <strong>Agent 编排</strong>
+          <p>目标规划 · 记忆 · 身份与权限</p>
+        </div>
+        <span class="threat-stage__risk">目标劫持</span>
+      </article>
+      <span class="threat-arrow" aria-hidden="true">↓</span>
+      <article class="threat-stage">
+        <span class="threat-stage__number">04</span>
+        <div>
+          <strong>工具与执行</strong>
+          <p>MCP · API · 代码执行 · 外部系统</p>
+        </div>
+        <span class="threat-stage__risk">权限滥用</span>
+      </article>
+      <span class="threat-arrow" aria-hidden="true">↓</span>
+      <article class="threat-stage">
+        <span class="threat-stage__number">05</span>
+        <div>
+          <strong>基础设施</strong>
+          <p>网关 · 推理服务 · 云与供应链</p>
+        </div>
+        <span class="threat-stage__risk">CVE / 供应链</span>
+      </article>
+    </div>
+
+    <aside class="control-plane">
+      <span class="control-plane__label">CROSS-LAYER CONTROL</span>
+      <strong>治理控制面</strong>
+      <p>贯穿执行链路，而不是独立的一层。</p>
+      <ul>
+        <li>资产与模型清单</li>
+        <li>身份与最小权限</li>
+        <li>输入输出审计</li>
+        <li>持续评测与红队</li>
+        <li>事件响应与合规</li>
+      </ul>
+    </aside>
+  </div>
+  <figcaption class="threat-diagram__caption">
+    <div>
+      <span>READING LOGIC</span>
+      <h3 id="threat-diagram-title">{title}</h3>
+    </div>
+    <p>纵向是一次 AI 任务从“接收信息”到“产生真实动作”的执行链；右侧治理控制面需要覆盖每一个阶段。</p>
+  </figcaption>
+</figure>
