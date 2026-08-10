@@ -19,71 +19,85 @@ import { regionIntel, standardIntel, countMatches } from '../../lib/briefings';
     </div>
   </section>
 
-  <section class="section" style="padding-top:0">
+  <section class="section pt-0">
     <div class="container">
-      <h2 class="section__title">政策与法规 · 按地区</h2>
+      <nav class="gov-tabs" aria-label="地区快速导航">
+        {regions.map((region) => (
+          <a href={`#${region.slug}`} class="gov-tabs__item">
+            <span class="gov-tabs__flag">{region.flag}</span>
+            <span class="gov-tabs__name">{region.name}</span>
+            <span class="gov-tabs__count">{countMatches(region.match)}</span>
+          </a>
+        ))}
+      </nav>
+
+      <h2 class="section__title" style="font-size:1.8rem;margin-top:3rem">政策与法规 · 按地区</h2>
       <p class="section__desc">
         策展的基线信息 + 简报自动匹配的最新情报（数字为累计相关要点数）。
       </p>
-      <div style="display:grid;gap:2.5rem">
+      <div style="display:grid;gap:1.5rem">
         {
-          regions.map((region) => {
+          regions.map((region, idx) => {
             const intel = regionIntel(region.slug, 4);
             const total = countMatches(region.match);
             return (
-              <article class="region-card" id={region.slug}>
-                <header class="region-card__head">
+              <details class="region-card region-card--collapsible" id={region.slug} open={idx === 0}>
+                <summary class="region-card__summary">
                   <span class="region-card__flag">{region.flag}</span>
                   <h3>{region.name}</h3>
                   <span class="region-card__count">{total} 条相关情报</span>
-                </header>
-                <p class="region-card__stance">{region.stance}</p>
-                <table class="instrument-table">
-                  <thead>
-                    <tr>
-                      <th>法规 / 机制</th>
-                      <th>状态</th>
-                      <th>要点</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {region.instruments.map((ins) => (
+                  <span class="region-card__chev" aria-hidden="true">▾</span>
+                </summary>
+                <div class="region-card__body">
+                  <p class="region-card__stance">{region.stance}</p>
+                  <table class="instrument-table">
+                    <thead>
                       <tr>
-                        <td>{ins.name}</td>
-                        <td>{ins.status}</td>
-                        <td>{ins.note}</td>
+                        <th>法规 / 机制</th>
+                        <th>状态</th>
+                        <th>要点</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-                {intel.length > 0 && (
-                  <details class="intel-fold">
-                    <summary>来自简报的最新动态（{intel.length} 条）</summary>
-                    <ul class="highlight-list" style="margin-top:1rem">
-                      {intel.map(({ briefing, highlight }) => (
-                        <HighlightItem
-                          title={highlight.title}
-                          summary={
-                            highlight.summary.length > 160
-                              ? `${highlight.summary.slice(0, 160)}…`
-                              : highlight.summary
-                          }
-                          type={highlight.type}
-                          date={briefing.date}
-                          dateHref={u(`briefings/${briefing.slug}/`)}
-                          sources={highlight.sources}
-                        />
+                    </thead>
+                    <tbody>
+                      {region.instruments.map((ins) => (
+                        <tr>
+                          <td>{ins.name}</td>
+                          <td>{ins.status}</td>
+                          <td>{ins.note}</td>
+                        </tr>
                       ))}
-                    </ul>
-                  </details>
-                )}
-              </article>
+                    </tbody>
+                  </table>
+                  {intel.length > 0 && (
+                    <details class="intel-fold" open={idx === 0}>
+                      <summary>来自简报的最新动态（{intel.length} 条）</summary>
+                      <ul class="highlight-list" style="margin-top:1rem">
+                        {intel.map(({ briefing, highlight }) => (
+                          <HighlightItem
+                            title={highlight.title}
+                            summary={
+                              highlight.summary.length > 160
+                                ? `${highlight.summary.slice(0, 160)}…`
+                                : highlight.summary
+                            }
+                            type={highlight.type}
+                            themeSlug={highlight.themeSlug}
+                            date={briefing.date}
+                            dateHref={u(`briefings/${briefing.slug}/`)}
+                            sources={highlight.sources}
+                          />
+                        ))}
+                      </ul>
+                    </details>
+                  )}
+                </div>
+              </details>
             );
           })
         }
       </div>
 
-      <h2 class="section__title" style="margin-top:4rem">标准与框架</h2>
+      <h2 class="section__title" style="margin-top:4rem;font-size:1.8rem">标准与框架</h2>
       <p class="section__desc">从威胁清单到管理体系：不同框架回答不同层的问题。</p>
       <div class="standard-grid">
         {
@@ -117,3 +131,82 @@ import { regionIntel, standardIntel, countMatches } from '../../lib/briefings';
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .gov-tabs {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.5rem;
+    padding: 0.8rem;
+    border: 1px solid var(--line);
+    background: rgba(7, 17, 14, 0.92);
+    backdrop-filter: blur(10px);
+  }
+  .gov-tabs__item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem 0.7rem;
+    color: var(--muted);
+    text-decoration: none;
+    border: 1px solid transparent;
+    font-size: 0.82rem;
+    transition: all 160ms ease;
+  }
+  .gov-tabs__item:hover {
+    color: var(--ink);
+    border-color: var(--line);
+    background: var(--signal-dim);
+  }
+  .gov-tabs__flag {
+    color: var(--signal);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+  .gov-tabs__count {
+    color: var(--signal);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .region-card--collapsible {
+    padding: 0;
+    overflow: hidden;
+  }
+  .region-card__summary {
+    list-style: none;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 1rem;
+    align-items: center;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+  }
+  .region-card__summary::-webkit-details-marker { display: none; }
+  .region-card__summary h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+  }
+  .region-card__chev {
+    color: var(--muted);
+    transition: transform 200ms ease;
+  }
+  .region-card--collapsible[open] .region-card__chev {
+    transform: rotate(180deg);
+  }
+  .region-card__body {
+    padding: 0 clamp(1rem, 2.5vw, 1.5rem) clamp(1.2rem, 2.5vw, 1.6rem);
+    border-top: 1px solid var(--line);
+  }
+  .region-card__body .region-card__stance {
+    margin-top: 1rem;
+  }
+  .region-card--collapsible[open] .region-card__summary {
+    border-bottom: 1px solid var(--line);
+  }
+</style>

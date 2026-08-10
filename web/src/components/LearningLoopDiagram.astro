@@ -1,34 +1,112 @@
 ---
+/**
+ * 情报 → 学习 → 落地闭环：四象限卡片，替代手绘 SVG。
+ */
 const title = '情报 → 学习 → 落地闭环';
+
+const nodes = [
+  { id: 'brief', num: '01', title: '每日简报', desc: '全球 AI 安全公开动态，按要点结构化为可溯源条目。' },
+  { id: 'theme', num: '02', title: '主题沉淀', desc: '要点自动挂接到四大主题与研究维度，形成知识结构。' },
+  { id: 'path',  num: '03', title: '学习路径', desc: '从威胁面到检查清单，安全工程师五步闭环。' },
+  { id: 'check', num: '04', title: '清单与复盘', desc: '把技术发现转成可追踪控制项，反哺下一轮观察。' },
+];
 ---
 
-<figure class="diagram" data-diagram aria-label={title}>
-  <svg viewBox="0 0 640 240" role="img">
-    <title>{title}</title>
-    <path class="diagram-edge" data-edge="brief,theme" d="M150 70 H250"></path>
-    <path class="diagram-edge" data-edge="theme,path" d="M370 70 H470"></path>
-    <path class="diagram-edge" data-edge="path,check" d="M530 100 V150"></path>
-    <path class="diagram-edge" data-edge="check,brief" d="M470 180 H150 150 100"></path>
-
-    <g data-node="brief">
-      <rect class="diagram-node" x="40" y="40" width="120" height="60" rx="4"></rect>
-      <text class="diagram-label" x="100" y="75" text-anchor="middle">每日简报</text>
-    </g>
-    <g data-node="theme">
-      <rect class="diagram-node" x="250" y="40" width="120" height="60" rx="4"></rect>
-      <text class="diagram-label" x="310" y="75" text-anchor="middle">主题沉淀</text>
-    </g>
-    <g data-node="path">
-      <rect class="diagram-node" x="470" y="40" width="120" height="60" rx="4"></rect>
-      <text class="diagram-label" x="530" y="75" text-anchor="middle">学习路径</text>
-    </g>
-    <g data-node="check">
-      <rect class="diagram-node" x="430" y="150" width="160" height="60" rx="4"></rect>
-      <text class="diagram-label" x="510" y="185" text-anchor="middle">清单 / 复盘</text>
-    </g>
-  </svg>
+<figure class="diagram loop-diagram" aria-label={title}>
+  <div class="loop-diagram__grid">
+    {nodes.map((n) => (
+      <article class="loop-diagram__card">
+        <span class="loop-diagram__num">{n.num}</span>
+        <strong>{n.title}</strong>
+        <p>{n.desc}</p>
+      </article>
+    ))}
+  </div>
   <figcaption class="panel">
     <h3>{title}</h3>
     <p>解释本站如何把新闻原料转成可学习、可执行的安全动作。</p>
   </figcaption>
 </figure>
+
+<style>
+  .loop-diagram {
+    padding: 1.4rem;
+    background: rgba(255,255,255,0.5);
+  }
+  .loop-diagram__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    position: relative;
+  }
+  .loop-diagram__card {
+    position: relative;
+    padding: 1rem 1rem 1rem 2.6rem;
+    border: 1px solid rgba(12, 143, 104, 0.22);
+    background: rgba(255, 255, 255, 0.55);
+  }
+  .loop-diagram__num {
+    position: absolute;
+    left: 0.8rem;
+    top: 0.95rem;
+    color: var(--signal-dark);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+  .loop-diagram__card strong {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--ink-dark);
+  }
+  .loop-diagram__card p {
+    margin: 0.3rem 0 0;
+    color: var(--muted-dark);
+    font-size: 0.75rem;
+  }
+  /* 箭头连接（桌面端） */
+  @media (min-width: 720px) {
+    .loop-diagram__card:nth-child(1)::after {
+      content: '→';
+      position: absolute;
+      right: -0.65rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--signal-dark);
+      font-family: var(--font-mono);
+      z-index: 2;
+    }
+    .loop-diagram__card:nth-child(2)::after {
+      content: '↓';
+      position: absolute;
+      bottom: -0.95rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--signal-dark);
+      font-family: var(--font-mono);
+      z-index: 2;
+    }
+    .loop-diagram__card:nth-child(3)::after {
+      content: '←';
+      position: absolute;
+      left: -0.65rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--signal-dark);
+      font-family: var(--font-mono);
+      z-index: 2;
+    }
+    .loop-diagram__card:nth-child(4)::after {
+      content: '↑';
+      position: absolute;
+      top: -0.95rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--signal-dark);
+      font-family: var(--font-mono);
+      z-index: 2;
+    }
+  }
+  @media (max-width: 719px) {
+    .loop-diagram__grid { grid-template-columns: 1fr; }
+  }
+</style>

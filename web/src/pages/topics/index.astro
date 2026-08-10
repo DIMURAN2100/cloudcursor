@@ -1,0 +1,104 @@
+---
+import { u } from '../../lib/urls';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { topics } from '../../lib/topics';
+import { matchHighlights } from '../../lib/briefings';
+---
+
+<BaseLayout
+  title="专题"
+  description="跨主题的 AI 安全专题：提示注入、MCP/Agent、供应链、Agentic SOC、全球治理。"
+>
+  <section class="page-hero">
+    <div class="container">
+      <h1>专题</h1>
+      <p>
+        每日简报是流水，专题是结构。这里把跨主题、跨地区、跨时间的相关情报、术语与标准聚合成一组可深读的专题，随日更自动补充最新案例。
+      </p>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container topic-grid">
+      {
+        topics.map((topic, i) => {
+          const count = matchHighlights(topic.pattern, 100).length;
+          return (
+            <a class="topic-card" href={u(`topics/${topic.slug}/`)} data-index={String(i + 1).padStart(2, '0')}>
+              <span class="topic-card__num">{String(i + 1).padStart(2, '0')}</span>
+              <h2>{topic.title}</h2>
+              <p>{topic.lede}</p>
+              <span class="topic-card__count">{count} 条相关情报</span>
+              <span class="topic-card__arrow">↗</span>
+            </a>
+          );
+        })
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+  }
+  .topic-card {
+    position: relative;
+    display: grid;
+    gap: 0.6rem;
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+    background: linear-gradient(150deg, rgba(18,40,32,.55), transparent);
+    text-decoration: none;
+    transition: all 180ms ease;
+    min-height: 280px;
+  }
+  .topic-card::before {
+    content: attr(data-index);
+    position: absolute;
+    right: 1.2rem;
+    top: 1rem;
+    color: rgba(120,232,189,0.08);
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .topic-card:hover {
+    border-color: var(--signal);
+    background: var(--signal-dim);
+    transform: translateY(-3px);
+  }
+  .topic-card__num {
+    color: var(--signal);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .topic-card h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+  }
+  .topic-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .topic-card__count {
+    margin-top: auto;
+    color: var(--signal);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .topic-card__arrow {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.4rem;
+    color: var(--signal);
+    font-size: 1.1rem;
+  }
+</style>

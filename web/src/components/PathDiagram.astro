@@ -1,45 +1,104 @@
 ---
 import { engineerPath } from '../lib/site';
+
+/**
+ * 安全工程师学习路径：纵向步骤链，风格与 ThreatSurface 一致（HTML/CSS，非 SVG）。
+ */
 ---
 
-<figure class="diagram" data-diagram aria-label="安全工程师学习路径">
-  <svg viewBox="0 0 680 180" role="img">
-    <title>安全工程师学习路径</title>
-    {
-      engineerPath.steps.slice(0, -1).map((_, i) => (
-        <line
-          class="diagram-edge"
-          data-edge={`${engineerPath.steps[i].id},${engineerPath.steps[i + 1].id}`}
-          x1={70 + i * 130}
-          y1="70"
-          x2={120 + i * 130}
-          y2="70"
-        />
-      ))
-    }
+<figure class="diagram path-diagram" aria-label="安全工程师学习路径">
+  <ol class="path-diagram__chain">
     {
       engineerPath.steps.map((step, i) => (
-        <g data-node={step.id}>
-          <rect
-            class="diagram-node"
-            x={20 + i * 130}
-            y="40"
-            width="100"
-            height="60"
-            rx="4"
-          ></rect>
-          <text class="diagram-label" x={70 + i * 130} y="68" text-anchor="middle">
-            {String(i + 1).padStart(2, '0')}
-          </text>
-          <text class="diagram-label" x={70 + i * 130} y="86" text-anchor="middle">
-            {step.title.slice(0, 4)}
-          </text>
-        </g>
+        <li class="path-diagram__step">
+          <div class="path-diagram__head">
+            <span class="path-diagram__num">{String(i + 1).padStart(2, '0')}</span>
+            <strong>{step.title}</strong>
+          </div>
+          <p>{step.outcome}</p>
+          <span class="path-diagram__action">{step.action}</span>
+          {i < engineerPath.steps.length - 1 && <span class="path-diagram__arrow" aria-hidden="true">↓</span>}
+        </li>
       ))
     }
-  </svg>
+  </ol>
   <figcaption class="panel">
     <h3>安全工程师路径图</h3>
     <p>五步从威胁面到汇报，每一步挂接简报主题与行动项。</p>
   </figcaption>
 </figure>
+
+<style>
+  .path-diagram {
+    padding: 1.4rem;
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .path-diagram__chain {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    counter-reset: step;
+  }
+  .path-diagram__step {
+    position: relative;
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(12, 143, 104, 0.22);
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .path-diagram__step + .path-diagram__step {
+    border-top: 0;
+  }
+  .path-diagram__head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .path-diagram__num {
+    color: var(--signal-dark);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    min-width: 28px;
+  }
+  .path-diagram__head strong {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--ink-dark);
+  }
+  .path-diagram__step p {
+    margin: 0;
+    padding-left: calc(28px + 0.75rem);
+    color: var(--muted-dark);
+    font-size: 0.78rem;
+  }
+  .path-diagram__action {
+    margin-top: 0.35rem;
+    margin-left: calc(28px + 0.75rem);
+    padding-left: 0.65rem;
+    border-left: 2px solid var(--signal-dark);
+    color: #0a5d44;
+    font-size: 0.72rem;
+  }
+  .path-diagram__arrow {
+    position: absolute;
+    left: 50%;
+    bottom: -14px;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--signal-dark);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    z-index: 2;
+  }
+  .path-diagram__step:last-child .path-diagram__arrow {
+    display: none;
+  }
+</style>

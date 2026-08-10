@@ -16,7 +16,7 @@ import { loadDailyEnrichment } from '../lib/enrichment';
 
 const all = loadBriefings();
 const latest = getLatestBriefing(all);
-const recent = briefingsInLastDays(7, all);
+const recent = briefingsInLastDays(14, all);
 const highlights = latest?.highlights.slice(0, 5) ?? [];
 const totalHighlights = all.reduce((sum, briefing) => sum + briefing.highlights.length, 0);
 
@@ -40,6 +40,9 @@ const topRegions = regions
   .map((r) => ({ region: r, count: countMatches(r.match) }))
   .sort((a, b) => b.count - a.count)
   .slice(0, 4);
+
+// ticker: 取最新一期的全部 highlights 标题做滚动
+const tickerItems = latest?.highlights ?? [];
 ---
 
 <BaseLayout>
@@ -79,24 +82,26 @@ const topRegions = regions
           <time>{latest?.date || '—'}</time>
         </div>
       </aside>
-      <div class="hero__index" aria-hidden="true">01</div>
     </div>
     <a class="hero__scroll" href="#today" aria-label="向下查看今日主线">
       <span></span>向下阅读
     </a>
   </section>
 
-  <section class="ticker" aria-label="站点内容范围">
-    <div class="container ticker__inner">
-      <span class="ticker__label">TRACKING</span>
-      <div class="ticker__items">
-        <span>模型与智能体安全</span>
-        <span>AI 防御与 SOC</span>
-        <span>基础设施与供应链</span>
-        <span>全球政策与标准</span>
-      </div>
-    </div>
-  </section>
+  {
+    tickerItems.length > 0 && (
+      <section class="ticker" aria-label="今日热点">
+        <div class="container ticker__inner">
+          <span class="ticker__label">TODAY</span>
+          <div class="ticker__track">
+            {[...tickerItems, ...tickerItems].map((h) => (
+              <a href={u(`briefings/${latest!.slug}/`)}>{h.title}</a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   <section class="section section--today" id="today">
     <div class="container">
@@ -126,6 +131,7 @@ const topRegions = regions
                       title={h.title}
                       summary={h.summary}
                       type={h.type}
+                      themeSlug={h.themeSlug}
                       themeHref={u(`themes/${h.themeSlug}/#${h.dimensionSlug}`)}
                       sources={h.sources}
                     />
@@ -187,7 +193,7 @@ const topRegions = regions
       <div class="theme-grid">
         {
           themes.map((theme, index) => (
-            <a class="theme-link" href={u(`themes/${theme.slug}/`)}>
+            <a class="theme-link" href={u(`themes/${theme.slug}/`)} data-theme={theme.slug}>
               <div class="theme-link__top"><span>{String(index + 1).padStart(2, '0')}</span><span>{countThemeHighlights(theme.slug)} 条情报</span></div>
               <h3>{theme.name}<span>↗</span></h3>
               <p>{theme.summary}</p>
@@ -233,16 +239,32 @@ const topRegions = regions
     </div>
   </section>
 
-  <section class="section section--timeline">
+  <section class="section section--timeline" id="timeline">
     <div class="container">
       <div class="section-head">
-        <div><p class="section__eyebrow">05 / TIMELINE</p><h2 class="section__title">近七日情报推进</h2></div>
-        <a class="text-link" href={u("briefings/")}>查看全部归档 <span>→</span></a>
+        <div>
+          <p class="section__eyebrow">05 / TIMELINE</p>
+          <h2 class="section__title">近 14 日情报推进</h2>
+        </div>
+        <div class="timeline-filter" role="tablist" aria-label="按主题筛选">
+          <button class="timeline-filter__btn is-active" data-filter="all" role="tab">全部</button>
+          {themes.map((t) => (
+            <button
+              class="timeline-filter__btn"
+              data-filter={t.slug}
+              data-accent={t.slug}
+              role="tab"
+            >{t.name}</button>
+          ))}
+        </div>
       </div>
-      <div class="timeline">
+      <div class="timeline" id="timeline-list">
         {
           recent.map((b) => (
-            <article class="timeline__item">
+            <article
+              class="timeline__item"
+              data-themes={Array.from(new Set(b.highlights.map((h) => h.themeSlug))).join(',')}
+            >
               <div class="timeline__date">{b.date}</div>
               <h3 class="timeline__title">
                 <a href={u(`briefings/${b.slug}/`)}>{b.highlights[0]?.title || b.title}</a>
@@ -255,6 +277,31 @@ const topRegions = regions
           ))
         }
       </div>
+      <p class="timeline-empty" id="timeline-empty" hidden>该时段无该主题情报。</p>
+      <p style="margin-top:1.2rem">
+        <a class="text-link" href={u("briefings/")}>查看全部归档 <span>→</span></a>
+      </p>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const btns = document.querySelectorAll<HTMLButtonElement>('.timeline-filter__btn');
+  const items = document.querySelectorAll<HTMLElement>('#timeline-list .timeline__item');
+  const empty = document.getElementById('timeline-empty');
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      btns.forEach((b) => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const filter = btn.dataset.filter;
+      let visible = 0;
+      items.forEach((item) => {
+        const themes = (item.dataset.themes || '').split(',');
+        const show = filter === 'all' || themes.includes(filter!);
+        item.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      if (empty) empty.hidden = visible !== 0;
+    });
+  });
+</script>

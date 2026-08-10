@@ -1,0 +1,177 @@
+---
+import { u } from '../../lib/urls';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HighlightItem from '../../components/HighlightItem.astro';
+import { getTopic, topics } from '../../lib/topics';
+import { standards } from '../../lib/taxonomy';
+import { matchHighlights } from '../../lib/briefings';
+import { loadGlossary } from '../../lib/enrichment';
+
+export function getStaticPaths() {
+  return topics.map((t) => ({ params: { slug: t.slug }, props: { topic: t } }));
+}
+
+const { topic } = Astro.props;
+if (!topic) throw new Error('Topic not found');
+
+const matches = matchHighlights(topic.pattern, 24);
+const glossary = loadGlossary().filter((t) => topic.terms.includes(t.term) || topic.terms.includes(t.en));
+const relatedStandards = topic.standards
+  .map((slug) => standards.find((s) => s.slug === slug))
+  .filter(Boolean);
+---
+
+<BaseLayout title={topic.title} description={topic.lede}>
+  <section class="page-hero">
+    <div class="container">
+      <div class="meta-row">
+        <a href={u('topics/')}>专题</a>
+        <span>{matches.length} 条相关情报</span>
+      </div>
+      <h1>{topic.title}</h1>
+      <p>{topic.lede}</p>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container topic-detail">
+      {
+        topic.actions.length > 0 && (
+          <div class="topic-actions">
+            <p class="topic-actions__label">行动建议</p>
+            <ol>
+              {topic.actions.map((a) => <li>{a}</li>)}
+            </ol>
+          </div>
+        )
+      }
+
+      <h2 class="section__title" style="font-size:1.6rem;margin-top:3rem">相关情报（按时间倒序）</h2>
+      {
+        matches.length ? (
+          <ol class="highlight-list" style="margin-top:1rem">
+            {matches.map(({ briefing, highlight }) => (
+              <HighlightItem
+                title={highlight.title}
+                summary={highlight.summary}
+                type={highlight.type}
+                themeSlug={highlight.themeSlug}
+                date={briefing.date}
+                dateHref={u(`briefings/${briefing.slug}/`)}
+                sources={highlight.sources}
+              />
+            ))}
+          </ol>
+        ) : (
+          <p class="section__desc">暂无匹配，将随日更自动补充。</p>
+        )
+      }
+
+      <div class="topic-side">
+        {glossary.length > 0 && (
+          <div class="topic-side__block">
+            <h3>相关术语</h3>
+            <ul>
+              {glossary.map((g) => (
+                <li>
+                  <strong>{g.term}</strong>
+                  <span>{g.en}</span>
+                  <p>{g.definition}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {relatedStandards.length > 0 && (
+          <div class="topic-side__block">
+            <h3>相关标准 / 框架</h3>
+            <ul>
+              {relatedStandards.map((s) => s && (
+                <li>
+                  <a href={u(`governance/#${s.slug}`)}>
+                    <strong>{s.name}</strong>
+                    <span>{s.org}</span>
+                  </a>
+                  <p>{s.purpose}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .topic-detail { max-width: var(--reading); margin-inline: auto; }
+  .topic-actions {
+    padding: 1.4rem 1.5rem;
+    border: 1px solid var(--signal);
+    background: var(--signal-dim);
+  }
+  .topic-actions__label {
+    margin: 0 0 0.8rem;
+    color: var(--signal);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+  }
+  .topic-actions ol {
+    margin: 0;
+    padding-left: 1.3rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .topic-actions li {
+    color: var(--ink);
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+  .topic-side {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line-strong);
+  }
+  .topic-side__block h3 {
+    margin: 0 0 0.8rem;
+    font-family: var(--font-display);
+    font-size: 1rem;
+  }
+  .topic-side__block ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.8rem;
+  }
+  .topic-side__block li {
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line);
+    background: rgba(14,32,26,.4);
+  }
+  .topic-side__block strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+  }
+  .topic-side__block span {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+  .topic-side__block p {
+    margin: 0.4rem 0 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+  .topic-side__block a { text-decoration: none; display: block; }
+  .topic-side__block a:hover strong { color: var(--signal); }
+  @media (max-width: 720px) {
+    .topic-side { grid-template-columns: 1fr; }
+  }
+</style>

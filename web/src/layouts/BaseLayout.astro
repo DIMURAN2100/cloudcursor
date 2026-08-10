@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+import '../styles/components.css';
+import '../styles/sections.css';
+import '../styles/prose.css';
 import { brand, nav } from '../lib/site';
 import { u } from '../lib/urls';
 
@@ -43,6 +46,7 @@ const home = u();
               return (
                 <a
                   href={href}
+                  class:list={['nav__link', `nav__link--${item.group}`]}
                   aria-current={pathname.includes(item.href.replace(/\/$/, '')) ? 'page' : undefined}
                 >
                   {item.label}
@@ -65,49 +69,13 @@ const home = u();
         <div class="footer-meta">
           <span>每日更新 · GMT+8</span>
           <a href={u('about/')}>方法与来源</a>
+          <a href={u('rss.xml')} target="_blank" rel="noopener">RSS</a>
         </div>
       </div>
     </footer>
     <script>
-      const items = document.querySelectorAll('.timeline__item');
-      if (items.length && 'IntersectionObserver' in window) {
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) entry.target.classList.add('is-in');
-            }
-          },
-          { threshold: 0.35 },
-        );
-        items.forEach((el) => io.observe(el));
-      }
-
-      document.querySelectorAll('[data-diagram]').forEach((root) => {
-        const nodes = root.querySelectorAll('[data-node]');
-        const edges = root.querySelectorAll('[data-edge]');
-        const clear = () => {
-          root.removeAttribute('data-active');
-          nodes.forEach((n) => n.classList.remove('is-on'));
-          edges.forEach((e) => e.classList.remove('is-on'));
-        };
-        nodes.forEach((node) => {
-          node.addEventListener('mouseenter', () => {
-            const id = node.getAttribute('data-node');
-            root.setAttribute('data-active', 'true');
-            node.classList.add('is-on');
-            edges.forEach((edge) => {
-              const connects = (edge.getAttribute('data-edge') || '').split(',');
-              if (connects.includes(id || '')) {
-                edge.classList.add('is-on');
-                connects.forEach((cid) => {
-                  root.querySelector(`[data-node="${cid}"]`)?.classList.add('is-on');
-                });
-              }
-            });
-          });
-          node.addEventListener('mouseleave', clear);
-        });
-      });
+      import '../scripts/timeline-observer.js';
+      import '../scripts/diagram-hover.js';
     </script>
   </body>
 </html>
