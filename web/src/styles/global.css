@@ -4,27 +4,28 @@
  * ============================================================ */
 
 :root {
-  --bg: #07110e;
-  --bg-2: #0a1713;
-  --surface: #0e201a;
-  --surface-2: #122820;
-  --paper: #f1f0e9;
-  --ink: #eef5f0;
-  --ink-dark: #122019;
-  --muted: #8da197;
-  --muted-dark: #5b6a62;
-  --line: rgba(220, 238, 229, 0.12);
-  --line-strong: rgba(220, 238, 229, 0.22);
-  --signal: #78e8bd;
-  --signal-dark: #0c8f68;
-  --signal-dim: rgba(120, 232, 189, 0.1);
-  --warn: #efad72;
+  /* 浅色主题（白底） */
+  --bg: #ffffff;
+  --bg-2: #f5f7f6;
+  --surface: #eef2f0;
+  --surface-2: #e4eae7;
+  --paper: #f7f8f6;
+  --ink: #0f1f1a;
+  --ink-dark: #0b1814;
+  --muted: #5b6b64;
+  --muted-dark: #6a7870;
+  --line: rgba(15, 31, 26, 0.1);
+  --line-strong: rgba(15, 31, 26, 0.18);
+  --signal: #0c8f68;
+  --signal-dark: #086e50;
+  --signal-dim: rgba(12, 143, 104, 0.08);
+  --warn: #b85c2e;
 
-  /* 四大主题 accent（V8） */
-  --accent-ai-self: #78e8bd;     /* 青 — AI 自身安全 */
-  --accent-ai-defense: #6aa9ff;  /* 蓝 — AI 赋能防御 */
-  --accent-infra: #efad72;       /* 琥珀 — 基础设施/供应链 */
-  --accent-gov: #b592ff;         /* 紫 — 治理合规 */
+  /* 四大主题 accent（浅色主题下加深，保证白底对比度） */
+  --accent-ai-self: #0c8f68;     /* 深青 — AI 自身安全 */
+  --accent-ai-defense: #2c5fd9;  /* 深蓝 — AI 赋能防御 */
+  --accent-infra: #b85c2e;       /* 深琥珀 — 基础设施/供应链 */
+  --accent-gov: #7c4dcc;         /* 深紫 — 治理合规 */
 
   --font-display: 'Space Grotesk', 'Noto Sans SC', sans-serif;
   --font-ui: 'Noto Sans SC', 'PingFang SC', sans-serif;
@@ -65,12 +66,12 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
-  opacity: 0.16;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+  opacity: 0.5;
 }
 
 ::selection {
-  color: #03100c;
+  color: #ffffff;
   background: var(--signal);
 }
 
@@ -107,8 +108,8 @@ img {
   top: 0;
   z-index: 40;
   border-bottom: 1px solid var(--line);
-  background: rgba(7, 17, 14, 0.82);
-  backdrop-filter: blur(18px) saturate(130%);
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(18px) saturate(140%);
 }
 
 .site-header__inner {
@@ -137,7 +138,7 @@ img {
   height: 32px;
   display: grid;
   place-items: center;
-  border: 1px solid var(--signal);
+  border: 1.5px solid var(--signal);
   color: var(--signal);
   font-family: var(--font-display);
   font-size: 0.82rem;
@@ -225,7 +226,7 @@ img {
 .site-footer {
   padding: 3.5rem 0;
   border-top: 1px solid var(--line);
-  background: #050c0a;
+  background: var(--bg-2);
 }
 
 .footer-grid {
@@ -369,17 +370,18 @@ img {
   padding: 0.7rem 1.15rem;
   border: 1px solid var(--signal);
   border-radius: var(--radius);
-  color: #04120d;
+  color: #ffffff;
   background: var(--signal);
   font-size: 0.88rem;
   font-weight: 600;
   text-decoration: none;
-  transition: transform 180ms ease, background 180ms ease;
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
 }
 
 .button:hover {
-  color: #04120d;
-  background: #9af2d0;
+  color: #ffffff;
+  background: var(--signal-dark);
+  border-color: var(--signal-dark);
   transform: translateY(-2px);
 }
 
@@ -420,8 +422,8 @@ img {
   overflow: hidden;
   border-bottom: 1px solid var(--line);
   background:
-    radial-gradient(circle at 82% 50%, rgba(120, 232, 189, 0.08), transparent 25%),
-    repeating-linear-gradient(90deg, transparent 0 79px, rgba(120, 232, 189, 0.025) 80px);
+    radial-gradient(circle at 82% 50%, rgba(12, 143, 104, 0.06), transparent 25%),
+    repeating-linear-gradient(90deg, transparent 0 79px, rgba(12, 143, 104, 0.025) 80px);
 }
 
 .page-hero::after {
@@ -429,7 +431,7 @@ img {
   position: absolute;
   right: max(20px, calc((100vw - var(--max)) / 2));
   top: 1.4rem;
-  color: rgba(120, 232, 189, 0.4);
+  color: rgba(12, 143, 104, 0.45);
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.14em;

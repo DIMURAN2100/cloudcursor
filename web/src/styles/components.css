@@ -334,7 +334,7 @@
   gap: 0.55rem;
   padding: 1.25rem;
   border: 1px solid var(--line);
-  background: linear-gradient(150deg, rgba(18, 40, 32, 0.52), transparent);
+  background: linear-gradient(150deg, rgba(12, 143, 104, 0.06), rgba(15, 31, 26, 0.02));
   text-decoration: none;
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
 }
@@ -443,7 +443,7 @@
 .region-card {
   padding: clamp(1.2rem, 3vw, 2rem);
   border: 1px solid var(--line);
-  background: linear-gradient(145deg, rgba(18, 40, 32, 0.55), transparent);
+  background: linear-gradient(145deg, rgba(12, 143, 104, 0.07), rgba(15, 31, 26, 0.02));
 }
 
 .region-card__head {
