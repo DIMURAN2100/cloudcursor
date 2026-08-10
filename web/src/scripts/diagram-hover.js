@@ -1,7 +1,7 @@
 // Diagram hover 联动：仅在页面存在 [data-diagram] 时生效。
-document.querySelectorAll<HTMLElement>('[data-diagram]').forEach((root) => {
-  const nodes = root.querySelectorAll<HTMLElement>('[data-node]');
-  const edges = root.querySelectorAll<SVGElement>('[data-edge]');
+document.querySelectorAll('[data-diagram]').forEach((root) => {
+  const nodes = root.querySelectorAll('[data-node]');
+  const edges = root.querySelectorAll('[data-edge]');
   if (!nodes.length) return;
 
   const clear = () => {
@@ -20,9 +20,7 @@ document.querySelectorAll<HTMLElement>('[data-diagram]').forEach((root) => {
         if (connects.includes(id || '')) {
           edge.classList.add('is-on');
           connects.forEach((cid) => {
-            root
-              .querySelector<HTMLElement>(`[data-node="${cid}"]`)
-              ?.classList.add('is-on');
+            root.querySelector(`[data-node="${cid}"]`)?.classList.add('is-on');
           });
         }
       });

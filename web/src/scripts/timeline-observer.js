@@ -1,5 +1,5 @@
 // Timeline IntersectionObserver — 仅在出现 .timeline__item 的页面生效。
-const items = document.querySelectorAll<HTMLElement>('.timeline__item');
+const items = document.querySelectorAll('.timeline__item');
 if (items.length && 'IntersectionObserver' in window) {
   const io = new IntersectionObserver(
     (entries) => {
