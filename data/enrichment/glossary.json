@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-09",
+  "updatedAt": "2026-08-10",
   "terms": [
     {
       "term": "提示注入",
@@ -98,6 +98,20 @@
       "definition": "Linux Foundation 提出的工作组机制，机密汇聚 agentic AI 安全事件与险肇事故，通知受影响方并输出降低系统性风险的操作建议，补齐传统 CVE 对 AI 事故的覆盖缺口。",
       "theme": "governance",
       "dimension": "standards-frameworks"
+    },
+    {
+      "term": "Agentjacking",
+      "en": "Agentjacking",
+      "definition": "利用公开可发现的错误追踪 DSN 等外部可写数据源注入伪造修复指引，再经 MCP 被编码智能体拉取执行，从而在开发者主机落地恶意依赖与凭据窃取；属于间接提示注入接到本地执行的结构性风险。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "CoreBreak",
+      "en": "CoreBreak",
+      "definition": "一类 Agent 运行时缺陷：攻击者向会话注入伪造或不可信的 tool-use/确认事件，使工具在未经模型回合授权时执行，从而绕过系统提示与内容过滤；缓解要点是工具调用必须绑定到具体模型授权事件。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
     }
   ]
 }
