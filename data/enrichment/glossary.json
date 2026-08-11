@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10",
+  "updatedAt": "2026-08-11",
   "terms": [
     {
       "term": "提示注入",
@@ -112,6 +112,13 @@
       "definition": "一类 Agent 运行时缺陷：攻击者向会话注入伪造或不可信的 tool-use/确认事件，使工具在未经模型回合授权时执行，从而绕过系统提示与内容过滤；缓解要点是工具调用必须绑定到具体模型授权事件。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
+    },
+    {
+      "term": "准备框架",
+      "en": "Preparedness Framework",
+      "definition": "OpenAI 用于评估前沿模型高风险能力门槛的内部框架；在网络安全维度，Critical 表示模型可在无人介入下对大量加固真实目标发现并开发各严重级别零日，或仅凭高层目标自主规划并执行端到端新型网络攻击。",
+      "theme": "ai-self",
+      "dimension": "eval-redteam"
     }
   ]
 }
