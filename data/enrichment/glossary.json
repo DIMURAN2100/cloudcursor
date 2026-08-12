@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-11",
+  "updatedAt": "2026-08-12",
   "terms": [
     {
       "term": "提示注入",
@@ -119,6 +119,20 @@
       "definition": "OpenAI 用于评估前沿模型高风险能力门槛的内部框架；在网络安全维度，Critical 表示模型可在无人介入下对大量加固真实目标发现并开发各严重级别零日，或仅凭高层目标自主规划并执行端到端新型网络攻击。",
       "theme": "ai-self",
       "dimension": "eval-redteam"
+    },
+    {
+      "term": "Deadbugz",
+      "en": "Deadbugz",
+      "definition": "针对 MCP 生态的活跃供应链投毒活动：经公开 PR 投递看似无害的恶意 MCP 服务器，在客户端累计多次 tools/call 后于运行时改写工具元数据与提示，诱导智能体窃取凭证与配置；使安装时扫描难以发现。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    {
+      "term": "GhostSplice",
+      "en": "GhostSplice",
+      "definition": "恶意 MCP 服务器将外泄意图拆分到工具描述、工具结果，并在支持 sampling 的客户端叠加第三通道，使模型在统一上下文中拼出完整恶意任务；单通道静态扫描与完整性校验难以单独告警。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }

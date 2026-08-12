@@ -1,0 +1,47 @@
+{
+  "date": "2026-08-12",
+  "headline": "MCP 供应链与跨通道指令拼接同日升级为运行时对抗面，企业助理与多代理 CI 把注入后果推成权限继承",
+  "execSummary": [
+    {
+      "title": "Deadbugz：延迟元数据门控让「安装时看起来无害」的 MCP 变成活跃供应链投毒",
+      "insight": "Pillar 更新披露：攻击者经公开 GitHub PR 投递伪装为 productivity-suite 的恶意 MCP；前三次 tools/call 仅呈现格式化等无害能力，之后运行时改写工具元数据与 prompts/get，诱导搜集 SSH/AWS/shell 历史与 K8s 配置。同一公开账号约 74 分钟提交 23 个相关 PR。短时抽检与安装时扫描无法覆盖「第三次调用后变脸」的对抗。",
+      "action": "立即在代理/终端与 DNS/HTTP 层阻断 productivity-suite-mcp.onrender.com，全库检索 productivity-suite、deadbug-mcp.py 及 ~/.config/.cache/.sys/ 类隐藏路径；将已批准 MCP 的 tools.listChanged/描述刷新纳入变更管理，须重新人工批准后才可访问凭据或外联。"
+    },
+    {
+      "title": "GhostSplice、RovoBlast 与 ADK A2A：指令被拆通道、参数当可信输入、低权限代理可撬高权限工作流",
+      "insight": "GhostSplice 把外泄意图拆入工具描述、工具结果与 sampling 第三通道，对照中模型配合率约由 42% 升至 82%。RovoBlast 显示点击特制链接即可把外部参数当作可信输入驱动企业助理连接器外泄。ADK 仓库案例则证明低权限 PR/Issue 代理可被提示注入后触发维护者级 @gemini-cli 工作流。共同机制是「不可信内容/低权限身份」继承了真人工具权或高权限自动化。",
+      "action": "清点 Rovo 等助理连接器并撤销非必要第三方连接；审计「低权限代理评论→高权限代理工作流」触发边，禁止以协作者 PAT 跑面向公网 PR 的代理，改为短时最小权限机器身份，并禁止工具输出未经校验直接流入另一工具参数。"
+    },
+    {
+      "title": "Daybreak 蓝/红分级与 HTTP Terminator：防御窗口收窄，发现加速但补丁仍须人审",
+      "insight": "OpenAI 将 Daybreak 拆为 Blue（通用前沿模型用于发现/审查/响应）与须额外核准的 Red（GPT-5.6-Cyber 做利用验证与合法红队），并披露协助发现 V8 等漏洞；能力按 Preparedness Framework 仍为 High。PortSwigger 开源 HTTP Terminator，以 RFC 微灵感驱动假设生成并在授权范围内武器化，确认新型请求走私路径与 ATS 零日。ASD 董事会指引同步把「漏洞发现与利用时间被压缩」上升为董事会风险议题。",
+      "action": "若引入 Daybreak 类或 AI 辅助补丁能力，本周书面要求：安全工程师对修复做利用路径复测与行为回归，禁止模型生成补丁未经审查直接合入；并向董事会摘要 ASD 指引中的攻击面缩小、补丁时效与 AI 代理最小权限三项。"
+    }
+  ],
+  "classifications": {
+    "2026-08-12-brief-bfbd5a03bf04#1": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-08-12-brief-bfbd5a03bf04#3": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-08-12-brief-bfbd5a03bf04#4": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-08-12-brief-bfbd5a03bf04#5": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    "2026-08-12-brief-bfbd5a03bf04#6": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    "2026-08-12-brief-bfbd5a03bf04#7": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    }
+  }
+}
