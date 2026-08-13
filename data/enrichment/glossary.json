@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-12",
+  "updatedAt": "2026-08-13",
   "terms": [
     {
       "term": "提示注入",
@@ -131,6 +131,20 @@
       "term": "GhostSplice",
       "en": "GhostSplice",
       "definition": "恶意 MCP 服务器将外泄意图拆分到工具描述、工具结果，并在支持 sampling 的客户端叠加第三通道，使模型在统一上下文中拼出完整恶意任务；单通道静态扫描与完整性校验难以单独告警。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "加密推理痕迹",
+      "en": "Encrypted Reasoning Traces",
+      "definition": "推理 API 中用于跨调用保留思考状态的不透明/加密对象；研究显示可被较弱模型跨会话解码，从而泄露仅存在于隐藏推理中的密钥等隐私，也可被滥用为隐藏提示注入载体。对外共享轨迹前应剥离此类字段。",
+      "theme": "ai-self",
+      "dimension": "data-model"
+    },
+    {
+      "term": "权限疲劳",
+      "en": "Permission Fatigue",
+      "definition": "编码代理等工具频繁弹出人工确认，导致用户习惯性放行高风险操作的现象；产品侧以运行时分类器（如默认 Auto Mode）拦截破坏性工具调用作为缓解，但仍需对关键写操作保留人工闸门。",
       "theme": "ai-self",
       "dimension": "agent-security"
     }

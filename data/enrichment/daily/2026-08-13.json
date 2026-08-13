@@ -1,0 +1,35 @@
+{
+  "date": "2026-08-13",
+  "headline": "AI 网关供应链把长寿命凭据推成可检索暴露面，推理状态对象与编码代理默认权限同步升为一等控制面",
+  "execSummary": [
+    {
+      "title": "LiteLLM/TeamPCP：短时恶意包的后果变成可检索、可长期复用的组织级凭据债",
+      "insight": "CloudSEK 公开 TeamPCP/LiteLLM 相关暴露数据集检索入口，称约 43.4 万份被窃文件/日志可映射逾 2500 家潜在相关组织（厂商口径，非已确认入侵名单）。LiteLLM 恶意版本 1.82.7/1.82.8 仅在 PyPI 存活约 40 分钟，但可窃取云密钥、SSH、K8s token、数据库口令与模型 API Key；CVE-2026-33634 已将其与 Trivy 一并列入受影响对象，FBI FLASH 仍警告关联凭据可在初始入侵后被长期武器化。匹配强度不等于已证实横向移动。",
+      "action": "本周在制品库与主机排查 LiteLLM 1.82.7/1.82.8 及 3 月 24 日审计窗口安装/缓存痕迹，轮换可触达的 CI/CD、云、发布与模型 API 凭据；并检索组织 GitHub 中 tpcp-docs/docs-tpcp 及 tpcp-docs- 前缀、含 data-<timestamp> 发布资产的仓库。"
+    },
+    {
+      "title": "加密推理对象可被弱模型跨会话解码，公开智能体轨迹变成隐私与隐藏注入载体",
+      "insight": "研究显示 OpenAI、Anthropic、Google 推理 API 中用于跨调用保留思考状态的加密推理对象，可跨会话/跨用户/跨同厂较弱模型重放，并由较弱模型模糊解码。6708 条公开智能体轨迹中解码约 31.5 万 thinking 块，剔除基准后得 704 个真实会话隐私伪影（含密钥与令牌），其中 64 项仅出现在隐藏推理中；并演示将恶意指令藏入不透明推理块的提示注入 PoC。主提取攻击截至 8 月在作者复现声明中已不可再复现，未见在野利用通报。",
+      "action": "清理对外共享的智能体轨迹与评测日志：默认删除 reasoning/thought_signature 等不透明字段后再发布或提交；模型切换场景按厂商最新文档清理思考块，禁止提交原始 API 转写。"
+    },
+    {
+      "title": "Claude Code 自动模式将成默认：权限决策部分迁移到运行时分类器",
+      "insight": "Anthropic 宣布自 2026-08-14 起，Claude Code 在 Pro/Max/Team 新会话默认启用 Auto Mode，由分类器拦截不可逆、破坏性或越界工具调用以缓解权限疲劳；厂商对照称人工仅拦截约 13.6% 故意植入的危险命令提示，自动模式约 89%，经 Apollo Research 红队后对抗漏判率由约 12% 降至约 7%。Enterprise/API/云平台仍需管理员自行启用。分类器仍可能误拦或漏拦，高风险操作仍需人工闸门。",
+      "action": "在 8 月 14 日前审定 Claude Code（及同类编码代理）默认权限：用托管设置固定 Auto/手动策略，对破坏性 Git、外发与生产写入保留人工审批闸门，并书面明确误拦/漏拦的升级路径。"
+    }
+  ],
+  "classifications": {
+    "2026-08-13-brief-8ff2fed67d20#2": {
+      "theme": "ai-self",
+      "dimension": "data-model"
+    },
+    "2026-08-13-brief-8ff2fed67d20#3": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    "2026-08-13-brief-8ff2fed67d20#6": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    }
+  }
+}
