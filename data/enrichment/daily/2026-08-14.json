@@ -1,0 +1,22 @@
+{
+  "date": "2026-08-14",
+  "headline": "开源代理执行框架升为国家级人机混合攻防变量，编码代理默认权限与第三方代理安全认证同日重塑控制面",
+  "execSummary": [
+    {
+      "title": "台湾确认境外 AI Agent 混合攻击：Hermes/OpenClaw 多代理框架支撑侦察—喷洒—横向",
+      "insight": "Dream Security 披露约 160MB/1395 文件工作区中的开源 Hermes 与 OpenClaw 多代理攻势（约 2026-07-01 至 07-04、最多约 8 子代理并行，并以“授权渗透测试”话术绕过拒答）；厂商称至少破解 85 组员工凭据、外泄逾 2564 笔人员记录并探测政府 IT 供应商、核能安全机构与能源企业（厂商来源，非司法认定）。台湾资通安全署 8 月 13 日确认 7 月异常与人机混合处置，不宜等同“纯无人全自动国家级 APT”。护栏若只看声明意图，可被角色伪装系统性绕过。",
+      "action": "本周盘点 Hermes、OpenClaw 及同类代理运行时：关闭未纳管实例；对工具外联、文件写入与凭据访问启用允许清单与会话审计；并复查 SSO/OIDC、调试后门类 API 与未鉴权目录接口的暴露面。"
+    },
+    {
+      "title": "SharePoint JWT 绕过 PoC 公开次日即进蜜罐：AI 辅助披露不自动拉长防御窗口",
+      "insight": "Rapid7 于 8 月 11 日公开 CVE-2026-55040（JWT 校验绕过）细节与 PoC，并与 BCS RCE CVE-2026-63520 组成无凭据代码执行研究链（研究重度依赖智能体）。Defused Cyber 称次日其 SharePoint 蜜罐已观测到沿用该 PoC 的利用尝试；本地部署受影响、Online 不在列表。利用状态已从“AI 辅助研究披露”进入“PoC 被快速复用探测”。",
+      "action": "立即核对本地 SharePoint 是否覆盖 7/8 月针对 CVE-2026-55040 与 CVE-2026-63520 的补丁；在 WAF/蜜罐/IDS 中检索 Rapid7 PoC 特征请求，并将“高关注 AI 辅助披露 + 公开 PoC”默认按短周期利用触发器处理。"
+    },
+    {
+      "title": "Claude Code Auto Mode 今日默认生效，Mozilla 同步警示 agentic harness 写入权限缺口",
+      "insight": "自 2026-08-14 起，Claude Code 在 Pro/Max/Team 新会话默认启用 Auto Mode，由分类器拦截不可逆/破坏性/越界工具调用以缓解权限疲劳（厂商称人工约拦 13.6%、自动模式约 89%；Enterprise/API/云仍为管理员择优）。Mozilla《State of Open Source AI》则指出竞争重心转向协调工具、记忆、沙箱与权限的 agentic harness，跨 MCP/A2A 仍缺统一写入权限模型，用户默认批准可高达约 93%。两端同指：同意疲劳与运行时放行策略已成为代理中间层的一等控制面。",
+      "action": "今日复核 Claude Code（及同类编码代理）托管默认：固定 Auto/手动策略，对破坏性 Git、生产写入与外发保留人工审批；并将 MCP/A2A 写入类操作（消息发送、预算动用、数据修改）纳入统一审批与撤销机制。"
+    }
+  ],
+  "classifications": {}
+}

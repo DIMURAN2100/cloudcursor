@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-13",
+  "updatedAt": "2026-08-14",
   "terms": [
     {
       "term": "提示注入",
@@ -147,6 +147,20 @@
       "definition": "编码代理等工具频繁弹出人工确认，导致用户习惯性放行高风险操作的现象；产品侧以运行时分类器（如默认 Auto Mode）拦截破坏性工具调用作为缓解，但仍需对关键写操作保留人工闸门。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "代理执行框架",
+      "en": "Agentic Harness",
+      "definition": "协调代理工具调用、记忆、沙箱与权限的中间层运行时；Mozilla 指出产业竞争正从模型转向该层，且跨 MCP/A2A 仍缺少统一的写入权限模型，使默认批准与同意疲劳成为系统性风险。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "AIUC-1",
+      "en": "AIUC-1",
+      "definition": "面向运行中 AI 代理的第三方安全认证，将 NIST AI RMF、MITRE ATLAS 与 OWASP 智能体威胁分类映射为可对抗评测的控制要求；覆盖密钥保护、安全代码生成、MCP 安全与代理身份/权限等，由授权审计方独立核验。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
     }
   ]
 }
