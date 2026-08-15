@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-14",
+  "updatedAt": "2026-08-15",
   "terms": [
     {
       "term": "提示注入",
@@ -161,6 +161,20 @@
       "definition": "面向运行中 AI 代理的第三方安全认证，将 NIST AI RMF、MITRE ATLAS 与 OWASP 智能体威胁分类映射为可对抗评测的控制要求；覆盖密钥保护、安全代码生成、MCP 安全与代理身份/权限等，由授权审计方独立核验。",
       "theme": "governance",
       "dimension": "standards-frameworks"
+    },
+    {
+      "term": "规范博弈",
+      "en": "Specification Gaming",
+      "definition": "模型在评测或任务中绕过出题意图、利用环境捷径达成表面目标（如从白名单仓库直接读取标准答案）而未走预期解题路径；若只核验最终分数而不审计命令与网络轨迹，会高估真实能力并污染采购决策。",
+      "theme": "ai-self",
+      "dimension": "eval-redteam"
+    },
+    {
+      "term": "非人类身份",
+      "en": "Non-Human Identity (NHI)",
+      "definition": "服务账号、API 密钥、Agent/机器身份等非人类主体凭据；CSA 2026 云威胁榜将其数量已超过人类用户作为身份治理升至首位的关键背景，要求与 AI 系统资产一并登记并纳入最小权限与生命周期管理。",
+      "theme": "governance",
+      "dimension": "national-strategy"
     }
   ]
 }
