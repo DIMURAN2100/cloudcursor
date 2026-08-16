@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-15",
+  "updatedAt": "2026-08-16",
   "terms": [
     {
       "term": "提示注入",
@@ -175,6 +175,20 @@
       "definition": "服务账号、API 密钥、Agent/机器身份等非人类主体凭据；CSA 2026 云威胁榜将其数量已超过人类用户作为身份治理升至首位的关键背景，要求与 AI 系统资产一并登记并纳入最小权限与生命周期管理。",
       "theme": "governance",
       "dimension": "national-strategy"
+    },
+    {
+      "term": "GhostJacking",
+      "en": "GhostJacking",
+      "definition": "把间接提示注入写入防火墙拦截日志、监控告警或错误报告等智能体信任的运维数据，再借已授权 MCP 读写完成 DNS 篡改、命令执行与云凭证外泄；缓解需拆分只读分析与高危写操作，并对基础设施变更强制人工确认。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "AgentBreaker",
+      "en": "AgentBreaker",
+      "definition": "NVIDIA 开源的智能体利用扫描器，以映射工具面→探测→利用→失败自适应循环评估可行动智能体系统；经任务专用微调后可显著降低相对前沿 API 的红队成本，便于企业自建私有对抗评测，但仍须严格隔离评测网络。",
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
     }
   ]
 }
