@@ -1,0 +1,35 @@
+{
+  "date": "2026-08-17",
+  "headline": "智能体风险从「骗过模型」扩到调度层与 MCP 插件：无模型回合即可触发工具，工具服务器复现经典 Web 漏洞",
+  "execSummary": [
+    {
+      "title": "CoreBreak：调度层把「像工具调用的数据」当已授权指令，系统提示与内容过滤失去介入点",
+      "insight": "Black Hat USA 2026 披露跨平台模式 CoreBreak：在 Amazon Bedrock AgentCore、Google ADK（Python）与 Vercel AI SDK harness 中，调度层信任消息形状或伪造确认事件，部分路径甚至从不调用模型即可执行工具。已确认 CVE 含 Bedrock AgentCore CVE-2026-18830（AWS 托管侧已自动修复）、ADK CVE-2026-18236（需升至 2.5.0）及 Vercel harness CVE-2026-64650/64651。CSA Labs 强调应对调度层做来源证明审计，核对每次工具执行能否回溯到同会话真实模型补全——这与提示注入攻击「模型判断」是不同攻击面。",
+      "action": "本周盘点 Bedrock AgentCore、自托管 Google ADK、Vercel AI SDK harness：确认托管修复生效，ADK 升至 ≥2.5.0 与已修复 harness 版本；抽查近 7 日无法回溯到模型补全的工具调用日志，并对人工确认门禁校验工具归属与参数一致性。"
+    },
+    {
+      "title": "Grafana/Flowise/Cortex/mcp-atlassian：MCP 与编排节点复现 SSRF、RCE、任意文件读",
+      "insight": "同窗多枚已确认漏洞显示工具服务器本身就是高权限执行面：Grafana MCP CVE-2026-19516（CVSS 9.1）允许经 X-Grafana-URL 对内网/元数据端点 SSRF；Flowise Custom MCP（CVE-2026-73601，约 Critical）在默认 stdio 下可经认证用户命令注入；Cortex 记忆 MCP（CVE-2026-49986）误信 CLAUDE_PROJECT_DIR 可能执行非预期引导代码；开源 mcp-atlassian（CVE-2026-73498）attachment 路径缺少校验致任意文件读。暴露面挂在智能体会话上，补丁与出站/文件根限制需与业务应用同级。",
+      "action": "立即升级 Grafana MCP≥1.1.0、Flowise≥3.1.3、mcp-atlassian≥0.22.0、Cortex/neuro-cortex-memory≥3.17.1；关闭非必要 Custom MCP stdio 与任意出站，限制本地文件根，并将 MCP/harness 写入 SBOM 与依赖扫描基线。"
+    },
+    {
+      "title": "RovoBlast：一键参数预填把钓鱼链接升级为会话级提示注入",
+      "insight": "Varonis 在 DEF CON 34 演示 RovoBlast：含 rovoChatPrompt 的链接可让已登录用户一键把攻击者指令写入 Atlassian Rovo 会话，助手在受害者权限内检索 Jira/Confluence 及已连接 Slack、M365、Google Workspace，并可经 ResearchAgent 等多步能力外带摘要。路径不依赖越狱或提权，属参数到提示（P2P）注入；Atlassian 已于 7 月 8 日完成服务端修复，但过宽连接器与内容载体注入仍需配置侧收缩。",
+      "action": "本周审查 Rovo 及同类企业助手连接器：移除法务/HR/财务/应急知识库接入，关闭非必要多步浏览与自治代理；抽查助手可见域与外发/摘要日志，确认 URL 预填类入口已随厂商修复关闭。"
+    }
+  ],
+  "classifications": {
+    "2026-08-17-brief-58d1d0410d26#1": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-08-17-brief-58d1d0410d26#5": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-08-17-brief-58d1d0410d26#7": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-16",
+  "updatedAt": "2026-08-17",
   "terms": [
     {
       "term": "提示注入",
@@ -189,6 +189,20 @@
       "definition": "NVIDIA 开源的智能体利用扫描器，以映射工具面→探测→利用→失败自适应循环评估可行动智能体系统；经任务专用微调后可显著降低相对前沿 API 的红队成本，便于企业自建私有对抗评测，但仍须严格隔离评测网络。",
       "theme": "ai-defense",
       "dimension": "ai-vuln-hunting"
+    },
+    {
+      "term": "参数到提示注入",
+      "en": "Parameter-to-Prompt (P2P) Injection",
+      "definition": "把不可信 URL/请求参数直接预填进助手会话提示的一类注入；如 RovoBlast 经 rovoChatPrompt 一键写入攻击者指令，再在受害者权限内检索连接器数据并外带摘要，通常不依赖越狱或提权。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
+    },
+    {
+      "term": "RovoBlast",
+      "en": "RovoBlast",
+      "definition": "针对 Atlassian Rovo 企业助手的一键 P2P 提示注入演示：特制链接将指令写入会话后，助手可在已授权连接器范围内检索并外泄内容；厂商已服务端修复 URL 入口，但仍需收缩连接器与禁用非必要自治代理。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
     }
   ]
 }
