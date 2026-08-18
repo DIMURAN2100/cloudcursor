@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17",
+  "updatedAt": "2026-08-18",
   "terms": [
     {
       "term": "提示注入",
@@ -203,6 +203,20 @@
       "definition": "针对 Atlassian Rovo 企业助手的一键 P2P 提示注入演示：特制链接将指令写入会话后，助手可在已授权连接器范围内检索并外泄内容；厂商已服务端修复 URL 入口，但仍需收缩连接器与禁用非必要自治代理。",
       "theme": "ai-self",
       "dimension": "prompt-injection"
+    },
+    {
+      "term": "幻装包名",
+      "en": "Slopsquatting",
+      "definition": "利用模型幻觉或常见拼写错误，抢注看似合法的依赖/包名并投毒的供应链手法；在 Skill、MCP 桥接与 AI 生成安装建议场景中，传统仅扫已知包的 SCA 难以覆盖。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    {
+      "term": "影子 MCP",
+      "en": "Shadow MCP",
+      "definition": "员工在客户端一行配置即可接入、未经安全审批的 MCP 服务器；常伴随明文令牌、过度授权与不可见出站，使密钥与工具面游离于集中库存与变更管控之外。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }

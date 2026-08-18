@@ -1,0 +1,35 @@
+{
+  "date": "2026-08-18",
+  "headline": "AI 运行时与 MCP 工具面进入「活跃利用 + 默认不安全」双压：Ray 入 KEV 设硬时限，无认证 MCP 与明文密钥同步暴露",
+  "execSummary": [
+    {
+      "title": "Ray CVE-2025-62593 入 CISA KEV：联邦 8 月 20 日前须缓解，开发机 Dashboard 启发式认证已被击穿",
+      "insight": "CISA 于 8 月 17 日将 Ray 代码注入漏洞纳入 KEV，并要求联邦民事行政部门按 BOD 26-04 在 8 月 20 日前完成缓解与取证分诊。缺陷在于 Dashboard 仅靠可篡改的 User-Agent（“Mozilla”前缀）拦截浏览器请求，叠加 DNS 重绑定即可在开发者用 Firefox/Safari 访问恶意页时触发远程代码执行；官方已在 2.52.0 修复，NVD 将利用状态标为 active。这把本被视为“内网开发便利面”的 AI 分布式计算节点，推到与传统关键基础设施同级的补丁与隔离节奏。",
+      "action": "本周立即清点 Ray 集群与开发机节点：低于 2.52.0 的实例升级，Jobs/Dashboard API 强制网络隔离与强认证；对曾对不可信网络可达的接口按 KEV/BOD 26-04 做补丁前取证分诊，并轮换相关作业令牌。"
+    },
+    {
+      "title": "UFO/CKAN 等 MCP：无认证控制面与错误回显把工具协议变成可路由攻击面",
+      "insight": "Microsoft UFO 在 3.0.8 前于 TCP 8020/8021 暴露无认证 Streamable HTTP MCP（CVE-2026-73296），未认证攻击者可对已 ADB 连接的 Android 设备截屏、读 UI 树并注入输入；CKAN MCP（CVE-2026-73844）则在错误路径把主机名、内网 IP、数据库错误与堆栈原文回传调用方，扩大侦察面。二者与行业对 MCP 明文密钥的讨论共同指向同一结构问题——协议连接便利性领先于默认鉴权、出站限制与错误脱敏基线。",
+      "action": "扫描内网与云安全组，关闭或鉴权 UFO 及其他 MCP 监听端口（含 8020/8021），禁止未认证 Streamable HTTP MCP 对不可信网络可达；将 CKAN MCP 升至 ≥0.4.112，统一错误回显为脱敏消息并复核数据门户连接器出站策略。"
+    },
+    {
+      "title": "MCP 明文密钥与 Skill/Rules「配置即指令」：智能体供应链从包仓库扩到仓库内文档资产",
+      "insight": "Keeper 分析指出 MCP 服务器常以明文配置与环境变量持有 API 令牌，叠加过度授权与提示注入即可诱导智能体滥用工具或交出密钥；Xygeni 同步强调 Skill、Rules 与 MCP 配置常被当文档提交而缺少安全评审，却可改写助手指令与可达系统，传统 SAST/SCA 对模型/智能体/MCP 资产不可见。GitProtect 称 2026 上半年已追踪 84 起 AI 相关 DevOps 安全事件（厂商口径）。密钥托管、配置评审与进入模型上下文的外部内容预检需同周落地。",
+      "action": "盘点仓库与终端中的 MCP 配置、Skill/Rules 文件：将长期静态 API 令牌迁入集中密钥库并开启轮换；对删改生产、外发数据类工具强制人工确认；在 PR 检查中把 Skill/MCP 配置纳入评审，并限制编码/运维智能体的云资源销毁与密钥读取权限。"
+    }
+  ],
+  "classifications": {
+    "2026-08-18-brief-16e0d071ca72#2": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-08-18-brief-16e0d071ca72#5": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-08-18-brief-16e0d071ca72#6": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}
