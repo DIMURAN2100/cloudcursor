@@ -1,0 +1,39 @@
+{
+  "date": "2026-08-19",
+  "headline": "编码智能体「工具元数据 + Auto 批准」与 AI 平台默认配置漏洞同窗集中，Skill/MCP 治理同步升为可审计标准与可采购能力",
+  "execSummary": [
+    {
+      "title": "CodeWhale：工具标为只读/Auto 批准，提示注入可直达开发者主机 RCE",
+      "insight": "开源编码智能体 CodeWhale 在 0.8.64 前连续披露 CVE-2026-75858/75857/75913：`rlm_eval` 将审批设为 Auto 使模型下发的任意 Python 本地执行；`exec_shell_interact` 可向已批准交互 shell 写入 LLM 控制的 stdin；`git_show` 缺参数分隔却被标只读并自动批准，可通过 `--output=` 写任意路径。共性是工具元数据声称低风险 + Auto 审批，使不可信仓库内容一旦进入上下文即可在开发机落地。属已确认产品公告，非在野利用通报。",
+      "action": "本周清点开发机与 CI 中的 CodeWhale（及同类编码智能体）：升级至 ≥0.8.64，关闭 Auto 批准的代码执行/交互 shell/看似只读的 git 工具，并把审批策略变更纳入审计。"
+    },
+    {
+      "title": "MemOS fail-open、MLflow 重定向 SSRF、Trigger.dev 原型污染：AI 平台中间件把经典 Web 缺陷接到记忆库与跨租户工作流",
+      "insight": "MemOS（≤2.0.30）在启用认证却未设 `INTERNAL_SERVICE_SECRET` 时，None==None 比较使外部请求获 `scopes: [\"all\"]`（CVE-2026-75110）；MLflow 3.15.0 前 webhook 测试仅校验原始 URL、投递却跟随重定向，可探测内网/云元数据（CVE-2026-64849）；Trigger.dev 4.5.5 前元数据 API 无原型污染防护，持环境密钥即可污染共享进程并跨租户 DoS（CVE-2026-73654）。影响面变为记忆密钥、实验血缘与多租户鉴权，默认安全配置与路径/重定向钉扎成为补丁同级控制。",
+      "action": "立即为 MemOS 配置强随机 `INTERNAL_SERVICE_SECRET` 并限制管理 API；将 MLflow Tracking Server 升至 ≥3.15.0 并强制认证、关闭未鉴权 webhook 测试；确认 Trigger.dev ≥4.5.6 并轮换可能暴露的环境 API 密钥。"
+    },
+    {
+      "title": "OWASP Agentic Skills Top 10 v1.0 发布：Skill 全链路升为独立攻击面与共用控制语言",
+      "insight": "OWASP 在 Black Hat/DEF CON 2026 后发布 Agentic Skills Top 10 v1.0，将 Skill（含 `SKILL.md` 与资源包）从编写、分发、安装、执行到更新拆为 AST01–AST10，并映射 AISVS、Agentic/MCP/LLM Top 10、CSA MAESTRO、ISO/IEC 42001 与 NIST AI RMF；属社区标准、非强制法规。同期 Fortinet 收购 Virtue AI 把智能体红队、MCP 扫描与恶意工具调用阻断并入 Security Fabric，Apify MCP（CVE-2026-50143）则提醒第三方 Actor 路径权威混淆可致令牌泄露——标准语言与供应链入口需同周落地。",
+      "action": "以 OWASP Agentic Skills Top 10 为检查表建立 Skill/MCP 清单、签名校验与安装审批；将 Apify MCP Server 升至 ≥0.10.11，对第三方 Actor/Skill 来源实施允许列表，禁止智能体从不可信市场自动加载新 Skill。"
+    }
+  ],
+  "classifications": {
+    "2026-08-19-brief-872d0c2f8ba0#2": {
+      "theme": "ai-self",
+      "dimension": "data-model"
+    },
+    "2026-08-19-brief-872d0c2f8ba0#4": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-08-19-brief-872d0c2f8ba0#5": {
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    },
+    "2026-08-19-brief-872d0c2f8ba0#7": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}

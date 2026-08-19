@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18",
+  "updatedAt": "2026-08-19",
   "terms": [
     {
       "term": "提示注入",
@@ -217,6 +217,20 @@
       "definition": "员工在客户端一行配置即可接入、未经安全审批的 MCP 服务器；常伴随明文令牌、过度授权与不可见出站，使密钥与工具面游离于集中库存与变更管控之外。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "智能体技能十大风险",
+      "en": "OWASP Agentic Skills Top 10",
+      "definition": "OWASP 发布的 Skill 全生命周期风险清单（AST01–AST10），覆盖编写、分发、安装、执行与更新，并映射 AISVS、Agentic/MCP/LLM Top 10、CSA MAESTRO、ISO/IEC 42001 与 NIST AI RMF；属社区标准，可用于 Skill/插件准入、签名与沙箱策略。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    },
+    {
+      "term": "故障开放",
+      "en": "Fail-Open",
+      "definition": "安全控制在配置缺失或异常时默认放行而非拒绝；如 MemOS 在启用认证却未设置内部密钥时，把「请求头缺失」与「环境变量为 None」比较为真，使外部请求获得全部权限。AI 平台中间件应默认拒绝并强制显式密钥。",
+      "theme": "ai-self",
+      "dimension": "data-model"
     }
   ]
 }
