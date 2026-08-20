@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19",
+  "updatedAt": "2026-08-20",
   "terms": [
     {
       "term": "提示注入",
@@ -231,6 +231,20 @@
       "definition": "安全控制在配置缺失或异常时默认放行而非拒绝；如 MemOS 在启用认证却未设置内部密钥时，把「请求头缺失」与「环境变量为 None」比较为真，使外部请求获得全部权限。AI 平台中间件应默认拒绝并强制显式密钥。",
       "theme": "ai-self",
       "dimension": "data-model"
+    },
+    {
+      "term": "CoSnitch",
+      "en": "CoSnitch",
+      "definition": "针对 Microsoft Copilot Personal 的一键攻击链：诱导模型泄露未文档化参数后，构造含自动执行参数的深链，在页面加载时运行提示并经已授权 OAuth 连接器外泄邮件/网盘等数据，还可向持久记忆写入指令；厂商已发补丁，研究方称未见在野利用。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
+    },
+    {
+      "term": "心智病毒",
+      "en": "Mind Viruses",
+      "definition": "多智能体系统中可自传播的目标/指令：经智能体间对话，以及可持久写入并被重载进系统提示的共享文件跨会话扩散，实现多跳感染；受控研究显示在系统提示中加入明确警告等轻量防护可显著阻断。缓解重点是禁止未审批写入提示/记忆文件并做完整性校验。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }

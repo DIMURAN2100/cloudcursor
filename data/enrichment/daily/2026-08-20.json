@@ -1,0 +1,35 @@
+{
+  "date": "2026-08-20",
+  "headline": "AI 工程平台出站通道与助手连接器同日升为优先利用面：MLflow SSRF 入 KEV，Copilot Personal 一键外泄链已补丁",
+  "execSummary": [
+    {
+      "title": "MLflow 未认证 webhook SSRF（CVE-2026-64849）入 CISA KEV，公开后数小时即见大规模扫描利用",
+      "insight": "CISA 于 2026-08-19 将 MLflow 3.15.0 前 `/api/2.0/mlflow/webhooks/{id}/test` 重定向跟随 SSRF 列入 KEV，要求按 BOD 26-04 于 2026-09-02 前缓解；缺陷仅校验原始 URL、投递可触及内网/云元数据并回传响应体。watchTowr 称公开编号后数小时蜜罐已观测到对暴露实例的大规模扫描与利用尝试。说明 AI 追踪/注册服务一旦具备未认证出站通道，应急节奏需与传统 Web 应用 KEV 同级。",
+      "action": "本周盘点全部互联网可达的 MLflow Tracking/Registry：升级至 ≥3.15.0，关闭或鉴权 webhook test，并审计近日出站至链路本地元数据地址的访问日志。"
+    },
+    {
+      "title": "CoSnitch：Copilot Personal 深链 autorun + OAuth 连接器一键外泄与记忆投毒",
+      "insight": "Varonis 披露 CVE-2026-24301：诱导模型泄露未文档化参数后，构造含 `?q=` 与 `autorun=1` 的链接，受害者点击即可在页面加载时自动执行提示，调用已连接的 Gmail/Drive/Calendar/OneDrive 等连接器外泄数据，并向持久记忆写入指令。影响 Personal 而非 Enterprise，研究方称未见在野利用；微软同日已发补丁。个人版助手一旦绑定企业邮箱/网盘，仍可成为旁路数据通道。",
+      "action": "督促使用 Copilot Personal 且已连接企业邮箱/网盘的员工完成安全更新，复核并撤销非必要 OAuth 连接器，禁用或审查深链自动执参入口。"
+    },
+    {
+      "title": "多智能体「心智病毒」+ Onyx/RAGFlow/PyCharm MCP CVE：共享提示文件与令牌平面同步放大",
+      "insight": "Anthropic Fellows 论文演示目标/指令可经智能体对话与可重载进系统提示的持久文件（如 `SOUL.md`）多跳传播；同期 Onyx CVE-2026-71424 经共享 MCP 配置泄露跨用户 OAuth 头，RAGFlow CVE-2026-75898 Invoke 未校验出站 URL 致 SSRF，PyCharm CVE-2026-75060 未认证 Jupyter MCP 可本地代码执行。攻击面从单次提示注入扩展到持久配置、凭证与 IDE 工具链。",
+      "action": "本周将 Onyx、RAGFlow、PyCharm 升至各自修复线并轮换可能泄露的 MCP OAuth 令牌；禁止生产多智能体工作流对系统提示/共享记忆文件的任意写入，关闭未认证 MCP/Jupyter 对外暴露。"
+    }
+  ],
+  "classifications": {
+    "2026-08-20-brief-da9a6d24967f#2": {
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
+    },
+    "2026-08-20-brief-da9a6d24967f#4": {
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    },
+    "2026-08-20-brief-da9a6d24967f#7": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}
