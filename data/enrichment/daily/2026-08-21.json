@@ -1,0 +1,35 @@
+{
+  "date": "2026-08-21",
+  "headline": "企业安全与自动化平台把 MCP 推上高权限生产面：Splunk 反序列化 Critical、n8n/Neo.mjs 工具链 RCE 与凭据越权同日可见，防御侧同步公开多智能体挖洞编排",
+  "execSummary": [
+    {
+      "title": "Splunk MCP Server 反序列化 RCE（CVE-2026-76404）CVSS 9.1，admin 角色即可落到 OS 命令执行",
+      "insight": "Splunk 公告 SVD-2026-0808 确认 MCP Server app 1.2.1 前版本因凭据管理组件缺少类型校验、反序列化不可信对象，持有 admin 的用户可在底层操作系统执行任意命令；临时缓解为关闭或移除该 app。说明 AI 工具面一旦挂进传统安全平台高权限角色，缺陷会按「安全平台自身」而非实验插件计价。",
+      "action": "本周盘点生产 Splunk 是否安装 MCP Server app：受影响实例升级至 1.2.1，或按公告临时卸载并复核 admin 角色与 MCP 相关配置。"
+    },
+    {
+      "title": "n8n/Neo.mjs：MCP 参数直通路径与 shell，路径穿越与命令注入以工具调用形式复活",
+      "insight": "NVD 收录 n8n CVE-2026-77068（MCP 节点 schema 路径穿越致主进程 RCE）与 CVE-2026-77073（表达式认证下跨项目凭据持久化），以及 neo.mjs CVE-2026-18482（文件系统 MCP 将可控路径拼入 shell）。认证成员或本地开发者身份往往已足够触发；叠加业界对 MCP 明文密钥与过宽权限的综述，配置与工具实现共同构成平台级攻击面。",
+      "action": "将 n8n 升至 2.33.4/2.34.1+ 并收紧 MCP Bearer 与成员对 schema/工作流 API 的可达范围；核对 neo.mjs 等本地文件系统 MCP 是否已含修复构建，清理明文长期密钥并关闭未用 STDIO/远程端点。"
+    },
+    {
+      "title": "Google 公开 AVDH：多智能体顺序编排 + 人工门禁，48 小时窗口内规模化确认严重漏洞",
+      "insight": "GTIG/Mandiant 首次公开 Agentic Vulnerability Discovery Harness（AVDH）蓝图：以 ADK 编排 Explorer、威胁建模、入口发现与富化等顺序智能体，并在关键节点插入人工顾问。官方称在被盗企业代码仓应急中约 48 小时确认逾 100 个真阳性严重漏洞，并产出 12 个已分配 CVE。定位为点时高强度审查与红队加速器，与持续扫描类能力互补。",
+      "action": "若承担代码泄露应急或红队职责，对照 AVDH 公开架构评估是否可为关键仓建立「威胁建模门禁 + 并行入口扫描」的点时审查流水线，并明确人工校验节点。"
+    }
+  ],
+  "classifications": {
+    "2026-08-21-brief-35683605c42e#2": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    "2026-08-21-brief-35683605c42e#4": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-08-21-brief-35683605c42e#5": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}

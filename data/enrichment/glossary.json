@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20",
+  "updatedAt": "2026-08-21",
   "terms": [
     {
       "term": "提示注入",
@@ -245,6 +245,13 @@
       "definition": "多智能体系统中可自传播的目标/指令：经智能体间对话，以及可持久写入并被重载进系统提示的共享文件跨会话扩散，实现多跳感染；受控研究显示在系统提示中加入明确警告等轻量防护可显著阻断。缓解重点是禁止未审批写入提示/记忆文件并做完整性校验。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "AVDH",
+      "en": "Agentic Vulnerability Discovery Harness",
+      "definition": "Google Threat Intelligence / Mandiant 公开的多智能体漏洞发现编排：以 ADK 串联 Explorer、威胁建模、入口发现与富化等顺序智能体，并在关键节点插入人工顾问校验；定位为代码暴露后的点时高强度审查与红队加速器，与持续扫描类能力互补。",
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
     }
   ]
 }
