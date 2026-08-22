@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21",
+  "updatedAt": "2026-08-22",
   "terms": [
     {
       "term": "提示注入",
@@ -252,6 +252,20 @@
       "definition": "Google Threat Intelligence / Mandiant 公开的多智能体漏洞发现编排：以 ADK 串联 Explorer、威胁建模、入口发现与富化等顺序智能体，并在关键节点插入人工顾问校验；定位为代码暴露后的点时高强度审查与红队加速器，与持续扫描类能力互补。",
       "theme": "ai-defense",
       "dimension": "ai-vuln-hunting"
+    },
+    {
+      "term": "AI蠕虫闭环",
+      "en": "AI Credential Worm Loop",
+      "definition": "以 AI 网关/编程代理等高价值入口漏洞完成初始利用后，批量收割模型与工具链 API 密钥，再盗用模型算力继续扩大进攻的循环剥削链；腾讯安全威胁情报对 LiteLLM/OpenCode 在野活动的复盘用此概括「漏洞→凭据→算力→再攻击」。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "工具广告边界",
+      "en": "Tool Advertisement Boundary",
+      "definition": "Agent 框架向模型「广告」本请求可用的工具列表，应与运行时可实际分发/执行的工具集合一致；若仅广告未强制（如 Spring AI DefaultToolCallingManager），提示注入即可调用未对本请求开放的工具，造成权限提升。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
     }
   ]
 }

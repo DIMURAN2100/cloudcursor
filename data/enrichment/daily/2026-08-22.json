@@ -1,0 +1,39 @@
+{
+  "date": "2026-08-22",
+  "headline": "AI 网关与代理 CVE 被打成凭据蠕虫闭环，Spring AI 工具 ACL/MCP 会话与笔记本 MCP、模型工件落地缺陷同日抬高中间件与供应链优先级",
+  "execSummary": [
+    {
+      "title": "腾讯观测 LiteLLM/OpenCode 在野收割：漏洞利用→模型密钥→盗用算力再进攻的 AI 蠕虫闭环",
+      "insight": "威胁情报复盘显示，攻击者滥用 LiteLLM「保存前预览 MCP」端点注入可起进程配置，并以伪造 MCP tools/list 在零出网条件下外带凭据；OpenCode 则经未认证 HTTP/对话端点完成多类收割并投递后门。相关 CVE 披露较早且 LiteLLM 曾入 KEV，本期价值在于 8 月初规模化手法与「密钥当弹药」的循环剥削机制。",
+      "action": "本周清点可达的 LiteLLM/同类网关与未认证 OpenCode：升级至含 MCP 预览修复的发行线，轮换全部模型供应商 Key/master key/库凭据，并把「Key 异常用量 + MCP 测试端点访问」写入同一狩猎剧本。"
+    },
+    {
+      "title": "Spring AI：工具广告≠可执行集合，MCP Streamable HTTP 默认可被打成内存耗尽",
+      "insight": "CVE-2026-59318 确认 DefaultToolCallingManager 未强制工具列表边界，提示注入可调用未对本请求开放的工具；CVE-2026-59279 则因 MCP HTTP 传输默认无认证且无会话上限，可被自动化打成拒绝服务。说明 Agent 中间件须按对外服务做授权强制、认证与配额，不能把「模型所见清单」当作运行时 ACL。",
+      "action": "将 Spring AI 升至 2.0.1（或对应企业补丁线），对 MCP Streamable HTTP 强制认证与会话上限，并用提示注入回归验证「未广告工具不可分发」。"
+    },
+    {
+      "title": "marimo 打开编辑态即拉起 MCP command，ONNX 外部数据写入可被符号链接劫持",
+      "insight": "CVE-2026-75149 表明笔记本配置中的 MCP server command 在编辑模式打开时即可本地 RCE，「未执行单元格=安全」不成立；CVE-2026-49114 则在模型工件序列化路径上存在 TOCTOU/符号链接跟随，可把写操作导向密钥或定时任务。二者共同要求把 AI 工件与 MCP 配置按可执行脚本同级做信任分级与目录隔离。",
+      "action": "共享仓 marimo 升至 0.23.15+ 并禁止打开含不明 MCP command 的笔记本；训练/转换流水线将 ONNX 升至 1.21.0+，禁止在多用户可写目录执行 save_external_data 并隔离序列化输出目录。"
+    }
+  ],
+  "classifications": {
+    "2026-08-22-brief-0eff68a456dc#1": {
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    "2026-08-22-brief-0eff68a456dc#4": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-08-22-brief-0eff68a456dc#5": {
+      "theme": "infra-cve",
+      "dimension": "model-supply"
+    },
+    "2026-08-22-brief-0eff68a456dc#7": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    }
+  }
+}
