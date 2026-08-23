@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22",
+  "updatedAt": "2026-08-23",
   "terms": [
     {
       "term": "提示注入",
@@ -266,6 +266,13 @@
       "definition": "Agent 框架向模型「广告」本请求可用的工具列表，应与运行时可实际分发/执行的工具集合一致；若仅广告未强制（如 Spring AI DefaultToolCallingManager），提示注入即可调用未对本请求开放的工具，造成权限提升。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
+    },
+    {
+      "term": "加密上下文注入",
+      "en": "Cryptographic Context Injection",
+      "definition": "将恶意指令以密文嵌入网页等不可信内容，诱导具备代码执行能力的助手在摘要时解密出指令，再经导航等工具把会话元数据外带；可绕过基于明文的内容分类，缓解重点是约束工具出站边界与高危工具默认禁用。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
     }
   ]
 }

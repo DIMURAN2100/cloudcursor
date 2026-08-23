@@ -1,0 +1,35 @@
+{
+  "date": "2026-08-23",
+  "headline": "美机构把 AI 生成 ICS 利用脚本写入 OT 实战通告，加密上下文注入与推理/配置 eval 链同步抬高助手运行时与供应链信任边界",
+  "execSummary": [
+    {
+      "title": "NSA/CISA 等联合 AA26-231A：AI 生成利用脚本已写入针对 PLC 的活跃威胁战术",
+      "insight": "通告确认攻击者对西门子 S7 等 PLC 开展侦察与能力开发，使用 AI 生成漏洞利用脚本并伪装成合法监控工具，再借 Censys/ZoomEye 等扫描暴露面；覆盖关键制造、能源、水务等行业，且威胁不限于单一品牌。西门子强调未见新漏洞、重点在错误配置，说明防御优先级应转向公网可达性、远程运维通道与协议层狩猎，而非只等厂商 CVE。",
+      "action": "本周盘点西门子 S7 及其他品牌 PLC 的公网可达性与第三方远程运维通道，关闭互联网直达管理面，并完成关键补丁与异常运维流量狩猎核对。"
+    },
+    {
+      "title": "Cryptographic Context Injection：密文间接注入绕过明文护栏，经 Grok 工具链外带会话",
+      "insight": "Adversa 演示显示，恶意指令以密文嵌入网页后，诱导 Grok 摘要即可在自带 Python 运行时解密，再经导航工具把姓名、位置、订阅档位与当前提示词写入出站 URL。链条无 CVE、无在野通报，但结构上证明：有代码执行与联网工具的助手，仅靠明文内容过滤无法覆盖「解密后再执行」的间接注入。",
+      "action": "审查对外网页摘要/浏览助手：默认禁用或强审批代码执行与任意导航工具，并阻断会话元数据写入出站 URL 查询参数。"
+    },
+    {
+      "title": "Xinference eval 工具调用 RCE 与 Hydra 配置实例化：模型输出/配置文本直接变代码执行面",
+      "insight": "CVE-2026-61539（Critical）确认 Xinference 用不安全 eval() 解析 Llama3 工具调用，默认未认证即可经聊天补全 API 打到服务端 RCE；CVE-2026-68508 则表明 Hydra instantiate 若吞入不可信配置或模型元数据，可通过 _target_ 在进程内任意调用。二者共同说明：凡按模型输出或配置文本「执行」的 AI 组件，必须默认认证、禁用动态求值并对配置来源做签名/审批。",
+      "action": "清点 Xinference 等推理网关版本与认证开关，受影响实例升至 2.7.0+ 并关闭匿名访问；同步检查 ML 流水线是否把外部元数据传入 hydra.utils.instantiate()，改为允许名单目标或隔离执行。"
+    }
+  ],
+  "classifications": {
+    "2026-08-23-brief-600fb61d8246#1": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-08-23-brief-600fb61d8246#4": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-08-23-brief-600fb61d8246#6": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    }
+  }
+}
