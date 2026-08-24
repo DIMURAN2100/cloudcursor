@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-23",
+  "updatedAt": "2026-08-24",
   "terms": [
     {
       "term": "提示注入",
@@ -273,6 +273,20 @@
       "definition": "将恶意指令以密文嵌入网页等不可信内容，诱导具备代码执行能力的助手在摘要时解密出指令，再经导航等工具把会话元数据外带；可绕过基于明文的内容分类，缓解重点是约束工具出站边界与高危工具默认禁用。",
       "theme": "ai-self",
       "dimension": "prompt-injection"
+    },
+    {
+      "term": "收敛式绕路劫持",
+      "en": "Convergent Detour Hijacking (CDH)",
+      "definition": "向 Skill 生态植入协调型恶意 Skill：用自然语言抬高被路由选中概率，再构造看似合理的前置依赖，诱导 Agent 额外调用良性 Skill 完成绕路后仍回到原任务；任务完成率几乎不降，但 Token 与执行时间显著上升，削弱仅依赖失败率/拒答的监测。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "零数据留存",
+      "en": "Zero Data Retention (ZDR)",
+      "definition": "面向企业 API 的数据处理约定：提示词与回复原文不由供应商人员可读留存；可与 Private Safety Processing 等能力组合，在跨会话滥用监测与内容不可见之间重新划线，落地时需核验本地日志、事件接口与合同条款。",
+      "theme": "governance",
+      "dimension": "regulation"
     }
   ]
 }

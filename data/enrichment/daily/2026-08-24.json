@@ -1,0 +1,35 @@
+{
+  "date": "2026-08-24",
+  "headline": "恶意 Skill 以「任务仍成功」的绕路抬高成本，仿冒 AI 安装链回流传统投递面，云与 Dev 平台把授权与驻留下沉到基础设施",
+  "execSummary": [
+    {
+      "title": "CDH：协调型恶意 Skill 诱导绕路，任务完成率几乎不降但 Token/时延暴涨",
+      "insight": "深圳大学与香港中文大学等提出的 Convergent Detour Hijacking（收敛式绕路劫持）显示：攻击者用自然语言抬高路由命中，再以看似合理的前置依赖拉入健康检查等良性 Skill，完成绕路后回到原任务。受控实验中恶意协调 Skill 命中约 80%，成功触发且任务仍完成时 Token 约增 67%、耗时约增 92%。监测若只盯失败率或拒答，会漏掉这类「正确但昂贵」的供应链操纵。",
+      "action": "本周清点生产 Agent 已启用的第三方 Skill/插件，对「协调/编排」类做来源签名与人工审批，并为单次任务设置 Token 与额外工具调用硬上限。"
+    },
+    {
+      "title": "Sophos：多数「AI 相关」入侵是仿冒品牌安装页，而非模型越狱",
+      "insight": "MDR 复盘一年内 38 起 AI 相关恶意活动中，35 起瞄准 AI 产品/品牌生态，软件仿冒 30 起、Claude 相关仿冒 26 起；主手法 InstallFix 诱导复制执行 mshta/安装包，投放窃密木马与恶意扩展。有效阻断仍依赖传统投递与载荷行为检测，纯提示过滤收益有限。",
+      "action": "在终端与浏览器策略中拦截非官方域名的 Claude/ChatGPT/Copilot 安装指引，并对 mshta、异常安装包名与浏览器进程注入类告警建立狩猎规则。"
+    },
+    {
+      "title": "AWS AgentCore：把用户授权声明下沉到 JWT/会话标签与下游策略，Agent 只编排不闸门",
+      "insight": "Bedrock AgentCore 参考实现将部门等声明写入 Cognito 令牌，经 Runtime JWT 校验后，用 AssumeRoleWithWebIdentity 会话标签、Knowledge Bases 元数据过滤与 OBO 令牌交换，把最小权限落到 DynamoDB/知识库/Salesforce。即使提示注入或应用过滤失效，基础设施与下游仍应拒绝越权——直接挑战「宽权限服务账号 + 应用层 WHERE」的常见落法。",
+      "action": "审查 Bedrock AgentCore 或同类编排：将数据访问改为按用户令牌签发的临时凭证与下游强制策略，取消宽权限服务账号直连业务库。"
+    }
+  ],
+  "classifications": {
+    "2026-08-24-brief-ffd7eb8fafe1#2": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-08-24-brief-ffd7eb8fafe1#3": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-08-24-brief-ffd7eb8fafe1#5": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}
