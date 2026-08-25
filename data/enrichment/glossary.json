@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24",
+  "updatedAt": "2026-08-25",
   "terms": [
     {
       "term": "提示注入",
@@ -287,6 +287,13 @@
       "definition": "面向企业 API 的数据处理约定：提示词与回复原文不由供应商人员可读留存；可与 Private Safety Processing 等能力组合，在跨会话滥用监测与内容不可见之间重新划线，落地时需核验本地日志、事件接口与合同条款。",
       "theme": "governance",
       "dimension": "regulation"
+    },
+    {
+      "term": "RedC2",
+      "en": "RedC2",
+      "definition": "地下市场推销的跨平台远控框架；其 Red Agent 组件允许攻击者以自然语言编排侦察、凭据转储等后渗透任务。已确认经伪装 npm 包在模块加载时投放 Linux 后门，传递依赖一次 import 即可执行，且 --ignore-scripts 无法阻断。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
     }
   ]
 }

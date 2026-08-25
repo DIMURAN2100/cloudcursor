@@ -1,0 +1,35 @@
+{
+  "date": "2026-08-25",
+  "headline": "进攻与防御同步代理化：UAT-10147 半自主入侵流水线、美军 IRON 可关停自动响应，与 npm 投毒携带的 AI C2 把风险推到供应链与身份层",
+  "execSummary": [
+    {
+      "title": "UAT-10147：代理式 AI 已嵌入真实入侵流水线，目标清单约 17 万 URL",
+      "insight": "Cisco Talos 披露该团伙将 AI 用于漏洞利用、侦察、载荷生成、验证与持久化，并评估其已从「AI 辅助写脚本」转向半自主进攻编排；配套 SPECTRE 后门具备 EDR 绕过与 Linux rootkit。防御信号应从「是否用了 ChatGPT」转向异常批量脚本生成、开放目录型作战物资与未修高危 Web 入口。",
+      "action": "本周对互联网暴露的 Windows IIS/Linux Web 服务器完成高危公开漏洞补丁核验，并排查异常计划任务、Web shell、Defender 排除项与未知 rootkit/驱动加载。"
+    },
+    {
+      "title": "美军 Project Griffin / IRON：机器速度自动处置，但把终止开关与回滚写进基线",
+      "insight": "陆军征集以代理式 AI 汇聚传感器与统一 SIEM 告警、经既有策略执行点自动隔离/阻断/补丁，同时要求可配置置信度阈值、主终止开关、故障安全降级、一键回滚与完整审计轨迹。对企业 SOC 自动化升级的含义是：不能只比拼响应速度，必须同步设计权限边界、可撤销性与代理自身攻击面管控。",
+      "action": "为本周上线或试点的 SOC/编排类 AI 代理配置置信度阈值、人工审批档位、全局终止开关与一键回滚，并将每次自动处置写入可审计工单。"
+    },
+    {
+      "title": "npm 投毒投放 RedC2：加载即执行后门叠加自然语言后渗透编排",
+      "insight": "TrendAI 确认伪装为日历/打卡工具的 npm 包在模块加载时释放 Linux 后门，传递依赖一次 import 即可执行，`--ignore-scripts` 无效；载荷对接 RedC2 4.0 的 Red Agent，可用自然语言编排侦察与凭据转储。供应链监测不能只扫已知恶意包名，还须覆盖模块加载行为与未知原生二进制。",
+      "action": "在 npm/依赖流水线中对「模块加载即 spawn 原生二进制、无业务必要 chmod、硬编码哈希校验后拉起进程」建立阻断或告警，并清查 streak-/map-/kit- 类异常日历工具依赖。"
+    }
+  ],
+  "classifications": {
+    "2026-08-25-brief-52fab1e05542#1": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-08-25-brief-52fab1e05542#5": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    "2026-08-25-brief-52fab1e05542#6": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    }
+  }
+}
