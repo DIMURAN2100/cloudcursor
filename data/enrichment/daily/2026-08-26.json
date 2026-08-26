@@ -1,0 +1,35 @@
+{
+  "date": "2026-08-26",
+  "headline": "本地代理栈的沙箱逃逸与未鉴权推理、MCP 未认证 RCE、以及单次交互记忆投毒，把桌面 Agent 的控制面与持久层同时推到补丁与治理前台",
+  "execSummary": [
+    {
+      "title": "NVIDIA NemoClaw/OpenShell：本地代理沙箱与推理面同日遭批量高危清算",
+      "insight": "Bulletin 5872 将 OpenShell 沙箱逃逸与供应 API 拒绝列表缺陷标为 CVSS 9.9，NemoClaw 推理服务缺认证标为相邻网络可达的未授权访问；沙箱保护终端进程，并不能自动保护代理所持工具与凭证信任。企业若推广本地推理与桌面代理，监听地址、认证与 Host/Origin 校验已成补丁同级基线。",
+      "action": "本周清点环境中的 NemoClaw/OpenShell，升级至 NVIDIA 公告所列提交或版本，并核查本地推理服务是否监听非回环地址且缺少认证。"
+    },
+    {
+      "title": "Chainlit 启用 MCP 即可未认证 RCE，工具控制面默认信任被系统清算",
+      "insight": "开启 features.mcp.enabled 后，未认证客户端可向 POST /mcp 提交可控 fullCommand；白名单只校验可执行文件名、不限制参数，配合 npx -c 即可在服务器权限下任意命令执行（CVSS 9.8），并另有 SSRF 可达内网与云元数据。默认关闭不等于安全——显式启用且对外暴露时，MCP 会直接退化成远程命令通道。",
+      "action": "审计 Chainlit 及其他 LLM 应用的 MCP 开关与网络暴露；已启用者立即升级至 2.12.0+，并将 /mcp 限制为内网且要求强认证。"
+    },
+    {
+      "title": "InjecMEM：一次正常交互即可跨会话投毒 Agent 记忆检索",
+      "insight": "研究显示攻击者无需读写记忆存储权限，仅一次交互即可植入可检索对抗记录，使后续相关查询被导向预设输出；MemoryOS 场景报告最高约 76.6% 攻击成功率。偏重即时输入/输出过滤的护栏难以覆盖「先写入、后检索」的延迟影响，记忆层须单独纳入安全边界。",
+      "action": "为本周在用的 Agent 记忆库划分可写主体与检索信任标记，补上投毒检测与一键清除流程，勿仅依赖即时提示过滤。"
+    }
+  ],
+  "classifications": {
+    "2026-08-26-brief-e595243a58cd#2": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-08-26-brief-e595243a58cd#3": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-08-26-brief-e595243a58cd#4": {
+      "theme": "ai-self",
+      "dimension": "data-model"
+    }
+  }
+}

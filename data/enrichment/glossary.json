@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25",
+  "updatedAt": "2026-08-26",
   "terms": [
     {
       "term": "提示注入",
@@ -294,6 +294,20 @@
       "definition": "地下市场推销的跨平台远控框架；其 Red Agent 组件允许攻击者以自然语言编排侦察、凭据转储等后渗透任务。已确认经伪装 npm 包在模块加载时投放 Linux 后门，传递依赖一次 import 即可执行，且 --ignore-scripts 无法阻断。",
       "theme": "infra-cve",
       "dimension": "dev-supply"
+    },
+    {
+      "term": "InjecMEM",
+      "en": "InjecMEM",
+      "definition": "针对 LLM Agent 记忆系统的投毒手法：攻击者无需读写记忆存储权限，仅一次正常交互即可植入可检索对抗记录，使后续相关查询被导向预设输出；影响具备跨会话持久性，现有偏重即时输入/输出过滤的护栏难以覆盖。",
+      "theme": "ai-self",
+      "dimension": "data-model"
+    },
+    {
+      "term": "ClickFix",
+      "en": "ClickFix",
+      "definition": "社会工程投递变种：通过仿冒下载页或故障修复指引，诱导用户在终端自行粘贴看似安装/修复命令的恶意载荷；已出现针对 Codex、Claude Code 等 AI 编码助手品牌的活跃仿冒活动，目标是开发者终端信任而非传统软件漏洞。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
     }
   ]
 }
