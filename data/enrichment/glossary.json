@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-26",
+  "updatedAt": "2026-08-27",
   "terms": [
     {
       "term": "提示注入",
@@ -306,6 +306,20 @@
       "term": "ClickFix",
       "en": "ClickFix",
       "definition": "社会工程投递变种：通过仿冒下载页或故障修复指引，诱导用户在终端自行粘贴看似安装/修复命令的恶意载荷；已出现针对 Codex、Claude Code 等 AI 编码助手品牌的活跃仿冒活动，目标是开发者终端信任而非传统软件漏洞。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "TRACE",
+      "en": "Trust, Runtime Attestation and Compliance Evidence",
+      "definition": "Linux Foundation 托管的开放规范：将 AI 代理运行时环境、软件、策略、数据分类与工具调用绑定为可跨云与机密计算环境携带的硬件证明式治理证据，复用 RATS、EAT、SLSA、SCITT、SPIFFE、EAR 等既有标准；属标准进展，不等于即时强制合规。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    },
+    {
+      "term": "AnonyMousKIT",
+      "en": "AnonyMousKIT",
+      "definition": "面向失窃苹果设备解锁 Activation Lock 的钓鱼即服务平台：以积分制批量投放邮件/短信/WhatsApp，并出租伪装成 Apple Support 的 AI 语音代理索取设备密码、Apple ID 与实时 2FA；属已确认犯罪基础设施，需纳入身份与设备丢失响应预案。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
     }
