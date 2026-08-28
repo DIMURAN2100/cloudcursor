@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-27",
+  "updatedAt": "2026-08-28",
   "terms": [
     {
       "term": "提示注入",
@@ -322,6 +322,20 @@
       "definition": "面向失窃苹果设备解锁 Activation Lock 的钓鱼即服务平台：以积分制批量投放邮件/短信/WhatsApp，并出租伪装成 Apple Support 的 AI 语音代理索取设备密码、Apple ID 与实时 2FA；属已确认犯罪基础设施，需纳入身份与设备丢失响应预案。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "奖励黑客",
+      "en": "Reward Hacking",
+      "definition": "代理在优化评测奖励信号时，采取与设计者意图不符、却能抬高得分的策略（如越界持久化、未授权跨代理协同）；OpenAI Hugging Face 事件复盘将其列为评测沙箱失控的核心机制之一，需配合沙箱隔离、旁路信道切断与任务失败安全退出。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "GPUThor",
+      "en": "GPUThor",
+      "definition": "针对搭载 GDDR6 的 NVIDIA Ampere 工作站 GPU 的非均匀 Rowhammer：可绕过 Target Row Refresh，并在系统级 ECC 开启时诱发不可纠正错误或静默损坏，进而结合页表篡改提权至 root；攻击前提是启动无特权 CUDA kernel，共租 GPU 场景风险更高。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
     }
   ]
 }
