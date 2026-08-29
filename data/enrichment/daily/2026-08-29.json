@@ -1,0 +1,31 @@
+{
+  "date": "2026-08-29",
+  "headline": "AI 攻击面已从单点 CVE 升级为网关/MCP 定制利用与智能体上下文提权的组合打击，暴露面收敛与门控 fail-closed 成为本周必做工程",
+  "execSummary": [
+    {
+      "title": "Wiz 蜜罐：LiteLLM/MCP 等 AI 基建遭按组件定制围猎",
+      "insight": "约 90 天遥测显示攻击者对 LiteLLM、Flowise、Langflow、Ollama、ChromaDB 等按内部结构侦察利用；CVE-2026-59822 认证绕过与已入 CISA KEV 的 CVE-2026-42271 命令注入被用于投放矿工，并叠加盲提示注入经 OAST 确认 shell、内存抽主密钥与 `.claude/` 目录伪装。AI 网关与 MCP 测试路径已是在野组合打击面，默认无鉴权与测试端点必须优先收敛。",
+      "action": "本周盘点并下线或强制鉴权所有互联网可达的 LiteLLM/MCP 测试端点、Flowise、Langflow、Ollama 等组件，核对 CVE-2026-42271/59822 补丁与密钥轮换，并把盲提示注入+OAST、内存读钥、`.claude/` 伪装纳入 EDR/DNS 狩猎。"
+    },
+    {
+      "title": "指令权限提升：harness 组装上下文可抬升低信任内容",
+      "insight": "南京大学等《When Context Gets Root》表明：即便模型有来源指令层级，智能体运行时在拼装 system/developer/user/tool 上下文时，仍可能把低权限恶意内容抬成更高指令层级。六款编程智能体框架在无限制与自动权限审阅模式下，对机密性/完整性/可用性及 RCE 目标全部得手。依赖「指令层级=有效隔离」的产品假设被直接击穿，修复必须落在上下文构造而非仅模型对齐。",
+      "action": "复查智能体 harness 的上下文组装：禁止将仓库文件、网页抓取或工具回传提升为 system/developer 级指令；对写文件、执行命令、外发网络动作强制人工确认。"
+    },
+    {
+      "title": "AIIR 验证门控 fail-open，签名/策略校验可报假成功",
+      "insight": "GHSA-73p9-6hrp-8qhr 确认 AIIR（<1.7.0）多条验证与策略路径在未真正执行控制时仍返回「成功/已验证」：`require_signing` 可被空字段满足、CI 校验无论结果都报成功、发布策略上限未执行、部分输入静默跳过签名。依赖该门控阻断未签名回执的流水线会系统性制造虚假合规；1.7.0 改为 fail-closed，并建议叠加完整 Sigstore 交叉核对。",
+      "action": "审计 CI/发布流水线中的签名与策略门控是否 fail-closed；若使用 AIIR，升级至 ≥1.7.0 并启用完整 Sigstore 验证，避免单一门控库逻辑漏洞被当成已验证。"
+    }
+  ],
+  "classifications": {
+    "2026-08-29-brief-4d93cdbdf183#2": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-08-29-brief-4d93cdbdf183#5": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    }
+  }
+}

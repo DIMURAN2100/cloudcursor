@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-28",
+  "updatedAt": "2026-08-29",
   "terms": [
     {
       "term": "提示注入",
@@ -336,6 +336,20 @@
       "definition": "针对搭载 GDDR6 的 NVIDIA Ampere 工作站 GPU 的非均匀 Rowhammer：可绕过 Target Row Refresh，并在系统级 ECC 开启时诱发不可纠正错误或静默损坏，进而结合页表篡改提权至 root；攻击前提是启动无特权 CUDA kernel，共租 GPU 场景风险更高。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
+    },
+    {
+      "term": "指令权限提升",
+      "en": "Instruction Privilege Escalation",
+      "definition": "智能体运行时（harness）在组装上下文时，把低信任来源内容抬升为更高指令层级，从而绕过模型侧按来源划分的指令隔离；受控研究显示多款编程智能体在自动权限审阅下仍可达成机密窃取到 RCE。缓解须约束上下文贴标与高危工具 HITL，而非仅依赖模型对齐。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "RedEvoAgent",
+      "en": "RedEvoAgent",
+      "definition": "面向产品级执行 harness 的黑盒自动红队智能体：将跨案例攻击轨迹蒸馏为可读攻击技能，并结合工具效果画像、决策—工具归因与仅保留提升验证表现的更新棘轮；研究称可改善工具效率与跨 harness 迁移，供防御方红队自动化参考。",
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
     }
   ]
 }
