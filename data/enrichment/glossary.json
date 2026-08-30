@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-29",
+  "updatedAt": "2026-08-30",
   "terms": [
     {
       "term": "提示注入",
@@ -350,6 +350,13 @@
       "definition": "面向产品级执行 harness 的黑盒自动红队智能体：将跨案例攻击轨迹蒸馏为可读攻击技能，并结合工具效果画像、决策—工具归因与仅保留提升验证表现的更新棘轮；研究称可改善工具效率与跨 harness 迁移，供防御方红队自动化参考。",
       "theme": "ai-defense",
       "dimension": "ai-vuln-hunting"
+    },
+    {
+      "term": "防御者窗口",
+      "en": "Defender's Window",
+      "definition": "OpenAI 等提出的叙事：在攻防能力窗口期内，应优先把前沿 AI 能力用于修复积压高危漏洞、收敛过宽权限与配置债务，并以领导层优先级、采购标准、可验证修复手册与可追责的代理身份为执行抓手；属行业倡议，不是监管强制令。",
+      "theme": "governance",
+      "dimension": "national-strategy"
     }
   ]
 }

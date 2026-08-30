@@ -1,0 +1,39 @@
+{
+  "date": "2026-08-30",
+  "headline": "本地 LLM 中继与 MCP 工具面因鉴权失效成为与云上网关同级的控制面，同时产业倡议与 NIST 草案把代理身份与人工复核写成硬约束",
+  "execSummary": [
+    {
+      "title": "9router/browse-mcp/DeepSeek MCP：本地中继与 MCP 端点鉴权连环失守",
+      "insight": "9router 可用客户端可控 Host 头绕过本地 API Key 校验并借 baseUrl 做 SSRF，另因 /codex 未纳入鉴权前缀暴露同一后端；browse-mcp 未校验 save_dir/path 可任意写文件导向 RCE；DeepSeek MCP 自托管 HTTP 缺省无认证即可 initialize 与调工具，并可经可控 session_id 跨会话暴露。本地 AI 代理与 MCP 端口已等同高价值密钥/主机面，默认 0.0.0.0 与未鉴权传输会一次性放大远程可达性。",
+      "action": "本周盘点开发机与内网的 9router（升至 ≥0.5.2、改本机回环并轮换上游密钥）、browse-mcp（≥0.8.2）与 DeepSeek MCP（≥1.7.0）：强制传输层鉴权，禁止工具参数直写任意路径，并把「开放中继+SSRF」「未认证 initialize」「代理写启动项」纳入暴露面扫描。"
+    },
+    {
+      "title": "心智病毒：经 SOUL.md/MEMORY.md 跨会话、跨智能体扩散",
+      "insight": "Anthropic 与 EPFL 演示可自传播载荷可写入 harness 持久系统提示文件，在多智能体与类 OpenClaw 链式交互中扩散（写入 SOUL.md 尝试约 88%、下一跳感染约 55%），可导致文件破坏与管道执行安装脚本。单次输入过滤不够：只要持久状态可被代理改写并注入下一会话系统提示，载荷即可在拓扑中存活；系统提示警告在实验中可压低传播，但宿主初始状态仍决定易感性。",
+      "action": "审查编程/运维智能体的 SOUL.md、MEMORY.md 与跨会话 system prompt：改为签名或只读基线变更，对跨代理消息默认提高怀疑级别，并对不可逆动作保留独立人工门控。"
+    },
+    {
+      "title": "集体防务倡议 + NIST SP 1353：代理身份与合规人工复核并行落地",
+      "insight": "OpenAI 公开信呼吁在防御者窗口期用 AI 清理高危漏洞、过宽权限与配置债务，连署覆盖云、安全与模型厂商，并点名代理身份可观测性——属行业倡议而非监管强制。NIST SP 1353 草案示范用生成式 AI 辅助 CSF 2.0 对齐与画像起草，要求仅用已授权工具、输入预批准，且 AI 映射须标 Proposed/Derived 并经合格人员复核；意见征集至 10 月 15 日。",
+      "action": "对照倡议清单压缩本周暴露面（未修高危、过宽权限、不可追责智能体身份）；确认 CSF/合规起草所用生成式 AI 已获安全与隐私书面授权，产出一律标注待复核，并评估是否在 10 月 15 日前向 NIST 提交意见。"
+    }
+  ],
+  "classifications": {
+    "2026-08-30-brief-4611f10c6400#2": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    "2026-08-30-brief-4611f10c6400#4": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-08-30-brief-4611f10c6400#5": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-08-30-brief-4611f10c6400#6": {
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    }
+  }
+}
