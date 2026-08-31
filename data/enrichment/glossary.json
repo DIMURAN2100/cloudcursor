@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-30",
+  "updatedAt": "2026-08-31",
   "terms": [
     {
       "term": "提示注入",
@@ -357,6 +357,20 @@
       "definition": "OpenAI 等提出的叙事：在攻防能力窗口期内，应优先把前沿 AI 能力用于修复积压高危漏洞、收敛过宽权限与配置债务，并以领导层优先级、采购标准、可验证修复手册与可追责的代理身份为执行抓手；属行业倡议，不是监管强制令。",
       "theme": "governance",
       "dimension": "national-strategy"
+    },
+    {
+      "term": "关停开关",
+      "en": "AI Kill Switch",
+      "definition": "对失控或滥用的 AI/智能体系统实施节流、挂起乃至全自动关停的工程与治理能力；讨论强调制动须覆盖编排、工具与网络出口整条链路，而非仅切断模型本体。美国众议员提出的《AI Kill Switch Act》将其推向立法议程，落地仍不确定。",
+      "theme": "governance",
+      "dimension": "regulation"
+    },
+    {
+      "term": "模型谱系",
+      "en": "Model Provenance",
+      "definition": "以权重指纹与行为指纹等方法核验模型与上游检查点/家族的技术关联；Cisco/VAIL 研究显示后训练与换牌发布未必抹除可检测的上游信号，出版方或国别标签不能替代谱系与工件尽职调查。",
+      "theme": "infra-cve",
+      "dimension": "model-supply"
     }
   ]
 }

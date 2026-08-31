@@ -1,0 +1,39 @@
+{
+  "date": "2026-08-31",
+  "headline": "终端木马窃取云端 AI 会话与插件化智能体注入评测同日升温，治理侧同步把可关停能力与模型谱系核验推上议程",
+  "execSummary": [
+    {
+      "title": "Claude 会话遭 Infostealer 在野窃取",
+      "insight": "Anthropic 确认 Vidar、LummaC2、StealC、RedLine、Acreed 与 Mac 上 Atomic Stealer 等通用信息窃取木马，正从已感染终端窃取仍有效的 Claude 登录会话并消耗用量；公司已强制登出、移除已存支付方式并对确认的未授权扣费退款。属会话凭证账户滥用而非模型越狱/提示注入：云侧登出只能切断被盗会话，本机木马残留时新会话仍可再失窃。",
+      "action": "本周清查办公与研发终端的 Claude/同类 AI 浏览器会话与本地凭据保险库：对异常用量账户执行全会话吊销，完成端点木马排查后再允许重新登录，并核对支付方式是否仍绑定。"
+    },
+    {
+      "title": "DeepSeek Harness：技能/Unicode 渠道抬高间接注入成功率",
+      "insight": "腾讯朱雀以 A.I.G 对开源智能体运行时 DeepSeek Harness 做 14,560 次间接提示注入实验（16 类渠道）：隐藏 Unicode 在真实文件解析路径成功率约 25.5%，技能（skills）渠道显著高于常规网页/邮件；文本简化与文件模式结果可悬殊。属受控研究、未见在野确认，但说明插件化工具/技能入口扩大不可信内容导入面，技能包须按代码资产治理。",
+      "action": "对已部署的 DeepSeek Harness 或其他插件化智能体：关闭未审批的技能包/MCP 来源，为发信、命令执行、资金类汇点配置模型外授权闸门，并用 SkillSpector 类扫描做安装前风险评分。"
+    },
+    {
+      "title": "关停开关立法升温 + 模型谱系标签失灵",
+      "insight": "《AI Kill Switch Act》等讨论把“可节流、可挂起、可关停”推成技术能力要求，且须覆盖编排/工具/网络出口整条智能体链路；立法落地仍不确定，但企业分级遏制已成热点。Cisco/VAIL 用权重与行为指纹实证出版方/国别标签不足以代表技术谱系（如 Nemotron–Qwen），仅靠“美/中模型”做供应链判断会留盲区。",
+      "action": "指定平台与安全联合负责人起草智能体分级遏制与紧急关停条件（节流→禁用工具→断网→停服务）并完成一次桌面推演；采购尽职调查扩展到基座检查点、蒸馏教师与谱系声明，避免只看出版方国别标签。"
+    }
+  ],
+  "classifications": {
+    "2026-08-31-brief-0e578c32241d#1": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-08-31-brief-0e578c32241d#4": {
+      "theme": "infra-cve",
+      "dimension": "model-supply"
+    },
+    "2026-08-31-brief-0e578c32241d#5": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-08-31-brief-0e578c32241d#6": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    }
+  }
+}
