@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-01",
+  "headline": "FSB 把前沿 AI 网络风险推上 G20 金融稳定议程，同时平台侧 AI API Key 托管失守与伪造爬虫扫钥并行，防御侧则在语义诱饵对抗与确定性工具审批之间分化",
+  "execSummary": [
+    {
+      "title": "FSB：前沿 AI 成为金融体系最紧迫网络关切之一",
+      "insight": "FSB 主席致函 G20，将前沿模型更强自主性、解题与威胁能力及高度集中的第三方技术依赖，定性为可能改写攻击速度、规模与经济成本并冲击跨机构市场信心的系统性因素；呼吁各司法辖区优先安全发布与部署，并强化金融机构与关键第三方的漏洞管理、响应恢复与“裸机”级重建。此为监管层政策呼吁，并非在野大规模金融系统攻击通报。",
+      "action": "本周由业务连续性与第三方风险管理联合牵头，盘点共享云/模型供应商同时中断场景，补齐切换预案，并至少完成一次对照 FSB 关切的桌面推演。"
+    },
+    {
+      "title": "Zeabur 环境变量被定向导出 + 伪造 AI 爬虫扫钥",
+      "insight": "Zeabur 确认攻击者凭内部 AWS 管理凭据进入共享集群并导出用户 Variables，目标明显指向 AI 服务 API Key；同期 GreyNoise 观测到伪造 OpenAI/Anthropic/DeepSeek 等爬虫 UA、不校验官方 IP 段即可绕过仅认 UA 的放行名单，集中探测 .env 与云密钥路径。密钥与身份校验仍是平台与对外暴露面的最短板。",
+      "action": "盘点所有把 AI 供应商 API Key 写入 PaaS/CI 环境变量的项目：于原厂撤销并轮换、设用量告警与预算上限；同步把 WAF/CDN 的 AI 爬虫放行改为校验厂商公布 IP 段，并检索近 30 日对 `/.env*` 与云凭据路径的探测日志。"
+    },
+    {
+      "title": "GuardBreaker 干扰 AI 分析 vs Shell 确定性审批",
+      "insight": "ESET 披露 UAC-0099 在恶意脚本注释中植入无功能高敏感话术（GuardBreaker），意图触发安全护栏、打断对真实载荷的自动分析；另一侧 LM Studio Bionic Auto Review 用 AST/能力提取先做机械判定，再交受限复核子代理且不读工具回传，以降低间接注入干扰。攻击者已开始适配 AI 辅助分析工作流，工程上需把模型输出降级为并联信号。",
+      "action": "对 SOC/恶意代码分析流水线做护栏抗扰测试（注释与无关高敏感话术不得单独中止分析链）；检查编码智能体命令审批，禁止仅靠字符串允许列表，对未知 AST、环境变量赋值与高危重定向默认拒绝或人工确认。"
+    }
+  ],
+  "classifications": {
+    "2026-09-01-brief-3232939ed199#1": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    "2026-09-01-brief-3232939ed199#3": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-01-brief-3232939ed199#5": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    "2026-09-01-brief-3232939ed199#6": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}

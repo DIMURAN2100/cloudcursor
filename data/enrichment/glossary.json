@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-31",
+  "updatedAt": "2026-09-01",
   "terms": [
     {
       "term": "提示注入",
@@ -371,6 +371,20 @@
       "definition": "以权重指纹与行为指纹等方法核验模型与上游检查点/家族的技术关联；Cisco/VAIL 研究显示后训练与换牌发布未必抹除可检测的上游信号，出版方或国别标签不能替代谱系与工件尽职调查。",
       "theme": "infra-cve",
       "dimension": "model-supply"
+    },
+    {
+      "term": "GuardBreaker",
+      "en": "GuardBreaker",
+      "definition": "针对 AI 赋能恶意软件分析的对抗手法：在脚本注释等无功能位置嵌入高敏感诱饵话术，意图触发安全护栏拒答或中断，从而打断对后续真实载荷的自动分析；缓解须把 AI 输出降级为并联信号，并禁止注释/无关敏感话术单独中止分析链。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "Shell Judge",
+      "en": "Shell Judge",
+      "definition": "LM Studio Bionic Auto Review 中的确定性前置审查层：对 shell 指令做 AST 解析与能力提取并匹配安全规则后直接放行，无法判定再交独立复核子代理；刻意不读取工具回传以降低间接提示注入干扰，不能替代沙箱隔离。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }
