@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01",
+  "updatedAt": "2026-09-02",
   "terms": [
     {
       "term": "提示注入",
@@ -385,6 +385,20 @@
       "definition": "LM Studio Bionic Auto Review 中的确定性前置审查层：对 shell 指令做 AST 解析与能力提取并匹配安全规则后直接放行，无法判定再交独立复核子代理；刻意不读取工具回传以降低间接提示注入干扰，不能替代沙箱隔离。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "VLOSE",
+      "en": "Very Large Online Search Engine",
+      "definition": "欧盟《数字服务法》（DSA）下的超大型在线搜索引擎类别；被指定服务须履行系统性风险评估、缓解措施与独立审计等额外义务。欧委会将 ChatGPT 纳入该类别，认定其可响应用户提示并检索网页，构成混合型搜索服务。",
+      "theme": "governance",
+      "dimension": "regulation"
+    },
+    {
+      "term": "AIDR",
+      "en": "AI Detection and Response",
+      "definition": "将端点检测与响应范式延伸到 AI Agent 运行时的防护模式：发现影子 Agent，并把提示、技能、工具调用、MCP 服务器与身份同端点遥测关联，形成提示到运行时行为的因果链；CrowdStrike Falcon Guardian 将其定位为产品旗舰能力，企业评估时尚需核验受支持 Agent 清单与隔离边界。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
     }
   ]
 }

@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-02",
+  "headline": "DSA 把 ChatGPT 按超大型搜索引擎强制纳入平台义务，同时本地推理未鉴权接口催生持久模板投毒，AI 品牌仿冒桌面客户端继续成为高转化投递面",
+  "execSummary": [
+    {
+      "title": "欧委会将 ChatGPT 指定为 DSA 超大型搜索引擎",
+      "insight": "欧委会认定 ChatGPT 可响应用户提示并检索网页，构成混合型搜索服务，据此将其纳入 DSA 下的 VLOSE，并同步把 Reddit、Roblox 指定为 VLOP；被指定服务须在四个月内履行系统性风险评估、缓解措施与独立审计等额外义务，超大型名单扩至 28 项。对话式 AI 开始被既有数字平台法直接捕获，形态标签不再能规避平台级义务。",
+      "action": "本周由法务与产品合规对照 DSA VLOSE/VLOP 义务，盘点面向欧盟用户、具备网页检索能力的对话式 AI 服务，明确是否触发系统性风险评估与独立审计准备，并列出责任人与截止时间。"
+    },
+    {
+      "title": "NemoClaw 未鉴权推理接口可致本地模型持久投毒",
+      "insight": "CVE-2026-65105（CVSS 8.1）显示 NemoClaw 推理服务配置不当可使相邻网络无鉴权访问本地推理接口；研究演示进一步指出，将 Ollama 绑到 0.0.0.0:11434 并结合 DNS 重绑定后可改写聊天模板，使隐藏指令在后续对话持续生效。同批 OpenShell 含沙箱逃逸与命令注入等高危项，Agent 失败点常在本地推理与沙箱管线而非模型权重。",
+      "action": "盘点开发者工作站与实验室中的 NemoClaw / OpenShell / Ollama 部署，确认已离开 0–0.0.25 受影响区间，并禁止将本地推理 API 绑定到非回环地址；同步把上述组件纳入与生产基础设施同级的补丁清单。"
+    },
+    {
+      "title": "假冒 Claude Opus 5 桌面版投递 RevStealer",
+      "insight": "攻击者以仿冒 Anthropic 的 GitHub「Claude Opus 5 Free Desktop」仓库为诱饵，分发伪装 Electron 应用并投放 RevStealer，窃取浏览器凭据、密码管理器与加密货币钱包数据；样本含沙箱/区域检测、Defender 排除项篡改与链上智能合约回退 C2。属已确认的品牌社工投递，防御重点在软件获取渠道与代码签名，而非提示词过滤。",
+      "action": "将「未签名 / 仿冒厂商的 AI 桌面客户端与 GitHub 免费模型仓库」纳入下载与终端防护策略，阻断 Electron 加载器类诱饵，并抽查近 7 日终端是否安装过名称含 Claude/Opus/Codex 的未批准桌面应用。"
+    }
+  ],
+  "classifications": {
+    "2026-09-02-brief-75ecb1d95053#2": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-02-brief-75ecb1d95053#4": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    "2026-09-02-brief-75ecb1d95053#6": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    }
+  }
+}
