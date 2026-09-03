@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-02",
+  "updatedAt": "2026-09-03",
   "terms": [
     {
       "term": "提示注入",
@@ -399,6 +399,20 @@
       "definition": "将端点检测与响应范式延伸到 AI Agent 运行时的防护模式：发现影子 Agent，并把提示、技能、工具调用、MCP 服务器与身份同端点遥测关联，形成提示到运行时行为的因果链；CrowdStrike Falcon Guardian 将其定位为产品旗舰能力，企业评估时尚需核验受支持 Agent 清单与隔离边界。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "GitSpawn",
+      "en": "GitSpawn",
+      "definition": "Manifold Security 披露的一类缺陷：命令行 AI 编程代理调用 git status/diff 时未剥离仓库本地 .git/config，攻击者可借 core.fsmonitor 等配置项以用户权限在沙箱外、无审批提示下执行任意命令；投递依赖保留完整 .git 的目录拷贝，普通 git clone 不带入该配置。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "主权 AI",
+      "en": "Sovereign AI",
+      "definition": "台湾数位发展部 AIEC 界定的治理口径：主权 AI 需兼具本地社会文化与价值观视角，且算力部署受本地法律管辖；AIEC 以月度公开语言模型基准（繁中理解、社会文化理解、价值观理解）提供可复现的第三方参照，属评测与叙事框架而非强制禁售决定。",
+      "theme": "governance",
+      "dimension": "national-strategy"
     }
   ]
 }

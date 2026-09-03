@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-03",
+  "headline": "编程代理攻击面前移到本地 Git 元数据与共享 Agent Bundle，同时前沿模型网安能力被厂商正式标到 Critical",
+  "execSummary": [
+    {
+      "title": "恶意 Git 配置可无提示劫持编程代理（GitSpawn）",
+      "insight": "Manifold 披露七款命令行 AI 编程代理在调用 git status/diff 时未剥离仓库 .git/config，攻击者可借 core.fsmonitor 等配置以用户权限在沙箱外执行任意命令；投递依赖保留完整 .git 的压缩包/共享盘，普通 clone 不带入。goose、Claude Code 主路径与 Cursor 已有修复，Hermes、Qwen Code、Grok Build 等仍可触发，Codex 对应 CVE-2026-19592。",
+      "action": "本周盘点终端上 Claude Code、Codex、Cursor、goose、Qwen Code、Hermes、Grok Build 版本并升级至厂商已声明修复版；未修复前禁止用代理打开来自压缩包/共享盘且含 .git 的未信任目录。"
+    },
+    {
+      "title": "Omnigent 多智能体托管曝 Critical MCP/Bundle CVE",
+      "insight": "Databricks 系 omnigent（pip，<0.3.0）经 GHSA 集中收录：CVE-2026-62674（CVSS 9.0）可用完整 Agent Bundle 覆盖共享智能体并注入恶意 stdio MCP；CVE-2026-62675 允许危险 Python callable 本地代码执行；CVE-2026-62676 为护栏 shell「失败即放行」。多智能体平台须按租户不可信设计，失败默认放行等于没有护栏。",
+      "action": "确认 Omnigent 或同类多智能体托管已升级到 0.3.0+，审查共享/模板 Agent 上传权限，并禁用租户自定义 callable 与未批准的 MCP stdio。"
+    },
+    {
+      "title": "OpenAI Astra 首个达到 Critical 网安能力阈值",
+      "insight": "OpenAI 宣布即将发布的 Astra 达到《准备框架》下 Critical 网络安全能力阈值，可在合适工具下无逐步人工指导发现并利用加固系统未知缺陷；评测含 ExploitBench 满分与零日负责任披露。高级能力初期仅限流给有限测试者与 Daybreak Blue，企业采购需同步评估滥用检测与内部红队能力。",
+      "action": "本周由安全与采购对照供应商准备框架/系统卡，把「高级网安能力限流、监控与防未授权行动」写入 AI 模型采购尽职调查清单，并明确内部红队是否覆盖同类能力假设。"
+    }
+  ],
+  "classifications": {
+    "2026-09-03-brief-4d5e3ee47bb5#3": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-03-brief-4d5e3ee47bb5#4": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    "2026-09-03-brief-4d5e3ee47bb5#5": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    }
+  }
+}
