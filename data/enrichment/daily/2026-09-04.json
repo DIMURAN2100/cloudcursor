@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-04",
+  "headline": "AI 工具总线认证与缓存缺陷进入强制修复与投毒链，同时进攻侧用智能体把勒索节奏压到十余小时",
+  "execSummary": [
+    {
+      "title": "LiteLLM MCP 认证缺陷进入 CISA KEV",
+      "insight": "CISA 将 BerriAI LiteLLM 的 CVE-2026-59822 纳入 KEV：MCP Streamable HTTP 端点接受任意 Bearer 即可建立已认证会话并调用暴露工具，CVSS 4.0 为 8.8，修复版 litellm 1.84.0。按 BOD 26-04，联邦公开暴露资产修复期限为 2026-09-16，AI 网关/MCP 聚合层已等同传统高危暴露面。",
+      "action": "本周清点可达的 LiteLLM 实例并升级至 1.84.0+；无法升级则在网关禁用/阻断 /mcp/ 路径，并复核补丁前是否已有异常 MCP 会话。"
+    },
+    {
+      "title": "智能体把勒索与外泄压缩到小时级",
+      "insight": "Unit 42 复盘显示，人类取得初始访问后将执行交给前沿模型与 agentic 框架，可在不足 10 小时内贯通内网测绘、源码仓、CI/CD 与云 AI 主密钥；另两起拉美外泄簇用商业大模型加速脚本迭代，入口仍是钓鱼与未修补服务器。进攻提速来自自动化，而非新零日。",
+      "action": "本周在 IR/狩猎剧本加入「自托管聊天前端、批处理脚本高频迭代、未授权 CI/CD、云 AI 主密钥异常调用」假设，并对互联网暴露入口做补丁与钓鱼入口复核。"
+    },
+    {
+      "title": "提示词不能当访问控制，防御模型改受限分发",
+      "insight": "SANS/AWS 明确：仅靠系统提示做授权可被绕过，须在检索层按 RBAC/ABAC 过滤后再入模型上下文，并拆分敏感读数、外联与不可信内容能力。同期 Google 以 Fairwind 向可信防御方开放 Flash Cyber（挖洞与自动补丁），标准 Flash 仍限制进攻向用途——防御重心下沉到身份/数据面与受控能力发放。",
+      "action": "本周把生产智能体的数据访问改为检索层强制鉴权，禁止仅以系统提示承担授权；评估 Fairwind 类接入时限定安全账号、沙箱写回，且自动补丁须经现有变更与回归门禁。"
+    }
+  ],
+  "classifications": {
+    "2026-09-04-brief-88fc6f174c41#2": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    "2026-09-04-brief-88fc6f174c41#3": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-04-brief-88fc6f174c41#5": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-09-04-brief-88fc6f174c41#6": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}

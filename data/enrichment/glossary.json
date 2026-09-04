@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-03",
+  "updatedAt": "2026-09-04",
   "terms": [
     {
       "term": "提示注入",
@@ -413,6 +413,20 @@
       "definition": "台湾数位发展部 AIEC 界定的治理口径：主权 AI 需兼具本地社会文化与价值观视角，且算力部署受本地法律管辖；AIEC 以月度公开语言模型基准（繁中理解、社会文化理解、价值观理解）提供可复现的第三方参照，属评测与叙事框架而非强制禁售决定。",
       "theme": "governance",
       "dimension": "national-strategy"
+    },
+    {
+      "term": "Fairwind",
+      "en": "Fairwind",
+      "definition": "Google 面向可信防御方的受限分发计划：将侧重漏洞发现与自动补丁的 Gemini Flash Cyber 等能力向政府、关键基础设施运营方与软件维护者等对象开放，并对标准 Flash 的化生放核与网络进攻用途设限；属厂商侧能力治理，不等于行政法规。",
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    {
+      "term": "检索时鉴权",
+      "en": "Retrieval-time Authorization",
+      "definition": "SANS/AWS 智能体安全指导强调的控制：在检索层按既有 RBAC/ABAC 收窄查询，并在结果进入模型上下文前过滤；禁止仅用系统提示充当访问控制。若用户无法经普通应用取得某记录，代其行事的智能体同样不应取得。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }
