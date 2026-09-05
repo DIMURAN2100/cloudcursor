@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-05",
+  "headline": "推理服务与编程代理补丁潮与云身份货币化 AI 用量并行加压，防御侧则同时面对补贴落地与挖洞积压",
+  "execSummary": [
+    {
+      "title": "vLLM 四项缺陷与 CodeWhale 审批下沉同日落地",
+      "insight": "GitHub Advisory 收录 vLLM 在启用 prompt embeds 时的稀疏张量竞态绕过、结构化输出 DoS、错误信息指纹化与 derender 资源放大，修复版均为 0.26.0；同期编程代理 CodeWhale/deepseek-tui 确认：已批准交互壳可免审写入模型控制的 stdin，且项目 config 的 instructions 可读任意路径密钥。自托管推理 API 与开发者工作站审批边界同时成为优先补丁面。",
+      "action": "本周清点 vLLM 实例并升级至 0.26.0+，关闭非必要 `--enable-prompt-embeds`/lm-format-enforcer；将 CodeWhale/deepseek-tui 升至 0.8.64+，禁止对交互壳「一次批准、长期免审」，并禁用不可信仓库的项目级 instructions。"
+    },
+    {
+      "title": "Bedrock LLMjacking 把被盗云身份直接货币化",
+      "insight": "Fortinet 复盘显示攻击者用泄露的 AdministratorAccess IAM 密钥新建身份、经 Marketplace 订阅并调用 Bedrock，在 API 层呈现为合法 InvokeModel，CloudTrail 默认难凭「首次用 AI」判定恶意。即便模型与网关无新 CVE，长期宽权限密钥失陷也能把推理账单与模型访问权转售。",
+      "action": "本周在 AWS 排查长期 AdministratorAccess 密钥与异常 Marketplace/Bedrock 订阅及 InvokeModel 峰值，开启 Bedrock 调用日志，并将首次基础模型调用与新建身份、陌生 IP 关联告警。"
+    },
+    {
+      "title": "Daybreak 补贴落地遇上 Mythos 挖洞积压与 OWASP 新榜",
+      "insight": "OpenAI 以约 10 亿美元量级资源补贴前线防御方使用 Daybreak，并与 MS-ISAC 试点；Echo 对 Claude Mythos 数据的梳理则显示逾 2 万条候选漏洞仍缺外部复核，模型自评严重度常偏高。同期 OWASP 发布 2026 LLM Top 10 与 ACS，Excessive Agency 升至第 3、Hidden Context Exposure 取代原系统提示泄露条目——发现能力、治理框架与人工分诊必须同速建设。",
+      "action": "本周按 OWASP 2026 将 Excessive Agency 与 Hidden Context Exposure 写入智能体风险登记与采购问卷；若接入 Daybreak/Mythos 类产出，强制进入人工复核与变更门禁，禁止模型自评 Critical 直接驱动补丁排序。"
+    }
+  ],
+  "classifications": {
+    "2026-09-05-brief-f8a1747c61e1#2": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-09-05-brief-f8a1747c61e1#3": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-05-brief-f8a1747c61e1#4": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    }
+  }
+}

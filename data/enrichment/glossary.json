@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-04",
+  "updatedAt": "2026-09-05",
   "terms": [
     {
       "term": "提示注入",
@@ -427,6 +427,20 @@
       "definition": "SANS/AWS 智能体安全指导强调的控制：在检索层按既有 RBAC/ABAC 收窄查询，并在结果进入模型上下文前过滤；禁止仅用系统提示充当访问控制。若用户无法经普通应用取得某记录，代其行事的智能体同样不应取得。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "LLMjacking",
+      "en": "LLMjacking",
+      "definition": "利用泄露的云身份（如长期宽权限 IAM 密钥）在受害账户上订阅并调用托管大模型推理（如 Amazon Bedrock），将付费算力用于自用或转售的滥用手法；API 层常表现为合法 InvokeModel，需结合身份异常、Marketplace 订阅与调用峰值关联检测。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "ACS",
+      "en": "Agent Control Standard",
+      "definition": "OWASP GenAI 2026 同期推出的智能体控制标准（v0.1）：强调运行时可检查、可追踪与可插桩，并引入 Agent Bill of Materials（AgBOM）及基于 OpenTelemetry/OCSF 的追踪设想，用于把清单式治理推进到运行时策略强制点。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
     }
   ]
 }
