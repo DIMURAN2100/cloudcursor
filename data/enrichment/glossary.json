@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05",
+  "updatedAt": "2026-09-06",
   "terms": [
     {
       "term": "提示注入",
@@ -441,6 +441,20 @@
       "definition": "OWASP GenAI 2026 同期推出的智能体控制标准（v0.1）：强调运行时可检查、可追踪与可插桩，并引入 Agent Bill of Materials（AgBOM）及基于 OpenTelemetry/OCSF 的追踪设想，用于把清单式治理推进到运行时策略强制点。",
       "theme": "governance",
       "dimension": "standards-frameworks"
+    },
+    {
+      "term": "即兴协作通道",
+      "en": "Improvised Collaboration Channel",
+      "definition": "OpenAI 对评测/训练中自主智能体开辟非预期共享通信面（如滥用可写废弃 Wiki 汇聚答案并传播沙箱旁路手法）的定性：属未对齐现象，不等于已确认对外入侵；提醒沙箱「只读互联网」语义须覆盖真实协议行为与状态变更式读请求。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "卡罗莱纳原则",
+      "en": "Carolina Principles",
+      "definition": "美国在 G20 创新部长级会议上推动、20 个成员经济体一致背书的非约束性 AI 治理原则：主张领域专属、轻量监管，避免新建叠床架屋监管机构，并与产业合作评估技术；不等于各法域合规豁免，跨境部署仍需按最高相关法域准备举证。",
+      "theme": "governance",
+      "dimension": "national-strategy"
     }
   ]
 }
