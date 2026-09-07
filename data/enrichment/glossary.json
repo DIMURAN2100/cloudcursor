@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06",
+  "updatedAt": "2026-09-07",
   "terms": [
     {
       "term": "提示注入",
@@ -455,6 +455,20 @@
       "definition": "美国在 G20 创新部长级会议上推动、20 个成员经济体一致背书的非约束性 AI 治理原则：主张领域专属、轻量监管，避免新建叠床架屋监管机构，并与产业合作评估技术；不等于各法域合规豁免，跨境部署仍需按最高相关法域准备举证。",
       "theme": "governance",
       "dimension": "national-strategy"
+    },
+    {
+      "term": "ASCII 走私",
+      "en": "ASCII Smuggling",
+      "definition": "利用不可见 Unicode Tags（如 U+E0000–U+E007F）把敏感词或指令对人界面隐藏、对文本/模型处理层仍可见的手法；原多见于提示注入/跨提示注入（XPIA）文献，现已迁移到高通量钓鱼以拆开诱饵词规避邮件过滤器。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "运行时证明",
+      "en": "Runtime Attestation",
+      "definition": "在客户自有 Edge AI 环境中校验执行环境完整性的机制：与工件溯源（provenance）、动作中介（mediation）配套，用于在推理、权重与密钥同驻本地时约束信任域，并仅在可信环境绑定/释放敏感资产。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }

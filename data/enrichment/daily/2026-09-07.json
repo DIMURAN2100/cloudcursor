@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-07",
+  "headline": "Daybreak 式挖洞能力嵌入边缘流量与补丁闭环，提示注入原语外溢钓鱼，客户侧 Edge AI 共担与失控智能体承保同步加压",
+  "execSummary": [
+    {
+      "title": "Cloudflare 把 Daybreak 挖洞写入授权补丁与 WAF 工作流",
+      "insight": "Cloudflare 以邀请制早期访问将 Vulnerability Discovery and Remediation 纳入 Managed Defense：经客户授权后调用 OpenAI Daybreak（含 GPT-5.6 Cyber）对代码库侦察、狩猎与校验，再对照 Web Assets/WAF 流量、路由热度与既有规则，优先处理已上线、高流量、遭探测且缺防护的路径，并提议定制 WAF 缓解与代码补丁，最终是否落地由客户决定。这把「模型能挖到什么」改写成「在授权代码 + 生产流量证据下先修什么」，属受控授权扫描而非自动改生产。",
+      "action": "本周若评估同类服务，书面限定授权代码仓与只读范围，并规定补丁/WAF 变更须经应用负责人与变更窗口批准后方可上线。"
+    },
+    {
+      "title": "ASCII 走私从提示注入文献迁到高通量钓鱼",
+      "insight": "微软在 Defender for Office 365 提示注入防护研究中观察到：攻击者用不可见 Unicode Tags（U+E0000–U+E007F）拆开 funding 等诱饵词以规避邮件过滤器；该手法此前多用于对人隐藏、对模型可见的指令走私（XPIA）。针对 ASCII 走私的狩猎签名自 2026-02-09 起命中显著上升并维持高位，多数邮件仍被多层防护拦截。说明 AI 攻防原语正被拆开复用到传统钓鱼流水线，不等于提示注入已大规模导致邮箱失陷。",
+      "action": "本周在邮件网关与会向 LLM 投喂原文的连接器中检测/剥离 Unicode Tags（U+E0000–U+E007F），并抽检含金融诱饵词的异常拆分样本。"
+    },
+    {
+      "title": "Edge AI 共担模型与失控智能体承保缺口同时显性化",
+      "insight": "微软 Edge AI 指引指出：推理、权重、客户数据与系统权限落在客户侧时，硬件/平台/权重证明责任部分转移给客户，提示注入、模型篡改、恶意固件与检索/工具配置投毒可同处本地信任域，需以运行时证明、工件溯源与动作中介约束，并仅在可信环境绑定密钥/权重。同期承保侧显示 Tech E&O 常按「对客户损失」设计，未必覆盖智能体波及非客户第三方；Resilience 称 AI 助力社工相关损失已占其 2026 上半年承保损失约 85%。技术门禁与保单批注需同步升级。",
+      "action": "本周对工厂/网点/断连 Edge AI 上线清单要求提供运行时证明、模型与检索工件溯源及工具中介条件；并与法务/保险经纪复核 Tech E&O 是否覆盖智能体越界致第三方损害与沙箱逃逸。"
+    }
+  ],
+  "classifications": {
+    "2026-09-07-brief-ba669429ad73#2": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-07-brief-ba669429ad73#3": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-09-07-brief-ba669429ad73#5": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    }
+  }
+}
