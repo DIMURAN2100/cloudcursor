@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-08",
+  "updatedAt": "2026-09-09",
   "terms": [
     {
       "term": "提示注入",
@@ -481,6 +481,20 @@
       "term": "ToolHive",
       "en": "ToolHive",
       "definition": "Stacklok 开源的 MCP 服务器运行时加固项目：默认将每个 MCP 后端放入独立容器并剥离宿主机凭证，结合注册表签名/出处校验与 Virtual MCP 网关统一 SSO、审计遥测；容器隔离不能替代身份强制与策略过滤，仍需接入企业 IdP 与可观测性栈。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "DUSTMAKER",
+      "en": "DUSTMAKER",
+      "definition": "GTIG 披露的供应链组件：被 UNC6780（TeamPCP）等用于污染 AI 编码助手工作区，并配合提示注入规避检测、伪造可通过信任检查的发布证明，把 MCP、助手工作区与 CI 信任链一并武器化。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    {
+      "term": "共享剪贴板",
+      "en": "Shared Clipboard (sandbox covert channel)",
+      "definition": "Check Point 对 ChatGPT 代码执行沙箱的跨账户隐蔽通道命名：容器对公网与彼此直连隔离可能完好，但共享内部制品仓（如 JFrog Artifactory）可写元数据会变成隐蔽信箱，植入提示即可在正常作答同时外传已连接应用数据与会话文件。",
       "theme": "ai-self",
       "dimension": "agent-security"
     }

@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-09",
+  "headline": "代理化攻击把凭据收割压到数小时，助手沙箱共享管理面与推理/编排租户隔离同日失守",
+  "execSummary": [
+    {
+      "title": "ChatGPT 沙箱共享 Artifactory 成跨账户隐蔽信箱",
+      "insight": "Check Point Research 演示：植入提示（粘贴、共享会话或自定义 GPT）后，ChatGPT 可在正常作答同时，借代码执行容器共享的内部 JFrog Artifactory 元数据属性，在不同账户会话间建隐蔽双向通道，读取已连接 Gmail 等应用数据并外传聊天与会话文件；用户侧往往只见事后「Talked to Gmail」。厂商已下线相关 Artifactory，但连接应用默认「Important actions」仍可静默读取——问题从「模型是否听从恶意指令」推进到「沙箱对公网隔离完好却被共享内部管理面击穿」。",
+      "action": "本周盘点 ChatGPT/同类助手已连接的邮箱与文件类应用，将默认静默读取改为需确认，禁用未审计的共享会话与自定义 GPT，并确认内部制品仓/管理面不在模型代码执行沙箱可达范围内。"
+    },
+    {
+      "title": "GTIG：多智能体六小时收割凭据，供应链直瞄编码助手",
+      "insight": "Google GTIG Q3 2026 AI Threat Tracker 称攻击方正从基础提示转向多智能体工作流；Q2 一起疑似牟利活动中，入侵者在受害云内部署自主多智能体框架，借助编码聊天机器人与代理指令，不足六小时完成大规模第三方凭据收割，暴露的 Recon C2 曾管理逾 2.38 万枚密钥。同期 UNC6780（TeamPCP）等持续针对 PyPI/npm/Docker Hub，经 DUSTMAKER 等污染 AI 编码助手工作区、用提示注入规避检测并伪造发布证明，把 MCP、助手工作区与 CI 信任链一并武器化。尚未普遍出现全自主攻击流水线，但代理化已明显缩短防御响应窗口。",
+      "action": "本周对照云审计检索短时大规模外联扫描、异常 IP 轮换与 AI API/云密钥异常调用并轮换可疑第三方凭据；将 MCP 服务器、编码助手工作区目录与 CI OIDC 发布路径纳入供应链扫描，重点查助手配置目录持久化钩子。"
+    },
+    {
+      "title": "vLLM 批次串扰/多模态 SSRF 与 n8n Agent 工具绕过同日加压租户边界",
+      "insight": "vLLM 同日披露 CVE-2026-73558（<0.27.0）：激活核整数溢出可在同一推理批次把一名用户输出片段并入另一用户响应；CVE-2026-73560（<0.26.0）：多模态处理器对用户提供的图像/音频 URL 与本地路径直接拉取，绕过既有 MediaConnector 的 SSRF/本地路径闸门。n8n CVE-2026-86996（已修于 2.37.7/2.38.2）则显示：工作流「可被谁调用」策略在 Execute Workflow 节点生效，但同一工作流作为 Agent 工具挂载时未校验，具备 Agent 构建权限者可调用本应受限的子工作流。推理批次隔离、多模态输入闸门与编排平台 Agent 工具绑定，已成为与模型对齐同级的安全面。",
+      "action": "本周将生产/多租户 vLLM 升到含 0.27.0 与 0.26.0 修复的版本线并限制不可信多模态 URL/本地路径；升级 n8n 至 2.37.7/2.38.2 或更高，审计全部挂到 Agent 的子工作流及其调用方策略。"
+    }
+  ],
+  "classifications": {
+    "2026-09-09-brief-a71af178541b#1": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-09-09-brief-a71af178541b#2": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-09-brief-a71af178541b#5": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}
