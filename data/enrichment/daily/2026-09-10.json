@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-10",
+  "headline": "模型访问权升格为高价值资产：工业级蒸馏与可重放令牌夹击，Agent 沙箱与 MCP 工具面同日失守",
+  "execSummary": [
+    {
+      "title": "CISA/NSA/FBI：工业级知识蒸馏升格为国家级通报",
+      "insight": "AA26-251A 指控多家中国 AI 企业自 2024 年末起对 Claude、GPT、Gemini、Grok 等前沿模型实施系统性能力抽取，并点名 DeepSeek、Moonshot AI、阿里巴巴、MiniMax、StepFun、Z.AI；手法含中转站代理、共享高级订阅与跨通路自动故障切换。建议含异常用量检测、对可疑蒸馏请求做响应扰动与跨厂商情报共享。此为政府威胁通报与归因判断，不等于逐条独立取证，但已把模型能力窃取写入政府—产业联防议程。",
+      "action": "本周在模型平台与 API 聚合层落地蒸馏类滥用规则：监控全天候高吞吐、新账号瞬时打满配额、异常订阅—API 吞吐比与跨地域中转特征；对可疑流量准备响应扰动，并审计第三方“中转”密钥是否被用于异常抽样子请求。"
+    },
+    {
+      "title": "DeepSeek Harness：Host 头伪造即可自关沙箱",
+      "insight": "CVE-2026-82533（CVSS 9.4）：本地控制面 API 仅信任可伪造 Host 头，沙箱限制文件写却未隔离回环；经提示注入后，智能体可用单条命令升至 danger-full-access，关闭沙箱与审批提示，隧道暴露时还可未认证导出会话日志。说明“只挡文件写”的沙箱在保留无认证本地控制面时，会变成可自我改写的权限开关。",
+      "action": "本周将 DeepSeek Harness / 第三方桌面封装升至含认证修复的 0.1.2-alpha.2（或 0.1.2-rc.1+），关闭不必要端口转发与隧道，并确认本地控制面不以可伪造请求头作为信任边界。"
+    },
+    {
+      "title": "Okta：窃密日志中的可重放 AI 会话令牌与明文密钥",
+      "insight": "对约 7GB Infostealer 日志（5,871 台主机）的分析显示，大量未过期 AI/身份会话令牌与 Gemini、OpenAI、Groq、OpenRouter 等 API 密钥可绕过口令与 MFA 直接接入控制台与 LLM API；地下市场已出现解析 AI 会话与“反检测”浏览器复用工具。防御重点从防撞库前移到令牌生命周期与端点密钥暴露面。",
+      "action": "本周对 AI 控制台与 API 启用会话异常/重放监测，为密钥设用量上限与来源限制，将浏览器与开发机中的明文 API Key 迁入密钥库或短时 OAuth；把 AI 订阅账号、浏览器会话与开发机密钥纳入 Infostealer 泄露监测，命中后立即吊销并强制重认证。"
+    }
+  ],
+  "classifications": {
+    "2026-09-10-brief-cbdfd4d06b41#2": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-09-10-brief-cbdfd4d06b41#3": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    }
+  }
+}

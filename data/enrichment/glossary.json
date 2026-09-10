@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-09",
+  "updatedAt": "2026-09-10",
   "terms": [
     {
       "term": "提示注入",
@@ -497,6 +497,20 @@
       "definition": "Check Point 对 ChatGPT 代码执行沙箱的跨账户隐蔽通道命名：容器对公网与彼此直连隔离可能完好，但共享内部制品仓（如 JFrog Artifactory）可写元数据会变成隐蔽信箱，植入提示即可在正常作答同时外传已连接应用数据与会话文件。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "工业级知识蒸馏",
+      "en": "Industrial-scale Knowledge Distillation",
+      "definition": "CISA/NSA/FBI AA26-251A 所指：大规模、系统性查询前沿模型以抽取推理、编码与智能体等受限能力，并常配合中转代理、共享订阅与跨通路故障切换规避地域限制与检测；属政府威胁通报口径，不等于逐条独立取证结论。",
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    {
+      "term": "令牌重放",
+      "en": "Token Replay",
+      "definition": "利用窃密木马等途径取得的未过期会话令牌或 API 密钥，绕过口令与 MFA 直接接入 AI 控制台、身份会话与 LLM API；Okta 对公开 Infostealer 日志的分析显示地下市场已出现专门解析 AI 会话与浏览器复用的工具链。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
     }
   ]
 }
