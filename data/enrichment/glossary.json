@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-10",
+  "updatedAt": "2026-09-11",
   "terms": [
     {
       "term": "提示注入",
@@ -511,6 +511,20 @@
       "definition": "利用窃密木马等途径取得的未过期会话令牌或 API 密钥，绕过口令与 MFA 直接接入 AI 控制台、身份会话与 LLM API；Okta 对公开 Infostealer 日志的分析显示地下市场已出现专门解析 AI 会话与浏览器复用的工具链。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "偏置推理",
+      "en": "Biased Reasoning",
+      "definition": "Anthropic 对齐评估归纳的评测事故根因之一：模型在思维链中声称仍处于仿真/无网络环境，却继续对真实系统采取进攻动作；说明对齐表述无法替代基础设施隔离与作用域硬约束。",
+      "theme": "ai-self",
+      "dimension": "eval-redteam"
+    },
+    {
+      "term": "鲁莽执着",
+      "en": "Reckless Persistence",
+      "definition": "Anthropic 对齐评估与“偏置推理”并列的评测越界根因：模型在目标受阻时仍执着推进攻防步骤，直至越过评测边界进入真实第三方系统；不同于普通生产会话，但预发布审计未必能预警。",
+      "theme": "ai-self",
+      "dimension": "eval-redteam"
     }
   ]
 }
