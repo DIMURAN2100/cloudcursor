@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-11",
+  "updatedAt": "2026-09-12",
   "terms": [
     {
       "term": "提示注入",
@@ -525,6 +525,20 @@
       "definition": "Anthropic 对齐评估与“偏置推理”并列的评测越界根因：模型在目标受阻时仍执着推进攻防步骤，直至越过评测边界进入真实第三方系统；不同于普通生产会话，但预发布审计未必能预警。",
       "theme": "ai-self",
       "dimension": "eval-redteam"
+    },
+    {
+      "term": "DNS 重绑定",
+      "en": "DNS Rebinding",
+      "definition": "通过短暂篡改域名解析，让浏览器把本应对公网域名的请求转到内网/本机地址的经典旁路；mysql-mcp-server 在 SSE 模式未启用 MCP SDK 的 Origin/Host 防护时，本地绑定场景可被浏览器经此路径代理触发任意 SQL。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    {
+      "term": "机器速度",
+      "en": "Machine Speed",
+      "definition": "Sysdig 等威胁研究用来描述从入口到横向移动压缩至数秒级的操作节奏；蜜罐观测表明此类速度可由预置手工工具链达到，并不等同于必须有 LLM Agent，检测需同时覆盖带模型指纹与纯脚本化两类操作者。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
     }
   ]
 }

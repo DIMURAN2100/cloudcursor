@@ -1,0 +1,43 @@
+{
+  "date": "2026-09-12",
+  "headline": "Agent 危险面下沉到 MCP/网关默认配置：无鉴权传输、SSRF 补丁绕过与默认口令同日暴露，PaperCut 正式补丁收口在野战役",
+  "execSummary": [
+    {
+      "title": "MCP 控制面三连失守：无鉴权 SQL、OpenAPI SSRF 绕过、网关默认口令",
+      "insight": "48 小时内连续确认三类协议/运维缺陷：mysql-mcp-server 在 SSE 模式关闭 Origin/Host DNS 重绑定防护并默认绑定 0.0.0.0、无认证即可 execute_sql（CVE-2026-59971，修至 0.4.2）；mcp-from-openapi 对外部 $ref 的主机名黑名单可被解析/重定向/IPv4 映射 IPv6 绕过，FrontMCP 加载不可信规格时触发内网 SSRF（CVE-2026-59973）；IBM ContextForge MCP Gateway 出厂口令 changeme，开启 basic auth 或管理 UI 即可远程夺管（CVE-2026-78573，升至 v1.0.10）。说明工具链风险已从提示层下沉到传输默认值与运维配置。",
+      "action": "本周清点 mysql-mcp-server / FrontMCP / ContextForge：禁止 SSE 公网暴露并升至公告修复版；禁止从不可信 URL 加载 OpenAPI 生成 MCP 工具；凡启用管理面或 basic auth 的网关立即改强口令并升至 v1.0.10+。"
+    },
+    {
+      "title": "MaxKB：提示注入经自动挂载 execute 逃逸沙箱",
+      "insight": "Lasso 披露 MaxKB CVE-2026-77521（Critical 10.0）：挂载工具/MCP/Skill 的助手经 deepagents + 主机 Shell 后端自动暴露未纳入人机确认的 execute；不可信聊天或 RAG/文档间接提示注入即可驱动命令执行，源码部署默认关沙箱，官方镜像沙箱仍可绕过且容器常以 root 运行。厂商已发 v2.10.5-lts。属协调披露研究确认，非在野通报，但把 LLM01 与危险工具能力直连。",
+      "action": "本周排查自建 MaxKB/同类 RAG Agent：升级至 v2.10.5-lts+，对公开嵌入助手禁用或强制审批 Shell/MCP 类工具，并以非 root、最小权限运行容器。"
+    },
+    {
+      "title": "PaperCut：正式维护版替换紧急补丁，AI Agent 战役仍在野",
+      "insight": "PaperCut 发布 NG/MF 正式维护版 26.0.5 / 25.0.13 / 24.1.10，替换针对 CVE-2026-81578/CVE-2026-82078 的全部紧急补丁并纳入额外硬化；两洞正被 GreyNoise 跟踪的 AI Agent 编排战役利用，约 440 台实例、395 个组织受影响。厂商强调正式 MR 经完整 QA；处置应不止于打补丁，还需按指引对疑似失陷 Application Server 干净重建并做 AD/凭证取证。",
+      "action": "本周将 PaperCut NG/MF 升至上述正式维护版，对曾公网暴露的服务器按厂商指引重建，并核查 AD 异常权限与战役相关 IOC。"
+    }
+  ],
+  "classifications": {
+    "2026-09-12-brief-f02c7c943954#1": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-12-brief-f02c7c943954#2": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-12-brief-f02c7c943954#4": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-09-12-brief-f02c7c943954#5": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-12-brief-f02c7c943954#6": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    }
+  }
+}
