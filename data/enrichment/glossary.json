@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12",
+  "updatedAt": "2026-09-13",
   "terms": [
     {
       "term": "提示注入",
@@ -539,6 +539,20 @@
       "definition": "Sysdig 等威胁研究用来描述从入口到横向移动压缩至数秒级的操作节奏；蜜罐观测表明此类速度可由预置手工工具链达到，并不等同于必须有 LLM Agent，检测需同时覆盖带模型指纹与纯脚本化两类操作者。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "PKCE",
+      "en": "Proof Key for Code Exchange",
+      "definition": "OAuth 2.0 授权码流程的扩展：客户端预先提交代码挑战，兑码时须出示对应 verifier，降低授权码被截获后直接换取访问令牌的风险；MCPHub 等控制面若默认关闭客户端认证且不强制 PKCE，截获授权码即可完成令牌兑换。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    {
+      "term": "代理工作负载遏制",
+      "en": "Agentic Workload Containment",
+      "definition": "CSA《Zero Trust Microsegmentation Guidance》单列的控制对象：将 AI 代理、工具运行器、模型网关、自动化容器与 MCP/工具服务器视为需独立微分段的工作负载，重点限制出站与服务间通信，以压缩其跨信任域动态选工具、带委托身份外联的爆炸半径。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
     }
   ]
 }
