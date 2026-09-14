@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-14",
+  "headline": "生成式能力与 AI 品牌信任双线武器化社会工程，叠加自托管端点默认开放与 Flowise/Headroom 控制面残差，把优先级推回邮件运营、暴露面清单与代理鉴权",
+  "execSummary": [
+    {
+      "title": "微软：逾百万封 AI 助写高管冒充发票欺诈",
+      "insight": "微软威胁情报观察 8 月 3–5 日逾百万封 CEO/CFO 冒充型发票欺诈，伪造 ServiceNow 年费与“转发”对话，诱使应付账款发起约 5 万美元量级 ACH；模板中大量 HTML 注释、分段标签与高度同构结构与生成式 AI 辅助制模一致，但不足以单独断定 AI 生成占比。检测需关联仿冒叙事与财务流程异常，而非只看附件哈希。",
+      "action": "本周复核应付账款与高管紧急付款：对 ACH/电汇强制双人复核，并拦截含“ServiceNow 年费/发票已批准”类异常叙事；同步核对 SPF/DKIM/DMARC 与反钓鱼策略。"
+    },
+    {
+      "title": "AI 品牌诱饵钓鱼规模化，自托管 AI 端点几乎未上锁",
+      "insight": "微软另文称 ChatGPT/Copilot/DeepSeek/Claude 等品牌被大规模用于钓鱼与恶意广告（ChatGPT 主题钓鱼单日约 10 万封），属借用品牌信任而非平台失陷，并见 Storm-3075 等将 AI 主题恶意广告商品化。同期 Mysterium 基于 Netlas 普查 36,769 个自托管 AI 端点，仅 2.02% 返回 HTTP 401/403；Open WebUI、Ollama 与 Flowise 等构建器大量裸奔，后者常等同凭据保险库。",
+      "action": "本周在邮件与 Web 策略新增 ChatGPT/Copilot/Claude/DeepSeek 品牌仿冒与广告重定向狩猎；并对公网/云安全组普查 Open WebUI、Ollama、vLLM、Flowise、n8n、Dify、Langflow，禁止裸绑 0.0.0.0。"
+    },
+    {
+      "title": "Headroom WebSocket 可劫持与 Flowise 未授权中止/SSRF 同窗补丁",
+      "insight": "CVE-2026-71416（CVSS 8.8）显示 Headroom 0.35.0 前未校验 WebSocket Origin，恶意页面可借浏览器可达场景劫持连接并滥用 OPENAI_API_KEY 乃至工具调用；Flowise 再曝 CVE-2026-90535（未授权 abort 打断任意会话预测，修至 3.1.4）与 CVE-2026-90580（评估接口 SSRF，exploit 已公开，升至 3.1.3 可缓解）。AI 代理与编排层仍在重复传统 Web 鉴权/SSRF 错误，后果扩至配额、工具与会话可用性。",
+      "action": "本周将 Headroom 升至 0.35.0+ 并关闭浏览器可达的未鉴权 WebSocket；Flowise 统一升至含 3.1.4 修复的版本线，隔离公网评估接口，并轮换可能写入工作流的云与 SaaS 凭据。"
+    }
+  ],
+  "classifications": {
+    "2026-09-14-brief-4e6548669f79#5": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-14-brief-4e6548669f79#6": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}

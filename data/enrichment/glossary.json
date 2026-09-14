@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-13",
+  "updatedAt": "2026-09-14",
   "terms": [
     {
       "term": "提示注入",
@@ -553,6 +553,20 @@
       "definition": "CSA《Zero Trust Microsegmentation Guidance》单列的控制对象：将 AI 代理、工具运行器、模型网关、自动化容器与 MCP/工具服务器视为需独立微分段的工作负载，重点限制出站与服务间通信，以压缩其跨信任域动态选工具、带委托身份外联的爆炸半径。",
       "theme": "governance",
       "dimension": "standards-frameworks"
+    },
+    {
+      "term": "AI品牌仿冒钓鱼",
+      "en": "AI Brand Impersonation Phishing",
+      "definition": "冒充 ChatGPT、Copilot、Claude、DeepSeek 等热门 AI 品牌投放钓鱼邮件、搜索引流或恶意广告，诱骗用户“更新订阅/付款”以窃取账号与支付数据；微软强调此类活动借用品牌信任，并不代表被冒用的 AI 服务本身被入侵。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "自托管AI暴露面",
+      "en": "Self-hosted AI Exposure Surface",
+      "definition": "将 Open WebUI、Ollama、Flowise、n8n、Dify、Langflow 等模型前端与智能体编排器直接暴露于公网且缺少网关认证的部署形态；Mysterium 等普查显示绝大多数可指纹端点甚至不返回 HTTP 401/403，智能体构建器一旦开放常等同于凭据保险库外置。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
     }
   ]
 }
