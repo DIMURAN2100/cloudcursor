@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-14",
+  "updatedAt": "2026-09-15",
   "terms": [
     {
       "term": "提示注入",
@@ -567,6 +567,20 @@
       "definition": "将 Open WebUI、Ollama、Flowise、n8n、Dify、Langflow 等模型前端与智能体编排器直接暴露于公网且缺少网关认证的部署形态；Mysterium 等普查显示绝大多数可指纹端点甚至不返回 HTTP 401/403，智能体构建器一旦开放常等同于凭据保险库外置。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
+    },
+    {
+      "term": "AI平台内容投毒",
+      "en": "AI Platform Malware Delivery",
+      "definition": "将恶意载荷置于 Claude Artifacts、共享会话链接等厂商自有可信域名上的用户生成内容面，使域名信誉与网关白名单系统性失效；CSA 将 FakeAgent、ClaudeFix 等列为已确认在野模式，与仿冒域名钓鱼形成互补。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "安全论证",
+      "en": "Safety Cases",
+      "definition": "在预期显著提升能力的强化学习等训练开始前，预先给出可审计的安全理由与门禁；OpenAI 称将把 Safety Cases 前移到高增益 RL 训练之前，作为自愿安全承诺的可核验节点。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
     }
   ]
 }

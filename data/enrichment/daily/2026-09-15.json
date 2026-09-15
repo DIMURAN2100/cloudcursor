@@ -1,0 +1,43 @@
+{
+  "date": "2026-09-15",
+  "headline": "AI 厂商可信域名上的 UGC 投毒与 Agent/MCP 扫描上传、代码检索控制面缺陷同窗暴露，叠加实验室“调速”与白宫保领先的政策张力",
+  "execSummary": [
+    {
+      "title": "CSA：Claude/ChatGPT 真域名变成恶意软件分发面",
+      "insight": "CSA 复盘 FakeAgent、ClaudeFix 等战役：攻击者把伪造 Claude Desktop Artifact 与“Apple Support”共享会话放到真实 claude.ai 等厂商域名，配合广告引流与 ClickFix，使域名信誉与网关白名单系统性失效；已确认在野，与仿冒域名钓鱼形成互补。",
+      "action": "本周调整网关与邮件策略：将 claude.ai/chatgpt.com/grok.com 的 Artifacts 与共享会话链接按不可信外部内容处置，取消无差别域名白名单；并在终端限制剪贴板驱动的 Terminal/PowerShell/Run 执行以打断 ClickFix。"
+    },
+    {
+      "title": "AWS Security Agent 可预测 S3 桶可被抢注窃档",
+      "insight": "CVE-2026-87912/87913 显示 aws-agents-for-devsecops 与 Security Agent MCP 仅校验扫描桶“存在”未校验归属，攻击者可按账户 ID+区域抢先注册同名桶，截获含 .env、私钥与 Terraform 状态的源码归档；升级不会自动释放已被占用的桶名。",
+      "action": "本周将 AWS Security Agent 插件与 MCP Server 分别升至 1.1.0 / 0.2.0，并核实 security-agent-scans-<account-id>-<region> 桶的账户归属，必要时预创建并轮换可能已外泄的密钥。"
+    },
+    {
+      "title": "实验室呼吁调速、白宫强调领先，NSA 拟设 AI 任务中心",
+      "insight": "Amodei 主张放缓前沿节奏并嵌入类员工级第三方评估，Altman 称将把 Safety Cases 前移到高增益 RL 训练前；特朗普同日反对因安全疑虑减速。同期 NSA 拟以含 AI 在内的五大任务中心重组。对企业短期更关键的是厂商自愿门禁是否可审计，而非等待尚未成形的全球速度上限。",
+      "action": "本周盘点采购合同与内部评测：要求供应商书面说明 Safety Cases/独立评估是否覆盖能力跃升训练，并把事件通报与训练前门禁写成可验收条款；同步跟踪 NSA/美方机构改革对供应链审查口径的潜在影响。"
+    }
+  ],
+  "classifications": {
+    "2026-09-15-brief-7aa605f0c106#1": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-15-brief-7aa605f0c106#2": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    "2026-09-15-brief-7aa605f0c106#3": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    "2026-09-15-brief-7aa605f0c106#4": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-15-brief-7aa605f0c106#5": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}
