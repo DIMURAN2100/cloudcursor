@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-15",
+  "updatedAt": "2026-09-16",
   "terms": [
     {
       "term": "提示注入",
@@ -579,6 +579,20 @@
       "term": "安全论证",
       "en": "Safety Cases",
       "definition": "在预期显著提升能力的强化学习等训练开始前，预先给出可审计的安全理由与门禁；OpenAI 称将把 Safety Cases 前移到高增益 RL 训练之前，作为自愿安全承诺的可核验节点。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    },
+    {
+      "term": "人本AI准则",
+      "en": "Humanist AI Code of Conduct",
+      "definition": "Microsoft AI 面向 MAI 模型发布的行为准则草案：以人类控制、指令层级（准则优先于运营方与用户指令）及不可覆盖的绝对约束为核心，覆盖禁止援助大规模杀伤性武器、进攻性网络行动与大规模操纵等，并预留经授权的防御性安全研究空间；拟经公众咨询后指导 2027 年起的模型开发。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    },
+    {
+      "term": "可问责爬虫",
+      "en": "Accountable AI Crawler",
+      "definition": "Cloudflare 对符合透明度与选择权要求的混合用途 AI 爬虫运营方的标识：站点可在保留搜索索引的同时拒绝同一爬虫用于模型训练（Disallow AI Training），并要求 Accountable 方提供训练/摘要退出路径与 URL 级可见性，使训练数据合规从 robots 声明推进到可阻断、可审计的配置项。",
       "theme": "governance",
       "dimension": "standards-frameworks"
     }

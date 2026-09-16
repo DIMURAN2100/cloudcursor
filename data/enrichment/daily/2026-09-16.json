@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-16",
+  "headline": "多智能体 UI 与 MCP 连接器以缺认证、过宽信任边界连发 Critical，叠加地下无护栏模型商品化与厂商/国家治理文本同步加码",
+  "execSummary": [
+    {
+      "title": "PraisonAI、mcp-gitlab、Casdoor：MCP 工具总线三连缺认证",
+      "insight": "PraisonAI 默认公网暴露未认证 /api/mcp/connect 即可用调用方 command/args 拉起本地进程（CVE-2026-57124，CVSS 9.8）；npm 包 @zereight/mcp-gitlab 以动态 API URL SSRF 外带 Private-Token，且 Streamable HTTP 缺 Host/Origin 校验可被 DNS 重绑定（CVE-2026-61559/61568）；Casdoor /api/mcp 把任意应用凭据当成跨组织信任捷径，可枚举用户、创建管理员（CVE-2026-91998）。共同机制是把 MCP 当本地工具总线时，默认监听与过宽主体信任直接映射为宿主机执行或令牌/IAM 失守。",
+      "action": "本周盘点并升级：PraisonAI UI/Claw ≥4.6.62 且禁止 0.0.0.0 绑定并对 /api/mcp/* 强制认证；@zereight/mcp-gitlab ≥2.1.30 并关闭 ENABLE_DYNAMIC_API_URL、为本地 MCP 配 Host/Origin 允许列表；检查 Casdoor 是否启用 /api/mcp 用户工具，轮换 clientSecret、审计跨组织用户变更并跟进官方修复版。"
+    },
+    {
+      "title": "地下论坛订阅制售卖 Luciferus 无审查模型",
+      "insight": "Sophos CTU 监测到 Exploit 黑客论坛自 8 月 24 日起推销 Luciferus“无道德限制”AI 订阅，定位为替代对 ChatGPT/Claude 的越狱；卖方宣称约 1200 亿参数专有模型，Sophos 以低置信度评估可能基于 Qwen 系微调。研究人员向 Junior 档请求简单远控木马示例即获源代码（未实跑验证）。表明黑市正把先天无护栏模型当作稳定商品化能力，降低恶意代码生成门槛。",
+      "action": "本周把“无审查 LLM 即服务”纳入威胁情报订阅：跟踪相关论坛帖与定价档位，更新对攻击者能力获取路径的假设，并在 SOC 剧本中增加对可疑 AI 生成恶意代码交付链路的检测与样本留存要求。"
+    },
+    {
+      "title": "微软人本 AI 准则草案与国安部长六大风险同窗",
+      "insight": "Microsoft AI 发布面向 MAI 的《Humanist AI Code of Conduct》首版草案并开放约六周公众咨询，强调人类控制、指令层级与不可覆盖的绝对约束（禁 WMD 援助、进攻性网络、大规模操纵等），拟指导 2027 年起模型开发。同期中国国家安全部部长署名文章提出政治安全、攻防工业化、泄密外泄等六类 AI 风险，并呼吁建设安全监管平台。两者层级与价值取向不同，但都表明大模型治理正从原则倡议进入可引用文本与监管能力建设阶段。",
+      "action": "本周对照微软准则草案与本地数据出境/模型使用政策，书面更新内部模型红线（进攻性网络、深度伪造、大规模操纵等不可覆盖项），并把供应商是否采纳类指令层级与关停开关写入采购验收清单；内容站点同步复核 Cloudflare 等平台的 Training/Search 分项策略。"
+    }
+  ],
+  "classifications": {
+    "2026-09-16-brief-eb588e0e1344#1": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-16-brief-eb588e0e1344#2": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-16-brief-eb588e0e1344#3": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-16-brief-eb588e0e1344#4": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-16-brief-eb588e0e1344#6": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    "2026-09-16-brief-eb588e0e1344#7": {
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    }
+  }
+}
