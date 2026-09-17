@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16",
+  "updatedAt": "2026-09-17",
   "terms": [
     {
       "term": "提示注入",
@@ -595,6 +595,20 @@
       "definition": "Cloudflare 对符合透明度与选择权要求的混合用途 AI 爬虫运营方的标识：站点可在保留搜索索引的同时拒绝同一爬虫用于模型训练（Disallow AI Training），并要求 Accountable 方提供训练/摘要退出路径与 URL 级可见性，使训练数据合规从 robots 声明推进到可阻断、可审计的配置项。",
       "theme": "governance",
       "dimension": "standards-frameworks"
+    },
+    {
+      "term": "OAuth资源指示符",
+      "en": "OAuth Resource Indicator",
+      "definition": "OAuth 保护资源元数据中的 resource 字段（RFC 9728）：客户端须校验其与目标资源一致，防止恶意 MCP 服务器诱导把合法授权服务器签发的访问令牌导向攻击者；rmcp 在 CVE-2026-63127 中因未做该一致性校验被列为高危。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    {
+      "term": "智能体费用熔断",
+      "en": "Agent Cost Circuit Breaker",
+      "definition": "为生产智能体设置的 API 调用速率、费用上限与异常循环告警：Mandiant 案例中某会计智能体失控循环不到一小时发出逾 15,000 次高成本调用并产生约 5 万美元云费用，说明非入侵场景下缺少费用护栏亦可造成业务与账单冲击。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }

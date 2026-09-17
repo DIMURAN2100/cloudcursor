@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-17",
+  "headline": "MCP 缺认证升级为 PAT 外泄与 OAuth 资源欺骗，编码助手会话与浏览器 AI 控制面同窗暴露，治理层以欧委会放缓倡议与上海公共测评平台追赶代理能力普及",
+  "execSummary": [
+    {
+      "title": "mcp-gitlab 未认证读 PAT，RMCP OAuth 资源欺骗同发",
+      "insight": "@zereight/mcp-gitlab 在 SSE=true 默认配置下对全部 MCP 工具不做认证，upload_markdown 的 file_path 无路径约束，可经 /proc/self/environ 窃取 GITLAB_PERSONAL_ACCESS_TOKEN 并完整接管账户（CVE-2026-61560，Critical，补丁 ≥2.1.27）；同日官方 Rust MCP SDK rmcp 披露未校验 OAuth Protected Resource 元数据 resource 字段，恶意 MCP 服务器可把合法授权服务器签发的令牌导向攻击者（CVE-2026-63127），另有未认证填满会话表的远程 DoS（CVE-2026-63128，修复 2.0.0）。共同机制是把 MCP 当本地便利总线时，缺认证、缺资源一致性与缺路径净化直接映射为云令牌失守。",
+      "action": "本周立即将 @zereight/mcp-gitlab 升至 ≥2.1.27、关闭未认证公网 SSE，轮换相关 GitLab PAT 并审计近仓/CI 变量；盘点基于 rmcp 的客户端升至 2.0.0，并验证 OAuth 资源元数据 resource 字段一致性校验（RFC 9728）已生效。"
+    },
+    {
+      "title": "Mandiant：编码助手会话被劫持引爆 Shai-Hulud 蠕虫",
+      "insight": "Mandiant《AI Risk and Resilience》披露已确认事件：攻击者劫持未具名 SaaS 厂商开发者的活跃 AI 编码助手会话，诱使其接受遭投毒的第三方依赖建议，经恶意 PyPI 包植入信息窃取木马并窃取 GitHub OAuth 令牌，再将自扩散蠕虫 Shai-Hulud 散布至约 100 个内部仓库并污染正式命名空间包造成二次感染。表明编码助手的依赖安装建议与长效 OAuth 持有已成为可转化为供应链蠕虫的实战入口，而非实验室演示。",
+      "action": "本周为 AI 编码助手启用依赖允许列表与校验和校验，禁止助手直接持有长效 OAuth/云密钥，依赖下载改经内部制品库；审计近两周助手建议安装的包与 GitHub OAuth 授权范围，对异常命名空间发布做紧急吊销。"
+    },
+    {
+      "title": "欧委会吁放缓自我改进，上海上线生成式 AI 安全测试平台",
+      "insight": "欧委会主席冯德莱恩在欧洲议会国情咨文中警告自我改进（self-recursive）模型与智能体逃逸等早期迹象将抬高黑客能力上限，拟邀请领先实验室讨论自行放缓，并推动与加、英在评估、验证与预警上合作，同时重申《AI Act》为护栏基础——属高层政策表态、非法案即时生效。同期上海“智测能手”公共平台于网安周发布，覆盖大模型测评、AIGC 标识、深度伪造检测与 MCP/SKILLS 多 Agent 代码审计，面向中小微普惠供给。两边路径不同，但都把治理重点从原则声明推到可执行的评测与企业可达服务。",
+      "action": "本周梳理本企业是否在沪或面向沪深等地客户需对接公共测评能力，把大模型/AIGC 标识与智能体代码审计纳入上线前清单；同步把欧委会“放缓/评估合作”叙事写入董事会 AI 风险简报，对照《AI Act》护栏义务做差距表，明确哪些依赖实验室自愿承诺、哪些已是硬合规。"
+    }
+  ],
+  "classifications": {
+    "2026-09-17-brief-31017450d77d#1": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-17-brief-31017450d77d#2": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-09-17-brief-31017450d77d#3": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-09-17-brief-31017450d77d#4": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-17-brief-31017450d77d#5": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    "2026-09-17-brief-31017450d77d#6": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    }
+  }
+}
