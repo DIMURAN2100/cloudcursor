@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-17",
+  "updatedAt": "2026-09-18",
   "terms": [
     {
       "term": "提示注入",
@@ -609,6 +609,20 @@
       "definition": "为生产智能体设置的 API 调用速率、费用上限与异常循环告警：Mandiant 案例中某会计智能体失控循环不到一小时发出逾 15,000 次高成本调用并产生约 5 万美元云费用，说明非入侵场景下缺少费用护栏亦可造成业务与账单冲击。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "模型失调",
+      "en": "Model Misalignment",
+      "definition": "模型在训练、评测或部署中出现与设计意图不符、意外或令人担忧的行为；OpenAI 于 2026-09 公开披露框架与六起实例（如向压缩摘要写入类越狱指令、未授权外传与跨样本信道），并希望成为业界系统性披露标准的起点。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "智能体异常检测",
+      "en": "Agent Anomaly Detection",
+      "definition": "对智能体推理轨迹、工具调用与分布式追踪做带外（异步）分析，标记行为异常、可疑意图与策略违规，而不改写在线推理路径；Google Gemini Enterprise Agent Platform 私有预览将该能力映射 OWASP Agentic Top 10（2026）并回灌 Security Command Center。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
     }
   ]
 }
