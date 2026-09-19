@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-19",
+  "headline": "编码代理插件发行层钉扎失效可致零点击 RCE，公开 MCP 配置与远程/本机 MCP 运行时暴露非人类身份缺口，NIST IR 8587 把 AI 代理签名令牌纳入短寿命与受众绑定基线",
+  "execSummary": [
+    {
+      "title": "Plugin4Shell：插件市场 SHA 钉扎可被同名分支劫持",
+      "insight": "Air 披露 Claude Code、Codex、Copilot 与 Gemini CLI 在解析插件市场“SHA 钉扎”时未校验检出对象确为承诺提交；攻击者控制插件仓库后可用与钉扎哈希同名的分支使检出落到恶意代码，配合默认后台自动更新形成零点击 RCE。Anthropic（Claude Code 2.1.179）与 OpenAI（Codex 0.146.0）已修复，Copilot 披露时仍未出补丁，Google 弃用 Gemini CLI 并引导迁移 Antigravity，既有安装面仍暴露。风险在发行层供应链假设被破坏，而非“骗模型”。",
+      "action": "本周盘点 Claude Code / Codex / Copilot / Gemini CLI 版本与插件来源：升级至已修复版本，停用或隔离未修复代理上的自动插件更新与非可信宿主市场，并审计非 GitHub 宿主上的插件源。"
+    },
+    {
+      "title": "公开 MCP 配置硬编码密钥与 Obot/本机 MCP 高危洞同日放大身份面",
+      "insight": "Hush 抽样约 8.2 万份公开 GitHub MCP 配置称约 12% 凭据槽写入硬编码字面量，其中约 55% 不像常见厂商令牌、传统密钥扫描易漏，约 24% 设计上宽范围且不过期；MCP 本意可提交共享，暴露的是智能体工具链非人类身份治理缺口，删除后仍可能留在 Git 历史。同日 Obot 远程 MCP URL 缺目标校验可致 SSRF、动态客户端注册缺受众校验可致令牌范围膨胀，process-compose MCP SSE 缺 Host/Origin 校验可被 DNS 重绑定驱动本机进程。",
+      "action": "本周扫描仓库中的 `.mcp.json`、`.cursor/mcp.json`、`.vscode/mcp.json` 等：清除硬编码密钥并改为密钥管理器或短寿命委托，对历史残留密钥在提供商侧轮换吊销；若自建 Obot 或启用 process-compose MCP SSE，升级至含修复版本、限制远程 MCP URL，并为本机 MCP 增加认证、关闭不必要控制工具暴露。"
+    },
+    {
+      "title": "NIST IR 8587 将 AI 代理签名令牌纳入联邦云身份基线",
+      "insight": "NIST 与 CISA 正式发布 IR 8587，要求访问/身份令牌原则上不超过一小时、高影响系统签名密钥至少每 90 天轮换，并强制显式 audience 等校验；权威报道指出文件明确覆盖使用签名令牌访问系统、数据与 API 的 AI 代理场景，但更广的智能体权限治理另案制定。遵循自愿，却与 SP 800-53 / FedRAMP 基线交叉引用。同期 CSA 将“AI 增强型攻击”与“AI 系统沦陷”分轨，提醒只加检测不评 RAG、或只测注入却放任长寿服务凭据都会留下盲区。",
+      "action": "本周对照 IR 8587：将智能体与 MCP OAuth 访问令牌有效期压至小时级、强制 audience，禁止令牌明文写入应用日志；并核查 Azure AI Foundry 租户确认 CVE-2026-85889 云侧自动修复已生效。"
+    }
+  ],
+  "classifications": {
+    "2026-09-19-brief-e06938e8fd1c#4": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}

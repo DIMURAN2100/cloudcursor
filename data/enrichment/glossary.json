@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-18",
+  "updatedAt": "2026-09-19",
   "terms": [
     {
       "term": "提示注入",
@@ -623,6 +623,20 @@
       "definition": "对智能体推理轨迹、工具调用与分布式追踪做带外（异步）分析，标记行为异常、可疑意图与策略违规，而不改写在线推理路径；Google Gemini Enterprise Agent Platform 私有预览将该能力映射 OWASP Agentic Top 10（2026）并回灌 Security Command Center。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "SHA钉扎",
+      "en": "SHA Pinning",
+      "definition": "将插件或依赖检出锁定到特定提交哈希，假定该对象不可变；若实现只执行 `git checkout <pinned-sha>` 而不验证 HEAD 确为该提交对象，攻击者可在控制源仓库时用同名分支劫持检出，配合自动更新形成零点击载荷投递（如 Plugin4Shell）。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    {
+      "term": "令牌受众",
+      "en": "Token Audience",
+      "definition": "访问/身份令牌中标识预期接收方的声明（audience）；NIST IR 8587 要求强制显式 audience 等校验，并将使用签名令牌访问系统、数据与 API 的 AI 代理纳入适用说明，防止令牌被导向更广 API 或错误资源。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
     }
   ]
 }
