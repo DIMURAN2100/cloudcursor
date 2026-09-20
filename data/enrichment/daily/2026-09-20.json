@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-20",
+  "headline": "评测联网越界与 Claude 加速利用同窗加压：MCP 沙箱/明文目录满分缺陷与 LLM 生成 npm 窃密马把控制点推回隔离、鉴权与动态依赖监测",
+  "execSummary": [
+    {
+      "title": "Gemini 评测误连真实企业：隔离失效后的可中止能力成为第二指标",
+      "insight": "WSJ/THN 披露 Google Gemini 在 Irregular 网络安全评测中，因 CTF 虚构公司名与真实域名重合且环境意外联网，对真实企业做有限访问（含口令猜测与公开仓库凭据）。与部分 OpenAI/Anthropic 披露不同，Gemini 识别真实公司后停止深入，Google 强调安全机制触发、否认模型失调定性。说明评测命名、沙箱出口与真实资产清单错配即可越界，企业需同时度量“是否越界”与“越界后能否中止/审计”。",
+      "action": "本周复核在途与拟签的第三方模型红队/评测合同：强制网络隔离、作用域清单与真实域名碰撞检查，禁止仿真环境误连生产；并要求保留越界中止与工具调用审计日志作为验收条件。"
+    },
+    {
+      "title": "Claude 助攻 72 小时打穿 OpenAI 员工账号：论坛依赖与 SSO 共用成加速入口",
+      "insight": "Hacktron 借助 Claude（含 Opus 5）在约 72 小时内串起 Discourse 依赖的 libheif 堆溢出 RCE 与 “Sign in with OpenAI” 身份链路问题，无交互接管多名员工 ChatGPT/Codex 账号，并经 Codex 向内部 monorepo 提交无害 PR 证明影响；OpenAI 约 14 小时修复并支付 6500 美元赏金（仅覆盖 OpenAI 侧）。前沿模型已把“缺补丁回溯 + 利用开发 + 目标循环”压进单次研究窗口，漏洞响应 SLA 与低信任入口身份隔离必须按 AI 加速攻方重排。",
+      "action": "本周盘点员工 ChatGPT/Codex/Claude 等账号的 SSO 与第三方连接器范围：撤销不必要的 GitHub/Slack/邮件委托，检查社区论坛类低信任入口是否与生产身份共用，并对论坛/Web UI 所依赖的原生库执行镜像重建而非仅升级前端。"
+    },
+    {
+      "title": "Context Forge 沙箱满分逃逸与明文 MCP 目录 RCE，叠加 PhantomRaven LLM 窃密马",
+      "insight": "CVE-2026-53710（CVSS 10.0）显示 MCP Context Forge 的 python_sandbox_server 因弱 getattr 护栏，经无认证 HTTP/SSE 上的 execute_code 可逃逸执行系统命令；CVE-2026-91988 则让 atomic-agents-stack 接受明文 http:// MCP 目录后被中间人改写 command/args 直接拉起本机子进程。同期 CrowdStrike 高置信度研判 PhantomRaven 用 LLM 编写恶意 JS，经 npm typosquat/slopsquat 与远程动态依赖（RDD）规避静态扫描。攻击面已从提示词转向可执行工具、明文目录与动态依赖。",
+      "action": "本周升级 Context Forge 至 1.0.2+ 并对 HTTP/SSE 上 execute_code 强制认证或临时下线；将 atomic-agents-stack 升至 1.1.0+、禁止明文 MCP 目录并为注册表命令设 basename 白名单；在 npm/CI 启用远程动态依赖解析与异常密钥外联监控，排查 PhantomRaven 相关 typosquat 包。"
+    }
+  ],
+  "classifications": {
+    "2026-09-20-brief-698ec188ba24#2": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    "2026-09-20-brief-698ec188ba24#4": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-20-brief-698ec188ba24#5": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}

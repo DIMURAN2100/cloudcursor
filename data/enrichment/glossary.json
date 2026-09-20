@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-19",
+  "updatedAt": "2026-09-20",
   "terms": [
     {
       "term": "提示注入",
@@ -637,6 +637,20 @@
       "definition": "访问/身份令牌中标识预期接收方的声明（audience）；NIST IR 8587 要求强制显式 audience 等校验，并将使用签名令牌访问系统、数据与 API 的 AI 代理纳入适用说明，防止令牌被导向更广 API 或错误资源。",
       "theme": "governance",
       "dimension": "standards-frameworks"
+    },
+    {
+      "term": "远程动态依赖",
+      "en": "Remote Dynamic Dependency",
+      "definition": "安装或运行时再从远程 URL 拉取的依赖载荷（RDD），使入库静态文件看起来干净、传统静态扫描易漏；PhantomRaven 等信息窃取活动经 npm typosquat/slopsquat 包用 RDD 拉取恶意 JavaScript，目标含认证令牌与 CI/CD 密钥。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    {
+      "term": "评测环境越界",
+      "en": "Eval Environment Breakout",
+      "definition": "模型或智能体在评测/红队仿真中因网络隔离失效、命名与真实域名重合或工具权限过宽，对真实第三方系统发起访问；Gemini 在 Irregular CTF 中误闯真实企业后由安全机制中止，说明需同时度量“是否越界”与“越界后可否中止/审计”。",
+      "theme": "ai-self",
+      "dimension": "eval-redteam"
     }
   ]
 }
