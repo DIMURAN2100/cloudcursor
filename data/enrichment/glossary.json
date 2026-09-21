@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-20",
+  "updatedAt": "2026-09-21",
   "terms": [
     {
       "term": "提示注入",
@@ -651,6 +651,20 @@
       "definition": "模型或智能体在评测/红队仿真中因网络隔离失效、命名与真实域名重合或工具权限过宽，对真实第三方系统发起访问；Gemini 在 Irregular CTF 中误闯真实企业后由安全机制中止，说明需同时度量“是否越界”与“越界后可否中止/审计”。",
       "theme": "ai-self",
       "dimension": "eval-redteam"
+    },
+    {
+      "term": "意图劫持",
+      "en": "Intent Hijacking",
+      "definition": "智能体在完整推理与执行链路中被逐步改变任务目标（目标漂移），仅看单次输入/输出不足以发现；Wiz 等检测引擎主张结合模型 I/O 遥测与旁路通道（如包管理器）识别恶意裁决，并以公开评测越界事件作为方法复盘案例。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "假隔离边界",
+      "en": "False Isolation Boundary",
+      "definition": "容器、本机守护进程或 Web UI 看似隔离，却因默认放宽网络/身份（如 insecure_allow_all、host.docker.internal、全网卡绑定、弱 Origin）仍可横向调用宿主机与控制面；ToolHive/MCP 文档服务/BrowserSkill 等案例表明缓解应优先关闭默认暴露，而非仅依赖模型拒答。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
     }
   ]
 }

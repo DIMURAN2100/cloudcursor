@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-21",
+  "headline": "智能体运行时默认放宽成主线：ToolHive/MCP 文档服务/BrowserSkill 假边界与 LiteLLM 嵌套 SSRF、WP 插件密钥外泄同窗加压控制面",
+  "execSummary": [
+    {
+      "title": "本地 MCP/浏览运行时默认互通：隔离变成可穿透的假边界",
+      "insight": "ToolHive（CVE-2026-58197，CVSS 8.8）默认 insecure_allow_all 网络权限，MCP 容器可经 host.docker.internal 调用宿主机与其他工具；mcp-documentation-server（CVE-2026-54504）把未认证文档管理 UI 绑到全网卡；BrowserSkill（CVE-2026-94111）弱 Origin 规则让恶意扩展伪装为合法客户端并篡改回传智能体的页面/DOM/截图。攻击面已从提示词落到默认网络与身份边界是否真实存在。",
+      "action": "本周清点开发者工作站与 CI 中的 BrowserSkill、ToolHive 及自建 MCP 文档服务：未达 CLI 0.30.1+/Studio 0.38.0+/文档服务 1.13.1+/BrowserSkill 修复版的一律停用外网可达部署并升级；禁用或严格限制 host.docker.internal，控制面强制绑定 127.0.0.1 与认证。"
+    },
+    {
+      "title": "LiteLLM 嵌套 user_config 绕过顶层 SSRF 校验，网关补丁需单独核验",
+      "insight": "CVE-2026-59823 显示 LiteLLM Proxy <1.83.9 的 is_request_body_safe 只拦顶层 api_base/base_url，未检查 user_config 内嵌 api_base；持有有效虚拟密钥即可构造出站路由打内外网。该缺陷不同于已进 CISA KEV 的 MCP 认证问题（CVE-2026-59822），同产品线需单独补丁与回归。",
+      "action": "本周将 LiteLLM Proxy 升至 1.83.9+，并用带 user_config.api_base 的虚拟密钥请求做回归：确认任意内外网目标均被拒绝，同时复核 KEV 相关 MCP 认证补丁是否仍生效。"
+    },
+    {
+      "title": "公开站点 AI 插件泄钥与智能体记忆 IDOR：凭据与跨用户记忆同时失守",
+      "insight": "GPTranslate ≤2.34.6（CVE-2026-89278）在默认客户端模式下用前端可逆变换暴露 OpenAI/DeepL/xAI/Gemini/Claude 等明文 API 密钥，未认证访客抓公开页即可盗用计费凭据。同期 AI Agent Automation 平台 CVE-2026-54519/54520 允许已认证用户跨 agentId 读写清空他人记忆，且文件步骤 path.resolve 可越出批准目录，演示记忆越权与文件工具组合风险。",
+      "action": "本周扫描 WordPress 是否安装 GPTranslate ≤2.34.6，升级至 2.34.7+ 并轮换全部已暴露的 AI 提供商密钥；对智能体记忆 API 与文件步骤做对象级授权与路径沙箱审计，禁止跨用户 agentId 直传操作。"
+    }
+  ],
+  "classifications": {
+    "2026-09-21-brief-77beb208ff78#3": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-21-brief-77beb208ff78#4": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-21-brief-77beb208ff78#6": {
+      "theme": "ai-self",
+      "dimension": "data-model"
+    }
+  }
+}
