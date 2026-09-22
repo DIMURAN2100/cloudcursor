@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21",
+  "updatedAt": "2026-09-22",
   "terms": [
     {
       "term": "提示注入",
@@ -665,6 +665,20 @@
       "definition": "容器、本机守护进程或 Web UI 看似隔离，却因默认放宽网络/身份（如 insecure_allow_all、host.docker.internal、全网卡绑定、弱 Origin）仍可横向调用宿主机与控制面；ToolHive/MCP 文档服务/BrowserSkill 等案例表明缓解应优先关闭默认暴露，而非仅依赖模型拒答。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
+    },
+    {
+      "term": "护栏外置",
+      "en": "Externalized Guardrails",
+      "definition": "将隔离、凭证与强制执行逻辑放在代理不可改写的控制面（如独立虚拟机/容器与出站代理），而非依赖沙箱内工具自行约束；Codex Heapjack/Overpatch 表明同堆令牌与 apply_patch 扩权可使 read-only 模式失守。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "配置字段代码执行",
+      "en": "Config-Field Code Execution",
+      "definition": "将模型或量化配置中的字段（如 quant_dtype）未经白名单校验直接传入 eval/动态构造，使加载不可信 Hugging Face 等工件即可在主机执行任意代码；LMDeploy CVE-2026-33625 属典型模型工件供应链路径。",
+      "theme": "infra-cve",
+      "dimension": "model-supply"
     }
   ]
 }

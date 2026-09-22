@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-22",
+  "headline": "执行边界须外置成主线：Codex 双路径沙箱逃逸与 LMDeploy 控制面/模型配置 RCE 同窗落锤，治理侧同步发布智能体漏洞蓝皮书",
+  "execSummary": [
+    {
+      "title": "Codex 只读沙箱可被同堆令牌与补丁扩权击穿，护栏不能放在代理内部",
+      "insight": "Heapjack 利用 Desktop 默认 node_repl 中可信/不可信 JS 共享 V8 堆，经 getHeapSnapshot 窃取授权令牌并伪造父进程请求，在 read-only 下无提示执行主机命令；Overpatch 借 CLI apply_patch 按父目录扩权，经符号链接改写家目录 .zshrc。同类结构此前亦见于 Cursor、Gemini CLI 等：沙箱内写配置、沙箱外可信工具再执行。隔离与凭证必须落在代理不可改写的控制面。",
+      "action": "本周清点全部 Codex Desktop 与 CLI（含 CI runner），核验 Desktop ≥26.818.21641、CLI ≥0.149.0；未达标一律停用对不可信仓库的自动分析，并将第三方克隆仓库默认按不可信输入处理，禁止仅依赖 read-only 作为主机隔离保证。"
+    },
+    {
+      "title": "LMDeploy 双路径 RCE：DistServe pickle 控制面与 Hugging Face 量化配置 eval",
+      "insight": "CVE-2025-66455（CVSS 9.8）在启用 DistServe/PD 解耦时，未强制 API Key 的 /distserve/p2p_connect 可对接恶意 ZMQ 并用 recv_pyobj/pickle 以服务进程权限 RCE；CVE-2026-33625 则将 quant_dtype 未经校验传入 eval(torch.{quant_dtype})，恶意 AWQ 类模型配置即可在加载时执行任意 Python。失败点在工具链信任落点，而非模型输出内容。",
+      "action": "本周盘点生产与实验环境 LMDeploy：启用 DistServe 的升至 ≥0.16.0 并关闭公网可达的 /distserve/*、强制 API Key；其余加载路径至少升至 0.12.3+；禁止无签名/无来源核验拉取 Hugging Face 量化配置，对 quant_dtype 等字段改白名单解析并禁用动态 eval。"
+    },
+    {
+      "title": "国内首部智能体漏洞治理蓝皮书发布，攻防叙事转向任务执行安全",
+      "insight": "公安部第三研究所网络安全法律研究中心联合 360 等编制的《2026智能体安全漏洞治理蓝皮书》于 9 月 21 日公开，指出智能体风险已从内容输出延伸至系统操作与现实业务，并提出继承性、耦合性等特征与全生命周期治理框架；非监管处罚或强制标准生效。与 Codex/LMDeploy 同日对照，说明技术与政策叙事正共同从内容安全转向任务执行安全。",
+      "action": "本周对照蓝皮书全生命周期框架，更新智能体与 MCP/推理网关资产台账，明确运行控制责任人与漏洞响应接口人，并将受控智能体挖洞能力纳入既有漏洞发现—验证—处置闭环而非无边界放开自动利用。"
+    }
+  ],
+  "classifications": {
+    "2026-09-22-brief-803579c9dbbc#1": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-09-22-brief-803579c9dbbc#3": {
+      "theme": "infra-cve",
+      "dimension": "model-supply"
+    },
+    "2026-09-22-brief-803579c9dbbc#4": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    "2026-09-22-brief-803579c9dbbc#5": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}
