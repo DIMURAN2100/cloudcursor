@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-23",
+  "headline": "智能体与 MCP/RAG 编排层集中暴露「身份形同虚设 + 危险能力默认开启」：MaxKB 提示注入直达 shell、Atlassian MCP 代操作员、RAG/导出落盘越界同窗落地，攻防两侧同步把大模型嵌入决策环",
+  "execSummary": [
+    {
+      "title": "MaxKB 挂载工具后默认暴露 execute，间接提示即可满分命令执行",
+      "insight": "CVE-2026-77521（CVSS 10.0）确认：开源企业 AI 助手 MaxKB 在挂载工具、MCP、Skill 或子应用时，经 SandboxShellBackend 向智能体暴露未排除且未纳入人工确认的 execute；未受信聊天或 RAG/上传文档间接提示可在源码部署（默认沙箱关闭）上以应用用户执行命令，官方容器的 shell=True/gosu 包装仍可被元字符绕过。失败点是工具闸控与沙箱默认态，而非模型拒答能力。",
+      "action": "本周盘点全部 MaxKB 实例并升至 v2.10.5-lts 及以上；关闭非业务必需的 shell/代码执行能力，复核 MAXKB_SANDBOX 已开启且容器以非 root 运行，对 RAG/上传文档入口按不可信输入做隔离验收。"
+    },
+    {
+      "title": "MCP/RAG 控制面三连：未认证代操作员、摄入 XSS、批导出路径穿越",
+      "insight": "mcp-atlassian（CVE-2026-77244，CVSS 10.0）在 HTTP 传输未校验真实用户身份时回退运营者环境变量全局凭据，网络可达端点即可按操作员权限读写 Atlassian；LightRAG WebUI（CVE-2026-86062）以未消毒 HTML 渲染助手内容，摄入文档即可在管理员会话执行脚本并窃取 localStorage 令牌；NotebookLM MCP（CVE-2026-61647）batch_to_vault 可控 vault_dir/slug_prefix 写出预期目录外。共性是身份与摄入/导出边界未按最小权限落地。",
+      "action": "本周清查对外暴露的 mcp-atlassian 与同类 MCP HTTP 端点，升至 0.22.0+ 并禁用环境变量全局令牌回退、改为按调用者短时凭证；LightRAG 对齐 ≥1.5.5 并对回答渲染启用 HTML 消毒；NotebookLM MCP 按安全公告升级并对导出路径做白名单。"
+    },
+    {
+      "title": "CLOSEDQUORUM 把战术决策外包多模型投票，CAIRN 以认知工件扩展狩猎",
+      "insight": "Cisco Talos 披露研究级 Windows 植入 CLOSEDQUORUM：下一步动作交由 DeepSeek、Qwen、Mistral、Gemini 等商业大模型投票表决以窃取凭证与钱包，弱化对自建 C2 基础设施依赖；公开材料写明尚未确认在野部署。同步开源的 CAIRN 用提示模板、供应商 API 端点等「认知工件」元数据做分层关联，无需运行样本即可回溯 LAMEHUG 等早期 AI 集成木马，检测指标需同时覆盖供应商调用痕迹与传统 IOC。",
+      "action": "本周在威胁狩猎流水线试点增加对 LLM 供应商 API 端点、嵌入提示模板与多模型编排痕迹的检测用例，可参考 CAIRN 认知工件分类做内部规则草案，并与既有 C2/域名封锁策略并行而非替代。"
+    }
+  ],
+  "classifications": {
+    "2026-09-23-brief-36314229d235#1": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-09-23-brief-36314229d235#3": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-23-brief-36314229d235#4": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-23-brief-36314229d235#6": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}
