@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23",
+  "updatedAt": "2026-09-24",
   "terms": [
     {
       "term": "提示注入",
@@ -693,6 +693,20 @@
       "definition": "植入将下一步战术动作委托给多个商业大模型投票表决（如 CLOSEDQUORUM 调用 DeepSeek/Qwen/Mistral/Gemini），以弱化对攻击者自建固定 C2 基础设施的依赖；Talos 公开材料写明该样例尚未确认在野部署，但提示封锁单一域名的策略将逐步失效。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "凭据池化中继",
+      "en": "Credential-Pooling Relay",
+      "definition": "自托管 LLM 中继（又称 transfer station，如 Claude Relay Service / sub2api）将订阅或 API 凭据池化后对外转售，使提供商难以按真实用户 IP/地域执行访问控制，并可支撑大规模查询与模型蒸馏类滥用；Team Cymru 测绘已发现超 8 万台，宜纳入出口与云资产狩猎指纹。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "向量知识投毒",
+      "en": "Vector Knowledge Poisoning",
+      "definition": "向智能体向量库/runbook 等可检索知识面写入恶意内容，借 RAG 检索结果操纵后续 MCP 工具调用；IBM FTM CVE-2026-18875 表明未认证写入接口即可在理论上触发未授权支付或数据外泄，需对知识写入面强制认证、审计与内容校验。",
+      "theme": "ai-self",
+      "dimension": "data-model"
     }
   ]
 }

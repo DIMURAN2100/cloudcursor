@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-24",
+  "headline": "AI 网关与支付类智能体把「默认未认证的管理/知识写入面」直接接到 MCP 工具执行；众测通报与中继测绘同步暴露应用漏洞与模型访问供应链两端",
+  "execSummary": [
+    {
+      "title": "Bifrost 网关默认关闭管理认证，未认证 stdio MCP 注册即可宿主 RCE",
+      "insight": "CVE-2026-90898（CVSS 9.8）确认：开源 AI 网关 Bifrost 经管理 API 注册 stdio 型 MCP 客户端时，会立刻以网关进程用户执行调用方指定命令，无需完成 MCP 握手；默认 governance.auth_config.is_enabled=false 使任意可达管理面的调用者等同本地管理员，并可接触上游模型密钥。失败点是管理面默认信任与危险 MCP 能力默认开放，而非模型拒答。",
+      "action": "本周清查 Bifrost 及其他 AI 网关实例，将 HTTP transport 升至 2.1.0+，强制开启管理认证并把管理端口限制在内网或零信任入口；禁用或审批默认开放的 stdio/本地命令类 MCP，并轮换可能暴露的上游 API 密钥。"
+    },
+    {
+      "title": "IBM FTM 智能体向量库可未认证写入，RAG runbook 可劫持支付类 MCP",
+      "insight": "CVE-2026-18875（CVSS 7.3）显示：IBM Financial Transaction Manager for OpenShift 的 AI 智能体服务在 runbook 写入接口未认证，攻击者可向向量库插入恶意 runbook，借 RAG 检索结果操纵后续 MCP 工具调用，理论上触发未授权支付或支付数据外泄。公开材料未声称在野利用，但 SSVC 标注 automatable=yes，且无临时缓解措施。",
+      "action": "本周盘点 FTM for OpenShift 4.0.6–4.0.10 实例并升级至 4.0.11.0；复核 AI agent / runbook / MCP 支付工具是否对未认证网络可达，对支付等高危工具调用强制策略拦截与人工确认。"
+    },
+    {
+      "title": "前沿模型凭据池化中继超 8 万台；CNCERT 众测把注入与智能体越权写成产业清单",
+      "insight": "Team Cymru 测绘显示自托管 LLM 中继（transfer station）已超 8 万台，将订阅/API 凭据池化转售以绕过地域与身份控制，并可支撑大规模查询与蒸馏类滥用；同期 CNCERT 通报国内众测累计 873 个漏洞，提示注入、密钥硬编码、输出致 RCE 与 Claw 类代理越权并列典型风险。攻击面同时落在应用漏洞与模型访问供应链两端。",
+      "action": "本周在出口与云资产狩猎中加入 LLM 中继/开源 API 网关指纹（参考 Team Cymru 标签族），查处违规凭据共享与异常高上传比流量；对照 CNCERT 通报对自研/采购大模型与智能体做提示注入、密钥硬编码、输出执行与代理越权回归测试。"
+    }
+  ],
+  "classifications": {
+    "2026-09-24-brief-5b138ce4e755#3": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    },
+    "2026-09-24-brief-5b138ce4e755#4": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-24-brief-5b138ce4e755#5": {
+      "theme": "ai-self",
+      "dimension": "eval-redteam"
+    }
+  }
+}
