@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24",
+  "updatedAt": "2026-09-25",
   "terms": [
     {
       "term": "提示注入",
@@ -705,6 +705,20 @@
       "term": "向量知识投毒",
       "en": "Vector Knowledge Poisoning",
       "definition": "向智能体向量库/runbook 等可检索知识面写入恶意内容，借 RAG 检索结果操纵后续 MCP 工具调用；IBM FTM CVE-2026-18875 表明未认证写入接口即可在理论上触发未授权支付或数据外泄，需对知识写入面强制认证、审计与内容校验。",
+      "theme": "ai-self",
+      "dimension": "data-model"
+    },
+    {
+      "term": "特殊令牌注入",
+      "en": "Special Token Injection",
+      "definition": "将 ChatML 等角色分隔符字面量植入网页等不可信外部内容，在拼入 LLM 上下文且自托管端点（如默认不过滤的 vLLM/Ollama）解析为真实系统/操作员轮次时，伪造指令边界并驱动沙箱命令；Decepticon CVE-2026-61732 要求在不可信内容写入模型前做特殊令牌过滤或转义。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
+    },
+    {
+      "term": "答案投毒",
+      "en": "Answer Poisoning",
+      "definition": "通过 GEO 优化帖文、PDF、假客服页与评论等污染检索语料，使 ChatGPT、Gemini、Google AI Overviews 等在查询品牌时输出虚假电话、邮箱或登录页；属公开研究观测，企业应将生成式搜索中的联络点纳入巡检并在官网固化权威入口。",
       "theme": "ai-self",
       "dimension": "data-model"
     }
