@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-25",
+  "updatedAt": "2026-09-26",
   "terms": [
     {
       "term": "提示注入",
@@ -721,6 +721,20 @@
       "definition": "通过 GEO 优化帖文、PDF、假客服页与评论等污染检索语料，使 ChatGPT、Gemini、Google AI Overviews 等在查询品牌时输出虚假电话、邮箱或登录页；属公开研究观测，企业应将生成式搜索中的联络点纳入巡检并在官网固化权威入口。",
       "theme": "ai-self",
       "dimension": "data-model"
+    },
+    {
+      "term": "BragJack",
+      "en": "BragJack",
+      "definition": "Forever Security 披露的攻击手法：恶意浏览器扩展劫持内置 AI 助手所信任的页面通道，在零点击条件下向 Chrome（Gemini）、Edge、Opera Neon、Perplexity Comet、Claude in Chrome 等下发指令，影响面可含本地文件、音视频设备、截屏与浏览器代理操控；缓解需组合扩展准入与助手敏感能力默认拒绝。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "导入期载荷",
+      "en": "Import-time Payload",
+      "definition": "供应链植入体不在 install/postinstall 钩子触发，而在 Python import 或 Agent 插件注册时执行的投毒手法；MemTensor MemOS 相关包中的 sckit 即属此类，可窃取多生态凭据并向其他包管理器扩散，SBOM 与扫描需覆盖运行时加载路径而非仅安装脚本。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
     }
   ]
 }

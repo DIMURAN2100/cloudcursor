@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-26",
+  "headline": "企业 AI 风险同步落在平台数据面与 MCP/Agent 控制面：未认证 SQL/协议旁路可直达业务库，记忆插件供应链与合法智能体框架已成事后控制基础设施",
+  "execSummary": [
+    {
+      "title": "ServiceNow AI Platform 未认证 SQL 注入直连实例库；DBHub MCP 被 DNS 重绑定绕过即可读写数据库",
+      "insight": "CVE-2026-13016（CVSS 9.3）确认：特定条件下未认证用户可对 ServiceNow AI Platform 底层数据库执行任意 SQL，厂商已向托管实例推送更新并提供自托管补丁，暂无在野利用证据。同期 DBHub CVE-2026-61742 显示 HTTP 传输下未认证 `/mcp` 仅靠 Origin/Host 主机名相等性校验，可被 DNS 重绑定绕过，恶意网页无需提示注入即可调用 MCP 工具；另 CVE-2026-61788 表明 `readonly=true` 未真正落到只读连接。平台 AI 模块与 MCP 数据面补丁优先级须与核心业务系统同级。",
+      "action": "本周由平台负责人核验 ServiceNow 实例（含自托管）是否已应用 KB3159623/CVE-2026-13016 更新；清点内网 DBHub，升级至 ≥0.22.6，关闭或强制鉴权 MCP HTTP 暴露面，并用真实只读数据库账号回归验证 readonly 开关。"
+    },
+    {
+      "title": "Zammad/Cline 智能体控制台可致 RCE 或本机劫持；BragJack 零点击污染浏览器内置 AI 助手通道",
+      "insight": "Zammad CVE-2026-84462：7.1.2 前版本中 AI Agent 配置安全过滤可被特制字段绕过，具备编辑权限的管理员可在托管服务器执行任意命令。Cline CVE-2026-59723：Hub 的 `/browser` WebSocket 未校验 Origin，默认未设 `ROOM_SECRET` 时授权恒通过，恶意网页可读写工作区/会话、篡改 MCP 与模型配置，并在默认 autoApprove 下触发命令执行。Forever Security 的 BragJack 研究进一步表明：恶意扩展可劫持 Chrome/Edge/Opera/Perplexity/Claude in Chrome 等内置助手信任通道，零点击下发指令并触及本地文件与代理能力。",
+      "action": "本周将 Zammad 升至 ≥7.1.2、Cline 升至 ≥3.0.30；对本机 Hub/仪表盘强制设置 ROOM_SECRET、禁用默认 auto-approve，并收紧浏览器扩展准入与内置 AI 助手敏感能力默认拒绝策略。"
+    },
+    {
+      "title": "MemTensor 记忆组件在 import/插件注册期投毒窃凭据；Carbonato 把 Hermes Agent 用作 Docker 失陷后的自然语言 C2",
+      "insight": "Semgrep 等确认 MemTensor MemOS 相关合法 npm/PyPI 包被植入 sckit（约 9 月 23 日恶意版本），载荷不在 install 钩子触发，而在 Python import 或 OpenClaw 插件注册时执行，用于窃取 npm、PyPI、GitHub、AWS、Hugging Face 等凭据。Malwarebytes 披露 Carbonato：攻击未认证 Docker API（2375），植入开源 Hermes Agent，经 Telegram 以自然语言指令自主执行终端命令并优先搜集 AI API 密钥——合法智能体框架已成为在野事后控制层。",
+      "action": "本周按 Semgrep IoC 回溯 `@memtensor/*`、MemoryOS 等依赖并轮换可能接触过的 GitHub/云/HF 令牌；扫描关闭未认证 Docker API（尤其 2375），检出 Hermes Agent 等未批准框架及异常 Telegram 外联，按密钥泄露事件轮换下游模型与云凭证。"
+    }
+  ],
+  "classifications": {
+    "2026-09-26-brief-8dab9e8bab54#6": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-09-26-brief-8dab9e8bab54#7": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    }
+  }
+}
