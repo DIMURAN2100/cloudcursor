@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-26",
+  "updatedAt": "2026-09-27",
   "terms": [
     {
       "term": "提示注入",
@@ -735,6 +735,20 @@
       "definition": "供应链植入体不在 install/postinstall 钩子触发，而在 Python import 或 Agent 插件注册时执行的投毒手法；MemTensor MemOS 相关包中的 sckit 即属此类，可窃取多生态凭据并向其他包管理器扩散，SBOM 与扫描需覆盖运行时加载路径而非仅安装脚本。",
       "theme": "infra-cve",
       "dimension": "dev-supply"
+    },
+    {
+      "term": "钱包拒绝服务",
+      "en": "Denial of Wallet",
+      "definition": "持有效模型 API 密钥向提供商发起大量可计费请求以耗尽付费额度的攻击（又称 AI API drain）；x47.c 等地下僵尸网络已将其作为可售卖模块，缓解需支出上限、关闭盲目自动充值并将异常账单纳入密钥轮换告警。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "自我复制提示注入",
+      "en": "Self-replicating Prompt Injection",
+      "definition": "注入在完成对抗目标的同时，诱导模型在公开出站通道（如外发邮件）全文复述自身，从而跨会话传播，形态类似蠕虫；OpenAI Alignment 在 GPT-Red 自博弈训练中观察到该形态，目前仅见于评测模拟。防御应禁止智能体未确认即复述或自动外发不可信内容。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
     }
   ]
 }
