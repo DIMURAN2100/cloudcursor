@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-27",
+  "updatedAt": "2026-09-28",
   "terms": [
     {
       "term": "提示注入",
@@ -749,6 +749,20 @@
       "definition": "注入在完成对抗目标的同时，诱导模型在公开出站通道（如外发邮件）全文复述自身，从而跨会话传播，形态类似蠕虫；OpenAI Alignment 在 GPT-Red 自博弈训练中观察到该形态，目前仅见于评测模拟。防御应禁止智能体未确认即复述或自动外发不可信内容。",
       "theme": "ai-self",
       "dimension": "prompt-injection"
+    },
+    {
+      "term": "语义缓存串租",
+      "en": "Semantic Cache Cross-Tenant Leak",
+      "definition": "多租户 LLM 代理的语义缓存因租户作用域与元数据键不一致，使持有效虚拟密钥的用户可提交语义相近提示，读取缓存中其他租户的响应（可含 PII）；LiteLLM CVE-2026-89032 属已确认机密性缺陷，缓解需升级含隔离修复的版本或临时关闭跨租户共享语义缓存并轮换密钥。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "Always-Allow 权限",
+      "en": "Always-Allow Permission",
+      "definition": "智能体/客户端对 MCP 等工具授予的“始终允许”类持久批准：一旦给出，后续同类调用可无二次确认执行；OX 演示显示恶意 MCP 可先获无关文件读取批准，再在无提示下读取 .env 等敏感文件，模型层恶意内容检测仅是尽力启发而非可靠撤销边界，敏感工具应改为一次性确认并留审计。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }

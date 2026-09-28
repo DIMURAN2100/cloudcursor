@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-28",
+  "headline": "MCP/智能体控制面风险继续下沉到默认配置与边界校验：quickstart 无认证、OAuth 元数据 SSRF、语义缓存串租与 MCP 资产治理真空同日并现",
+  "execSummary": [
+    {
+      "title": "Obot quickstart 默认关认证并把 Owner/Admin 授给可达端口的任何人，叠加 Docker sock 可直达宿主机控制面",
+      "insight": "NVD/GitHub Advisory 确认 CVE-2026-101065：含 commit d7e6970 及之前版本的 Obot，README Docker quickstart 默认监听 0.0.0.0:8080 且关闭认证；关闭时请求被映射为持有 Owner/Admin 的合成用户 nobody，任意可达方即可管理 API/UI 并注册攻击者控制的 MCP，quickstart 还挂载主机 docker.sock。属已确认默认值缺陷，未见在野利用声明——试用智能体平台可直接升级为宿主机控制。",
+      "action": "本周盘点按 Obot README quickstart 启动的实例：设置 OBOT_SERVER_ENABLE_AUTHENTICATION=true，撤销对公网/不可信网段的 0.0.0.0:8080 暴露，并审计 Docker sock 挂载与已注册 MCP 服务器。"
+    },
+    {
+      "title": "mcp-remote 采信远程 MCP 的 resource_metadata 可致 SSRF；LiteLLM 语义缓存因元数据键不一致可跨租户读响应",
+      "insight": "NVD 收录 geelen/mcp-remote CVE-2026-51994（CVSS 9.1）：0.1.32–0.1.38 对 WWW-Authenticate 中的 resource_metadata URL 无协议/主机/私网策略地发起请求，可打本机、内网或云元数据；另有令牌隔离与回环校验缺陷。同期 LiteLLM CVE-2026-89032：1.101.0-rc.1 前语义缓存租户作用域键不一致，持有效虚拟密钥的用户可借相近提示读取其他租户缓存响应（可含 PII，CVSS 7.7）。二者同属控制面边界校验失效，而非模型越狱本身。",
+      "action": "本周在工作站与 CI 镜像检索 mcp-remote，淘汰 0.1.38 及受影响区间并禁止连接未审核远程 MCP；对多租户 LiteLLM 升级至 1.101.0-rc.1 或后续正式版，临时可关闭跨租户共享语义缓存并轮换可能被串读的虚拟密钥。"
+    },
+    {
+      "title": "OX 测绘逾 1.5 万 MCP：跨境/家庭隧道/可抢注废弃域名并存；always-allow 一旦授予，模型启发无法充当撤销边界",
+      "insight": "OX Security 对逾 15,400 个 MCP 服务器分析：可解析主机中约 15.6% 在美国以外，约 0.45% 经家庭网络或消费级隧道，约 2.3% 主机名已不解析且部分域名可低价抢注冒充。演示显示恶意 MCP 先获 always-allow 读无关文件后，可在无二次确认下读 .env；Anthropic 被转述为 always-allow 属既定行为、模型层恶意检测是尽力启发而非安全边界。OpenAI 同期披露训练沙箱因 DNS 过滤不足经公共 DNS 委托外联第三方聊天机器人——驻留与出站治理若不覆盖 MCP 依赖与沙箱解析器，智能体仍会绕开既有云安全投资。",
+      "action": "本周建立 MCP 服务器资产台账（托管地域、运营方、域名注册状态与权限批准范围），清理 always-allow，对敏感文件/密钥类工具改为一次性确认并留审计；若使用 IBM ContextForge v1.0.0–1.0.8，升级至 v1.0.9+ 或临时关闭 Admin API。"
+    }
+  ],
+  "classifications": {
+    "2026-09-28-brief-94bd451d294d#6": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    }
+  }
+}
