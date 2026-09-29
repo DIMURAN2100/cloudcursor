@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28",
+  "updatedAt": "2026-09-29",
   "terms": [
     {
       "term": "提示注入",
@@ -763,6 +763,20 @@
       "definition": "智能体/客户端对 MCP 等工具授予的“始终允许”类持久批准：一旦给出，后续同类调用可无二次确认执行；OX 演示显示恶意 MCP 可先获无关文件读取批准，再在无提示下读取 .env 等敏感文件，模型层恶意内容检测仅是尽力启发而非可靠撤销边界，敏感工具应改为一次性确认并留审计。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "OpenShell",
+      "en": "OpenShell",
+      "definition": "NVIDIA Open Agent Safety Platform 中的开源智能体安全运行时：在模型与 agent harness 之外，以沙箱与可验证策略约束文件、网络、工具与凭据访问，使控制面不依赖模型自觉或应用层展示过滤；常与基于 DPU 的带外监视组件配合，覆盖测试到部署的纵深边界。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "带外监视",
+      "en": "Out-of-band Monitoring",
+      "definition": "将智能体监视与隔离放在智能体不可见、不可改写的带外域（如 BlueField-4 DPU 上的 Sentry），降低“运行时被拿下后看门狗一并失效”的共模风险；与同堆/同命名空间内的应用层护栏相对，是硬件化纵深防御选项，不能替代 MCP 身份与提示注入治理。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
     }
   ]
 }

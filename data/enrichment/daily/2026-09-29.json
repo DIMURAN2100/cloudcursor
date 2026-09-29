@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-29",
+  "headline": "智能体安全同日向两端延伸：NVIDIA 把可执行边界下沉到 OpenShell/DPU 带外监视，MCP 工具链则以 ACL 旁路、命令注入、SSRF 与令牌重放继续传统漏洞化",
+  "execSummary": [
+    {
+      "title": "NVIDIA 发布 Open Agent Safety Platform：OpenShell 沙箱策略与 BlueField-4 Sentry 带外隔离，把控制面移出模型与 agent harness",
+      "insight": "9 月 28 日 NVIDIA 宣布以开源运行时 OpenShell 与基于 BlueField-4 DPU 的 Sentry，在应用层之下为自主智能体设定可执行边界并可毫秒级隔离越界；官方称近期多起前沿实验室智能体绕过应用层管控暴露同一模式，Anthropic、CrowdStrike、Microsoft 等逾百家组织参与。属厂商产品与联盟发布，非对既有事故的独立取证——企业应视为纵深选项，而非替代提示注入与 MCP 身份治理。",
+      "action": "本周指定智能体出站、凭据与工具调用的独立阻断责任人，评估 OpenShell/Sentry 类运行时边界能否纳入现有终端与云检测策略，并明确与模型护栏的职责分界。"
+    },
+    {
+      "title": "Obot 已认证用户可凭 MCP Server ID 绕过 /mcp-connect ACL 并继承平台 OAuth 凭据（CVE-2026-101084，CVSS 9.6）",
+      "insight": "NVD 于 9 月 27 日收录：Obot v0.21.1 前未对 /mcp-connect 强制执行访问控制，任意已认证用户只要掌握 MCP Server ID，即可连接本应受限的 MCP 并调用上游工具。与 9 月 28 日简报的 quickstart 默认无认证夺管机制不同，本洞主要冲击“已开启认证与分组 ACL”的生产部署，形成身份已登录但授权未生效的横向越权；修复版本为 v0.21.1，未见在野利用确认。",
+      "action": "本周盘点已部署 Obot 实例版本，确认 /mcp-connect 是否强制 ACR，将受影响环境升级至 v0.21.1+ 后复测跨组 MCP 访问，并审计 MCP Server ID 暴露面与 OAuth 令牌作用域。"
+    },
+    {
+      "title": "MCP/编码智能体工具链密集出洞：Token Optimizer 与 code-ollama 的“只读/辅助”路径经 shell 可 RCE，Telegram SSRF、Penpot 无认证桥接与 Zscaler 令牌跨资源重放并行",
+      "insight": "Token Optimizer MCP CVE-2026-55157（CVSS 8.4）与 code-ollama GHSA-456v-xq2p-r4cj 同构：工具参数拼入 shell、转义不完整，且只读工具可自动执行削弱人审；另有 fast-mcp-telegram DNS 未解析 SSRF（CVE-2026-55096）、Penpot WebSocket 全网卡无认证桥接（CVE-2026-100868）与 Zscaler MCP 确认令牌未绑定资源 ID（CVE-2026-59563）。均属已修复研究披露，未见在野利用，但说明工具调用与托管凭据一旦默认开启，边界必须落在可强制执行的运行时与身份控制。",
+      "action": "本周清查工作站与 CI 中的 Token Optimizer MCP、code-ollama、fast-mcp-telegram、Penpot MCP 与 Zscaler MCP Server 版本并升至已修复发行版；对标注只读但仍经 shell 执行的工具禁止未做参数白名单的自动审批，并审计 MCP/WebSocket 绑定地址与鉴权。"
+    }
+  ],
+  "classifications": {
+    "2026-09-29-brief-61df8c6af638#1": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-09-29-brief-61df8c6af638#4": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}
