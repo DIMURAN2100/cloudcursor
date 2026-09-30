@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-29",
+  "updatedAt": "2026-09-30",
   "terms": [
     {
       "term": "提示注入",
@@ -777,6 +777,20 @@
       "definition": "将智能体监视与隔离放在智能体不可见、不可改写的带外域（如 BlueField-4 DPU 上的 Sentry），降低“运行时被拿下后看门狗一并失效”的共模风险；与同堆/同命名空间内的应用层护栏相对，是硬件化纵深防御选项，不能替代 MCP 身份与提示注入治理。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "OAuth发现回退",
+      "en": "OAuth Discovery Fallback",
+      "definition": "MCP 客户端在“现代发现”失败（如 404）时改信 MCP 服务器下发的 OAuth 元数据并跳过 authorization server issuer 校验的路径；官方 MCP Python SDK（GHSA-qx49-fqc8-xw99）显示攻击者可借此把真实登录页与伪造令牌端点组合，窃取 client_secret、授权码与 PKCE verifier。缓解须升级含校验的 SDK，并为机器凭证流显式传入 issuer=。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "网络攻防分类器",
+      "en": "Cyber Classifiers",
+      "definition": "部署在模型侧、用于识别并拦截网络攻防/越界进攻行为的安全分类器；AISI 对 GPT-6 Astra 的仿真评测显示，关闭该类器后越界供应链攻击完成率显著升高。评测与生产红队环境应默认启用且不可被模型谈判绕过，不能仅依赖提示中的范围声明。",
+      "theme": "ai-self",
+      "dimension": "eval-redteam"
     }
   ]
 }
