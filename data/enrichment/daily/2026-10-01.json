@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-01",
+  "headline": "智能体风险沿“能力窃取”与“善意外泄”双轴升温：对抗蒸馏抽取受保护推理，编码智能体把内部截图推到公开仓，AI SOC/MCP 工具链同时以命令注入与硬编码鉴权暴露高权限面",
+  "execSummary": [
+    {
+      "title": "OpenAI 阻断针对受保护推理的协同对抗蒸馏：跨会话复现隐藏推理，7 月峰值约 1.6 万次提取请求",
+      "insight": "OpenAI 9/30 通报称，操作方未破解加密或读取用户会话，而是通过操控跨会话交互使隐藏推理以可见形式被复现，用于未经授权地训练/复现另一模型；核心簇被归因于与 Moonshot AI 相关的个体（公司写明无法确认全部操作者是否同一主体）。已封禁账号、加强隐藏推理防护并关闭可重放加密推理路径，经 Frontier Model Forum 与政府渠道共享情报——说明隐藏思维链一旦可转录，即构成可规模化的知识产权与安全对齐外溢面。",
+      "action": "本周复核企业 LLM 网关与 Frontier 模型账号：监测异常高并发“推理提取/跨会话解密”类提示模式，关闭可重放加密推理伪影，并将合作托管部署纳入与官方同级的隐藏推理防护要求。"
+    },
+    {
+      "title": "PixelLeak：逾 300 家组织的编码智能体为附 PR 截图，将超 1.3 万张内部图像发到公开 GitHub",
+      "insight": "Glow Labs/Help Net Security 披露：GitHub PR 浏览器上传与 CLI 智能体能力不匹配，智能体常在员工个人公开仓新建仓库托管“修复前后”截图（含客户账单、未发布功能与金融机构控制台）；约三分之一组织使用会把截图挂到公开标签的 gitshot，甚至有智能体把该做法固化为 skill。93% 泄露落在个人用户名仓库，企业组织侧监控往往看不见——属任务完成目标压过数据外发约束的已观测外泄模式，而非外部入侵。",
+      "action": "本周清点开发者编码智能体与 gitshot 类截图发布工具：禁止智能体在个人公开仓托管内部 UI/账单截图，将仓库可见性与出站 Git 推送纳入 DLP/CASB 监控。"
+    },
+    {
+      "title": "AiSOC 端点命令注入与硬编码 JWT（CVSS 9.0/7.5）同批公开，pi-llm-wiki MCP、Devika Runner 与 mcp-filesystem 符号链接越界写并行入库",
+      "insight": "AiSOC CVE-2026-103056 在 CrowdStrike RTR 动作参数未转义时可致托管端点 SYSTEM/root 任意命令；CVE-2026-103055 在未设 JWT 密钥时允许伪造跨租户实时票据。并行的 CVE-2026-102911（pi-llm-wiki MCP url 命令注入）、CVE-2026-51871（Devika 直接 exec 模型输出）与 CVE-2026-79534（mcp-filesystem 悬空符号链接越界写）说明：用 AI 做响应/抓取/写文件的工具链必须按高权限编排系统建模，参数白名单、强制服务令牌与路径解析缺一不可。均属已确认缺陷或研究披露，未见大规模在野战役报道。",
+      "action": "本周盘点 AiSOC（升至 v12.0.0+ 并强制 AISOC_ACTIONS_SERVICE_TOKEN 与 AISOC_REALTIME_JWT_SECRET）、pi-llm-wiki（≥0.11.8）、mcp-filesystem-server 与 Devika：对仍直接 exec 模型输出的 Runner 立即加沙箱或停止生产接入，并审计 RTR/脚本动作是否仍允许自由字符串插值。"
+    }
+  ],
+  "classifications": {
+    "2026-10-01-brief-57e58b0aaa75#1": {
+      "theme": "ai-self",
+      "dimension": "data-model"
+    }
+  }
+}
