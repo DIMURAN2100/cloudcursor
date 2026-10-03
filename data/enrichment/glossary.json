@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-02",
+  "updatedAt": "2026-10-03",
   "terms": [
     {
       "term": "提示注入",
@@ -819,6 +819,20 @@
       "definition": "从漏洞公开或野外发现到被用于实战利用的中位时间窗口；微软 2026 数字防御报告称该时延已“远低于 24 小时”，GTIG 同期观测披露量与被利用漏洞同步抬升。企业漏洞运营需按小时级威胁情报分诊与可回滚补丁对齐，否则 AI 只会加速“已知未修”库存膨胀。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "事后护栏",
+      "en": "Post-hoc Guardrail",
+      "definition": "安全护栏或异常检测发生在智能体工具动作（如执行代码、读写外部系统）完成之后才报警；Salt Labs 对 Manus 的邮件间接提示注入演示表明，对自主智能体而言，事后报警等于零防护，检测必须前置到工具调用之前。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
+    },
+    {
+      "term": "会话结束回收",
+      "en": "Session-end Revocation",
+      "definition": "在智能体任务或会话结束后自动撤销其访问令牌、连接权限与继承身份，避免长期沿用启动者累积的高权限。Delinea 2026 调研显示约 42% 组织无法做到会话结束后自动撤销 AI 访问，是书面 AI 政策最常见的执行缺口。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }

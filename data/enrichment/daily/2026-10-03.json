@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-03",
+  "headline": "智能体高危面从模型越狱转向模板、工具与 UI 执行链：GitLab 网关沙箱逃逸与 MCP/A2UI 失控同现，事后护栏与会话权限回收成为运营短板",
+  "execSummary": [
+    {
+      "title": "GitLab 自托管 AI Gateway CVE-2026-90970：特制 flow 逃逸 prompt 模板沙箱，CVSS 9.9 可拿网关级命令执行",
+      "insight": "GitLab 10/2 紧急补丁修复：已认证且具备 Duo Agent Platform 权限的用户，可通过特制 flow 配置逃逸沙箱，在 AI Gateway 上执行任意命令；影响至 19.2.4 / 19.3.2 / 19.4.1 之前版本。托管网关已先行修复，仅自托管需立即升级。威胁面含网关持有的 JWT 签名密钥与模型提供方凭据；CISA 标注 exploitation 为 none，未见在野报告。说明智能体流程配置写入权本身就是高危执行面。",
+      "action": "本周盘点并升级所有自托管 GitLab AI Gateway / Duo Self-Hosted 至 19.2.4、19.3.2 或 19.4.1，并核对未打补丁期间 JWT 与模型凭据是否曾暴露。"
+    },
+    {
+      "title": "Manus 邮件间接注入、MCP Fetch SSRF 与 A2UI javascript: XSS：工具/UI 动作执行后才报警等于零防护",
+      "insight": "Salt Labs 演示攻击者把恶意指令藏入普通邮件，用户仅要求“检查收件箱”即可诱使 Manus 执行代码并触及邮箱、云盘与代码仓；护栏曾报警但发生在代码已执行之后（现称已修）。并行的 CVE-2026-104120（官方 mcp-server-fetch/everything ≤2026.6.4，fetch_url SSRF，修复 PR 待合）与 GHSA-72qq（@a2ui/web_core openUrl 未校验协议，恶意智能体可经按钮注入 javascript: URI，0.10.2 已修）说明：出站请求与代理生成 UI 同属经典失控路径，检测必须前置到工具调用之前。",
+      "action": "本周清查 mcp-server-fetch/everything 并在修复合入前限制 Fetch 可达内网与云元数据；将 @a2ui/web_core 升至 0.10.2+，对智能体生成按钮启用 URL 协议白名单；为企业邮箱/云盘智能体把异常检测挪到工具调用前。"
+    },
+    {
+      "title": "Delinea/PwC 同指执行缺口，TA419 钓鱼 AI 政策专家：书面政策无法覆盖会话权限与真人账号风险",
+      "insight": "Delinea 报告称近全数组织有 AI 数据访问书面政策，但约 42% 无法在会话结束后自动撤销 AI 访问，多数越权检测需一天或更久。PwC 71 国调查显示半数安全/技术高管把“针对 AI 系统的攻击”列准备度缺口前五，不足四分之一愿让智能体无人审批自动遏制修复。Proofpoint 披露 TA419 自 7 月起冒充前白宫科技政策官员等，对智库、高校、律所 AI 政策专家做凭证钓鱼，并曾冒充 Anthropic 员工。治理竞争已外溢到权限生命周期与真人账号。",
+      "action": "本周为连接邮箱/云盘/代码仓的企业智能体启用任务结束即回收令牌与会话；对 AI 政策、出口管制与模型采购岗位启用通行密钥，并对“冷启动政策邀约邮件”建立带外核验。"
+    }
+  ],
+  "classifications": {
+    "2026-10-03-brief-412be02b38d1#7": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    }
+  }
+}
