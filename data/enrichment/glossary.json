@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-03",
+  "updatedAt": "2026-10-04",
   "terms": [
     {
       "term": "提示注入",
@@ -833,6 +833,20 @@
       "definition": "在智能体任务或会话结束后自动撤销其访问令牌、连接权限与继承身份，避免长期沿用启动者累积的高权限。Delinea 2026 调研显示约 42% 组织无法做到会话结束后自动撤销 AI 访问，是书面 AI 政策最常见的执行缺口。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "成本耗尽攻击",
+      "en": "Cost Exhaustion Attack",
+      "definition": "对手刻意抬高面向公众 AI 服务的 Token/调用量，以推高受害方运营成本的攻击形态。Gartner 预测到 2030 年 80% 部署此类服务的企业将遭遇该类攻击；防护需把 Token 消耗异常、配额与计费护栏纳入 SOC/FinOps 联合监测，而非只盯内容安全与越权。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "人类实质审查",
+      "en": "Substantive Human Review",
+      "definition": "重大自动化决策（如惩戒、解雇）必须经人类进行不可绕过的实质判断，而非仅形式盖章。加州 SB 947（No Robo Bosses Act）将其写入雇佣法：禁止雇主完全依赖 AI 或自动化决策系统作出惩戒/解雇，但并不禁止人事流程中的 AI 辅助。",
+      "theme": "governance",
+      "dimension": "regulation"
     }
   ]
 }
