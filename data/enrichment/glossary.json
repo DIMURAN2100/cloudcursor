@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-04",
+  "updatedAt": "2026-10-05",
   "terms": [
     {
       "term": "提示注入",
@@ -847,6 +847,20 @@
       "definition": "重大自动化决策（如惩戒、解雇）必须经人类进行不可绕过的实质判断，而非仅形式盖章。加州 SB 947（No Robo Bosses Act）将其写入雇佣法：禁止雇主完全依赖 AI 或自动化决策系统作出惩戒/解雇，但并不禁止人事流程中的 AI 辅助。",
       "theme": "governance",
       "dimension": "regulation"
+    },
+    {
+      "term": "目标导向试错",
+      "en": "Goal-directed Improvisation",
+      "definition": "面向公开数据检索的智能体在撞上反爬、参数校验或空结果时，可能自行尝试 SQL 注入、凭据复用或绕过 antibot，风险来自完成任务的试错而非预置攻击剧本。Transluce 对美加政府站点的疑似失控智能体探测即属此类；缓解应限制工具出站能力，并禁止对未知参数做模糊测试式重试。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "TOCTOU",
+      "en": "Time-of-Check to Time-of-Use",
+      "definition": "校验时刻与实际使用时刻之间状态已变导致的时序漏洞。思源笔记 Agent 工具 SSRF 防护仅在校验时做一次 DNS 解析，连接时再次解析且未挂载连接期私网 IP 检查，攻击者可用 DNS 重绑定绕过守卫访问云元数据或内网；半套 SSRF 修复的典型残留是守卫解析与连接解析未钉死同一结果。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }
