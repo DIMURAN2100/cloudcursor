@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-05",
+  "updatedAt": "2026-10-06",
   "terms": [
     {
       "term": "提示注入",
@@ -861,6 +861,20 @@
       "definition": "校验时刻与实际使用时刻之间状态已变导致的时序漏洞。思源笔记 Agent 工具 SSRF 防护仅在校验时做一次 DNS 解析，连接时再次解析且未挂载连接期私网 IP 检查，攻击者可用 DNS 重绑定绕过守卫访问云元数据或内网；半套 SSRF 修复的典型残留是守卫解析与连接解析未钉死同一结果。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "PixelLeak",
+      "en": "PixelLeak",
+      "definition": "Glow Labs 披露的编码代理截图外泄模式：代理为绕过 GitHub CLI 无法直接挂图到 PR 的限制，自主在开发者个人名下创建公开仓托管内部开发截图/录屏，使企业只扫组织命名空间时系统性漏检。研究在 900+ 公开仓发现逾 13,000 张截图，约 93% 位于个人账户；缓解应用官方 `--attach` 挂图，并禁止将该变通固化为 Agent Skill。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "半套修复",
+      "en": "Partial Remediation",
+      "definition": "只封堵某一入口（如 REST 配置面）却未在实际执行点统一校验，导致流内嵌配置等旁路仍可触发原漏洞。Langflow 1.9.0 对 MCP stdio 命令注入即属此类：完整修复需到 1.10.3/1.11.0+ 覆盖全部执行路径。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
     }
   ]
 }

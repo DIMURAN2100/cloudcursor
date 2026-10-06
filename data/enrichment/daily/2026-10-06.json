@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-06",
+  "headline": "MCP 执行边界同日三连失守：Langflow stdio 命令注入与假本机安装、Grafana 提示路径读文件，叠加编码代理公开仓截图外泄与个保监管追责 AI 辅助编码",
+  "execSummary": [
+    {
+      "title": "Langflow MCP：stdio 命令注入（CVE-2026-105697/105740）+ XFF 伪造本机安装（CVE-2026-105741）",
+      "insight": "NVD/GHSA 于 10/5 披露：1.10.3 前 Langflow 通过 MCP stdio 以 `bash -c \"exec …\"` 启动用户配置的 command/args 且无白名单，任意可达 MCP 设置或 MCP Tools 的调用方可获进程级 RCE（CVSS 9.9）；默认 `LANGFLOW_AUTO_LOGIN=true` 时暴露实例甚至无凭据可拿令牌。同日 CVE-2026-105741（CVSS 7.1）显示安装接口无条件信任 `X-Forwarded-For` 最左端，已认证远程方可伪造 127.0.0.1，向 Cursor/Windsurf/Claude Desktop 固定路径写入 MCP 配置。1.9.0 仅堵 REST 入口属半套修复，流内嵌配置旁路仍危险；完整修复在 1.10.3/1.11.0+。未见在野利用，但已观测多台互联网可达脆弱实例。",
+      "action": "本周将自托管 Langflow 升至 1.10.3+（或 1.11.x），关闭 `LANGFLOW_AUTO_LOGIN`，禁用不必要的 MCP stdio，并全量复核已写入的 MCP 服务器配置与 IDE 侧 `mcp.json`；确认反向代理未把不可信 XFF 当作本机判定依据。"
+    },
+    {
+      "title": "Grafana mcp-k6 CVE-2026-89039：测试类 Prompt 裸路径可读任意文件",
+      "insight": "Grafana Labs 10/5 公告：mcp-k6 的 `convert_playwright_script` 接受裸文件路径作 `playwright_script` 时未限制工作目录，可读取运行用户可读的任意文件（含家目录 SSH 密钥与云凭证）；对 `@` 前缀的目录限制亦可被工作目录内符号链接绕过。影响需升至 mcp-k6 ≥0.7.0；CISA 标注 exploitation 为 none。说明即便是测试/转换类 MCP Prompt，把路径参数当可信文件源也会变成凭证泄密通道。",
+      "action": "本周清点开发与 CI 环境中的 mcp-k6，升级至 ≥0.7.0；对仍运行旧版的实例限制谁能调用 `convert_playwright_script`，并轮换可能被读取的本机 SSH 密钥与云凭证。"
+    },
+    {
+      "title": "PixelLeak 个人仓截图外泄盲区 + 新加坡 PDPC 将 AI 辅助编码纳入个保治理",
+      "insight": "Glow Labs（9/29，本期跟进）在 900+ 公开仓发现逾 13,000 张编码代理发布的内部截图/录屏，波及 300+ 组织；约 93% 暴露在员工个人账户，约三分之一与默认为公开的 gitshot 有关，部分组织已固化为 Agent Skill。GitHub CLI v2.99.0 的 `--attach` 可消除公开仓中转需求。新加坡 PDPC 对美珍香案的自愿承担则把「员工用生成式 AI 写涉及个人数据的生产脚本」纳入组织义务：缺治理/测试/复核导致约 9.5 万会员邮箱互见，要求落实含 AI Verify 原则的编码治理与发送前双人复核。技术外泄与流程合规同周对齐。",
+      "action": "本周按 Glow Labs 指引审计向公司私有仓提交过代码的员工（含离职）个人公开 GitHub 仓/Release/Gist，下线含内部 UI/计费截图并轮换图中可见密钥；禁止将「创建公开仓托管 PR 截图」编码为 Agent Skill，推广官方挂图并对 Agent 创建仓库设审批；同步为涉及个人数据的 AI 辅助脚本建立发送前双人复核与独立安全审查。"
+    }
+  ],
+  "classifications": {}
+}
