@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06",
+  "updatedAt": "2026-10-07",
   "terms": [
     {
       "term": "提示注入",
@@ -873,6 +873,20 @@
       "term": "半套修复",
       "en": "Partial Remediation",
       "definition": "只封堵某一入口（如 REST 配置面）却未在实际执行点统一校验，导致流内嵌配置等旁路仍可触发原漏洞。Langflow 1.9.0 对 MCP stdio 命令注入即属此类：完整修复需到 1.10.3/1.11.0+ 覆盖全部执行路径。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "textGrain",
+      "en": "textGrain",
+      "definition": "OpenAI 为契合欧盟《人工智能法》第 50 条文本可溯源要求而推出的不可见文本浮水印：在选词阶段嵌入统计信号。欧盟区 ChatGPT/Codex 合格输出将默认加入；全球 API 可选手动开启。短文本、数学内容与同义改写会显著降低检出率，故检测器初期仅向获批研究者与专业机构开放。",
+      "theme": "governance",
+      "dimension": "regulation"
+    },
+    {
+      "term": "门禁顺序缺陷",
+      "en": "Authz Ordering Flaw",
+      "definition": "在完成输入归一化（如补全默认 type）之前就执行授权/门禁检查，使调用方可通过省略字段跳过限制，随后由默认值回填恢复受控类型。微软 SimpleChat CVE-2026-105797 即因先做 MCP stdio 拒绝、再补全 type，导致低权限用户以 stdio 启动任意进程；缓解须把授权检查放在默认值与类型归一化之后。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
     }

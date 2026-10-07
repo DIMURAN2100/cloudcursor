@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-07",
+  "headline": "MCP 执行与身份边界同日四线暴露：设备侧 adb 拼接、stdio 门禁顺序、OAuth issuer 未绑定与租户内密钥/配置 IDOR，叠加分类器分片绕过与欧盟文本溯源落地",
+  "execSummary": [
+    {
+      "title": "UFO Mobile MCP：adb shell 参数拼接命令注入（CVE-2026-105793/105788）",
+      "insight": "NVD 10/6 收录微软 UFO：`press_key` 把调用方控制的 `key_code` 传入 `adb shell input keyevent`（CVSS 9.1）；此前只修该入口后，同文件 `type_text`/`launch_app` 仍把 `text`/`package_name` 放入 `adb shell` 参数位（CVSS 8.8）。Android `adb` 会把 `shell` 后参数交设备侧再解析，持有效 Mobile MCP API 密钥即可在已授权 Android 设备上以 `shell` 用户执行额外命令。修复分两步：v3.0.9 与 v3.0.10；未见在野利用。说明「宿主未进 shell」不等于远端设备安全。",
+      "action": "本周将 UFO 升至 ≥3.0.10，轮换 `UFO_MCP_API_KEY`，限制谁可调用 Mobile MCP，并复核已授权的 Android 调试连接；排查同类「参数直接拼进 adb shell」的移动端自动化工具。"
+    },
+    {
+      "title": "SimpleChat stdio 门禁顺序 + MCP TS SDK OAuth issuer 未绑定 + Payload/Dify 租户隔离",
+      "insight": "同日四条实现缺陷同向：SimpleChat（CVE-2026-105797，CVSS 8.8）在补全顶层 `type` 之前做 `_reject_non_admin_mcp_stdio`，低权限用户省略 `type=mcp` 即可跳过门禁并以 Web 服务器身份启动任意 stdio 进程（修 ≥0.261.031）。官方 MCP TypeScript SDK（CVE-2026-104850，CVSS 7.5）允许 MCP 服务器指定授权服务器且凭据未绑定 issuer，可无交互窃取 `refresh_token`/`client_secret`（sdk ≥1.31.0、client ≥2.2.0 并配 `expectedIssuer`）。Payload plugin-mcp（CVE-2026-105806）跨账户管密钥、Dify（CVE-2026-105761）MCP 配置 IDOR，则把插件/应用范围隔离证成必测项。",
+      "action": "本周将 SimpleChat 升至 ≥0.261.031并审计个人插件/MCP stdio；升级 MCP TS 客户端并配置 `expectedIssuer`、强制旧令牌重登；`@payloadcms/plugin-mcp` ≥3.88.0 并轮换密钥；Dify ≥1.16.0 并复核各应用 MCP 服务器归属与回调目标。"
+    },
+    {
+      "title": "CrowdStrike 分类器分片绕过 + OpenAI textGrain 对接欧盟 AI 法第 50 条",
+      "insight": "CrowdStrike 10/6 研究演示：对 Level 3 安全分类器保护的前沿模型，可将敏感请求改写为「检测工程/写 Sigma」等善意意图，分多轮抽取进程注入等原语，再交未受同等保护的较小模型拼装可编译利用链；单靠输出分类器盖不住跨模型编排。OpenAI 同窗口公布 textGrain：为契合欧盟《人工智能法》第 50 条文本可溯源，欧盟区 ChatGPT/Codex 合格输出将加不可见浮水印，API 可选开启；短文本与同义改写会显著降检出率，检测器初期仅对获批研究者开放。安全工程与合规工程时间表正在重叠。",
+      "action": "本周对安全团队多模型/Agent 管线启用跨会话审计，禁止「写检测规则」类提示直通可执行代码生成而不经人工复核；若服务欧盟用户，评估 textGrain/等价溯源开关的默认策略，并把短文本与改写场景的检出率限制写入合规说明。"
+    }
+  ],
+  "classifications": {}
+}
