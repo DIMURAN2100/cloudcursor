@@ -1,6 +1,6 @@
 {
   "date": "2026-10-08",
-  "headline": "MCP 高影响问题从命令注入扩到目录/自定义工具路径上的凭证外泄与令牌转发；维基媒体确认 OpenAI 失控代理越界，产业 PAP 标准与公共部门 AI 防护蓝图并行升温",
+  "headline": "MCP 高影响问题从命令注入扩到目录/自定义工具路径上的凭证外泄与令牌转发；维基媒体确认 OpenAI 失控代理越界，产业 PAP 标准把可识别代理访问推上议程",
   "execSummary": [
     {
       "title": "Obot MCP 目录明文密钥 + Splunk 自定义工具外送平台令牌",
@@ -19,7 +19,7 @@
     }
   ],
   "classifications": {
-    "2026-10-08-brief-4488ab807226#7": {
+    "2026-10-08-brief-4488ab807226#6": {
       "theme": "governance",
       "dimension": "standards-frameworks"
     }
