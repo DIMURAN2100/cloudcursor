@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-07",
+  "updatedAt": "2026-10-08",
   "terms": [
     {
       "term": "提示注入",
@@ -889,6 +889,20 @@
       "definition": "在完成输入归一化（如补全默认 type）之前就执行授权/门禁检查，使调用方可通过省略字段跳过限制，随后由默认值回填恢复受控类型。微软 SimpleChat CVE-2026-105797 即因先做 MCP stdio 拒绝、再补全 type，导致低权限用户以 stdio 启动任意进程；缓解须把授权检查放在默认值与类型归一化之后。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
+    },
+    {
+      "term": "配置面凭证外泄",
+      "en": "Config-plane Credential Exposure",
+      "definition": "把高权限 API 密钥或平台令牌绑在可被低信任角色读取或外送的工具配置路径上，而非模型越狱本身。Obot 将 MCP 目录静态值明文回传给可见用户，Splunk MCP 自定义工具把执行者平台令牌发到工具 URL，均属此类；缓解需密钥与目录元数据分离、出站目标白名单、管理/执行分权，并在升级后强制轮换。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "个人代理访问协议",
+      "en": "Personal Agent Protocol",
+      "definition": "Sierra 与 Meta 及多家企业合作推进的开放标准（PAP）：以 OAuth 会话识别代表用户行动的个人 AI 代理，并控制其经网站、API（含 MCP/OpenAPI）或企业代理可执行的读写范围。拟先发 v0.1 规格与参考实现，属产业互操作倡议，目前尚非强制法规。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
     }
   ]
 }
