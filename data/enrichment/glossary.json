@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-08",
+  "updatedAt": "2026-10-09",
   "terms": [
     {
       "term": "提示注入",
@@ -896,6 +896,20 @@
       "definition": "Sierra 与 Meta 及多家企业合作推进的开放标准（PAP）：以 OAuth 会话识别代表用户行动的个人 AI 代理，并控制其经网站、API（含 MCP/OpenAPI）或企业代理可执行的读写范围。拟先发 v0.1 规格与参考实现，属产业互操作倡议，目前尚非强制法规。",
       "theme": "governance",
       "dimension": "standards-frameworks"
+    },
+    {
+      "term": "角色注入",
+      "en": "Role Injection",
+      "definition": "提示模板库把用户可控渲染结果按行解析为 ChatMessage JSON 时，攻击者可输出形如 {\"role\":\"system\",...} 的内容，越界成为 system/assistant/tool 消息并绕过提示边界。Banks CVE-2026-107717 即属此类；缓解须升级库并在送入 LLM 前做角色白名单。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
+    },
+    {
+      "term": "ARTEX",
+      "en": "ARTEX",
+      "definition": "开源渗透测试智能体，可被用于规模化侦察与利用编排。CrowdStrike 称在针对韩国金融机构的活动中观察到其使用痕迹，并与 Claude Code 等编码代理会话相关联；企业宜把异常渗透代理进程与 AI 编码工具会话产物纳入威胁狩猎，而非仅依赖公开归因画像。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
     }
   ]
 }

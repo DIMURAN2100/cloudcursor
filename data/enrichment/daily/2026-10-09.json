@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-09",
+  "headline": "本地推理模型拉取与提示/MCP 中间件校验缺口同日暴露；编码代理护栏可被密文绕过，开源渗透智能体已进入金融业实战情报",
+  "execSummary": [
+    {
+      "title": "Ollama /api/pull 路径穿越可写任意文件并在重启后以 root 执行",
+      "insight": "CERT Polska 协调披露 CVE-2026-103663：Ollama 自 0.34.2 起对层 digest 校验不足，未认证远程攻击者可经模型拉取接口做路径穿越，把恶意二进制写到模型存储目录之外。在常见 Docker 部署且进程可写 `/usr/lib/ollama` 时，下次重启可以 root 加载执行。官方已在 0.35.0 修复；属已确认漏洞而非在野利用通报。本地/边缘推理节点把「拉模型」接口暴露到内网或公网时，攻击面直接连到主机权限。",
+      "action": "本周盘点全部可达的 Ollama 实例，确认版本 ≥0.35.0；关闭不必要的 `/api/pull` 暴露，并收紧容器对 `/usr/lib/ollama` 的写权限（只读或最小挂载）。"
+    },
+    {
+      "title": "Banks 角色注入与 BeamMCP「声明≠强制」：提示/工具中间件契约失效",
+      "insight": "Banks（CVE-2026-107717，≤2.4.5）的 `Prompt.chat_messages()` 把渲染结果逐行当 ChatMessage JSON 解析，攻击者可控模板变量可输出 `{\"role\":\"system\",...}` 越界成为 system/assistant/tool 消息；另有符号链接穿越 CVE-2026-107716，均已在 ≥2.5.1 修复。BeamMCP（CVE-2026-88257，<0.10.1）在 `tools/list` 广告嵌套约束，但 `tools/call`/`prompts/get` 只校验顶层，宿主在「自认已校验」下仍可进入违例 dispatch。共性是中间件把结构边界交给信任假设，而非强制执行。",
+      "action": "本周将 Python 依赖中的 `banks` 升至 ≥2.5.1，并对 `chat_messages()` 返回做角色白名单后再送入 LLM；自建 MCP（含 beam_mcp）升至 ≥0.10.1，并在宿主侧重做嵌套参数校验，勿仅信任 `tools/list` 广告的 schema。"
+    },
+    {
+      "title": "Copilot CLI 密文上下文注入外泄密钥；ARTEX 渗透智能体进入韩金融攻击链",
+      "insight": "Adversa AI 演示 Cryptographic Context Injection：autopilot 下代理抓取恶意页，运行时解密密文后再当可信指令读 `.env` 并外传（约 28 秒）；明文同类注入会被拦，GitHub 确认行为但拒按漏洞定级。CrowdStrike（中等置信度、厂商情报）称未知行为体在针对韩国金融机构的活动中使用开源渗透测试智能体 ARTEX，并观察到与 Claude Code 等编码代理会话相关的痕迹。防御侧需同时管「代理可读密钥/出站」与「异常渗透代理会话」两类信号。",
+      "action": "本周关闭 Copilot CLI 等非必要 autopilot、禁止对未信任 URL 自动抓取，把密钥移出代理可读目录并监控「解密后立即外连」行为链；在 EDR/代理进程遥测中加入 ARTEX 及异常渗透脚本生成特征，把 AI 编码/渗透智能体会话产物纳入狩猎与取证范围。"
+    }
+  ],
+  "classifications": {
+    "2026-10-09-brief-d03b366f525a#6": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    }
+  }
+}
