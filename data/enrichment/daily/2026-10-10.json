@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-10",
+  "headline": "智能体工作流与推理中间件默认执行面连续爆出高危 CVE，内容水印检测同步走向大众化验证入口",
+  "execSummary": [
+    {
+      "title": "Astron Agent 默认 LocalExecutor 导致跨租户 root 代码执行",
+      "insight": "NVD 收录 CVE-2026-108263（CVSS 9.9）：科大讯飞开源 Astron Agent 在 1.1.2 前，工作流代码节点默认走 LocalExecutor 并提供完整 Python builtins，文档所述沙箱限制未生效。已认证低权限租户可在 core-workflow 容器内以 root 执行代码，再借共享服务与数据库凭据突破应用层租户隔离。官方已在 v1.1.2 默认启用隔离执行器；属已确认漏洞，未见在野利用通报。多租户智能体平台若把「代码节点」默认当可信沙箱，攻击面直接连到共享凭据与邻租户数据。",
+      "action": "本周盘点全部 Astron Agent 部署，整栈升级至 ≥v1.1.2，确认已禁用 `CODE_EXEC_TYPE=local`，并复核升级后工作流代码节点与租户/凭据隔离策略。"
+    },
+    {
+      "title": "LMCache 未认证 pickle RCE 与 x64dbg-MCP 无鉴权暴露同日提醒中间件默认面",
+      "insight": "JFrog/NVD 披露 LMCache CVE-2026-105192（CVSS 9.8）：多进程模式下 ZeroMQ ROUTER（默认 5555）无身份认证，msgpack 扩展在解码阶段对载荷 `pickle.loads`，单条未认证消息即可进程级 RCE；官方容器默认 root，且截至披露尚无修复版本。同日 x64dbg-MCP CVE-2026-107824（CVSS 9.3）默认监听 `0.0.0.0` 且无鉴权，可达客户端可附加进程、读写内存与任意写文件。共性是把性能/调试中间件默认当成可信内网。",
+      "action": "本周对启用 LMCache 多进程/分布式的推理集群：禁止将 ZMQ/`--host` 暴露到不可信网络，限制 5555 与内部管理 HTTP，并跟踪 CVE-2026-105192/107204 修复版；同步将 x64dbg-MCP 升至 ≥1.2、强制 Bearer，并把 9094/9095 改绑本机或受信网段。"
+    },
+    {
+      "title": "提示注入经桌面 IPC 落地与开发态回环聊天被网页驱动；SynthID Detector 对外开放",
+      "insight": "AstronRPA CVE-2026-108159（CVSS 7.7）以 `v-html` 渲染未消毒模型输出，提示注入可经 XSS/IPC 桥接以桌面用户身份执行命令；Pydantic AI CVE-2026-107295（CVSS 7.6）开发用 Web 聊天未校验 Content-Type，恶意页面可向 localhost 端点提交请求驱动智能体工具，`requires_approval=True` 亦可被客户端篡改。并行地，Google DeepMind 向全球用户开放 SynthID Detector，支持跨厂商水印识别，但明确检出/未检出均不能单独定论 AI 参与。",
+      "action": "本周将 Pydantic AI 升至 ≥1.107.4 或 ≥2.28.0，禁止在浏览不可信站点时长期运行 `to_web()`/`clai web`；隔离桌面 RPA 对不可信网页的自动抓取与 `v-html` 路径并跟踪 AstronRPA 补丁；内容治理侧可将 SynthID Detector 作合成媒体第一跳筛查，但须与来源审计、哈希与传播链路取证组合使用。"
+    }
+  ],
+  "classifications": {}
+}

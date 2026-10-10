@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-09",
+  "updatedAt": "2026-10-10",
   "terms": [
     {
       "term": "提示注入",
@@ -910,6 +910,13 @@
       "definition": "开源渗透测试智能体，可被用于规模化侦察与利用编排。CrowdStrike 称在针对韩国金融机构的活动中观察到其使用痕迹，并与 Claude Code 等编码代理会话相关联；企业宜把异常渗透代理进程与 AI 编码工具会话产物纳入威胁狩猎，而非仅依赖公开归因画像。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "SynthID",
+      "en": "SynthID",
+      "definition": "Google DeepMind 的不可见数字水印技术，可嵌入生成式图片、视频与音频。2026-10-07 起向全球普通用户开放英文版 SynthID Detector，并支持识别 OpenAI、Nvidia、Kakao 等合作方嵌入的水印；官方提醒检出不代表整份内容均为 AI 生成，未检出亦不能否定 AI 参与，宜与来源审计等多信号交叉核验。",
+      "theme": "governance",
+      "dimension": "regulation"
     }
   ]
 }
