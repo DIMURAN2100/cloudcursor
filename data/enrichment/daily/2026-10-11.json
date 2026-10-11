@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-11",
+  "headline": "在野窃密已把编码代理令牌与 MCP 凭据列为常规收集项；智能体网关与低代码配置面同日暴露密钥与执行钩子",
+  "execSummary": [
+    {
+      "title": "Warden Stealer 把编码助手本地令牌、MCP 与会话库列为正式采集能力",
+      "insight": "Gen Threat Labs（厂商来源）分析 Rust 恶意软件即服务 Warden Stealer：自 2026 年 8 月起在地下论坛推广，v1.9（9 月 29 日公告）起正式采集 Claude、Codex、Grok、Cursor 等编码助手/智能体的访问与刷新令牌、MCP 配置凭据、提示历史与会话库。此为在野样本能力分析而非单一 CVE。开发机上的代理本地状态已与浏览器凭据同属高价值目标；厂商流行度判断需与终端检测交叉验证。",
+      "action": "本周在开发终端检索 Claude/Codex/Cursor/Grok 等本地配置与会话目录是否遭批量读取；若终端告警指向信息窃取程序，立即轮换相关访问令牌与 MCP 凭据，并把编码代理目录与异常 MCP 凭据文件读取纳入与浏览器凭据同等优先级的狩猎项。"
+    },
+    {
+      "title": "9router / JeecgBoot / Octop：已登录即可改写执行钩子或读出 MCP/模型密钥",
+      "insight": "NVD 同日收录三条配置面缺陷：9router CVE-2026-108593（CVSS 7.3）允许仪表盘用户把任意键写入 Hermes Agent 配置并植入自动接受钩子；JeecgBoot CVE-2026-108671（CVSS 7.1）AI 模块读 MCP 配置时鉴权被注释，任意已认证用户可取 MCP URL/请求头/出站令牌；Octop CVE-2026-108581（CVSS 7.1）提供商接口只验 JWT 不验角色，低权限用户可读明文模型与语音 API 密钥。多数尚无高于受影响区间的修复标签，临时控制靠收紧认证与轮换密钥。",
+      "action": "本周限制 9router 仪表盘账号并检查 Hermes 配置中非预期自动执行钩子；对 JeecgBoot ≤3.9.5 的 AI/MCP 模块限制普通账号访问并轮换出站令牌；审计 Octop ≤1.0.2b6，收回低权限对提供商接口的访问并轮换已保存密钥，凭据屏蔽补丁合并后再升级。"
+    },
+    {
+      "title": "mini-swe-agent 沙箱继承宿主环境变量；1MCP OAuth 标签过滤可被否定式绕过",
+      "insight": "mini-swe-agent CVE-2026-108592（CVSS 6.0）的 Bubblewrap 未清理宿主环境变量，沙箱内命令仍可读主机 API 密钥，任务内容中的提示注入可诱导代理读出并经共享网络外传——根因是沙箱隔离缺口而非注入本身。1MCP Agent CVE-2026-108586（CVSS 5.3）对 OAuth 标签范围的校验可被否定式高级标签过滤绕过，单一标签令牌可调用范围外 MCP 工具。二者最新发布标签仍在受影响区间。",
+      "action": "本周从运行 mini-swe-agent（至 2.4.6）与 1MCP Agent（至 0.39.0）的主机环境中移出生产密钥，暂停把 Bubblewrap 默认隔离或标签过滤当作唯一授权控制，并跟踪上游明确修复版本后立即升级。"
+    }
+  ],
+  "classifications": {
+    "2026-10-11-brief-3e99d4b7c0fa#5": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}

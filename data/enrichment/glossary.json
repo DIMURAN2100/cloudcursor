@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-10",
+  "updatedAt": "2026-10-11",
   "terms": [
     {
       "term": "提示注入",
@@ -917,6 +917,13 @@
       "definition": "Google DeepMind 的不可见数字水印技术，可嵌入生成式图片、视频与音频。2026-10-07 起向全球普通用户开放英文版 SynthID Detector，并支持识别 OpenAI、Nvidia、Kakao 等合作方嵌入的水印；官方提醒检出不代表整份内容均为 AI 生成，未检出亦不能否定 AI 参与，宜与来源审计等多信号交叉核验。",
       "theme": "governance",
       "dimension": "regulation"
+    },
+    {
+      "term": "Warden Stealer",
+      "en": "Warden Stealer",
+      "definition": "Rust 编写的恶意软件即服务信息窃取程序。Gen Threat Labs 称其自 2026 年 8 月起在地下论坛推广，v1.9 起正式采集 Claude、Codex、Grok、Cursor 等编码助手/智能体的访问与刷新令牌、MCP 配置凭据、提示历史与会话库；企业宜把编码代理本地目录与异常 MCP 凭据读取纳入与浏览器凭据同级的终端狩猎。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
     }
   ]
 }
