@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-12",
+  "headline": "云上运维智能体以 Critical CVE 做服务侧透明披露；开源 AI 网关与 MCP 运行时仍把管理口、回调与设备码 OAuth 做成默认可达的密钥入口",
+  "execSummary": [
+    {
+      "title": "Azure SRE Agent 以 CVSS 9.6 Critical CVE 披露缺失授权，客户侧无需补丁",
+      "insight": "Microsoft 于 10 月 8 日公开 CVE-2026-69435：Azure SRE Agent 存在缺失授权（CWE-918 SSRF 相关描述），已认证低权限攻击者可经网络提升权限并超出组件自身边界。MSRC 标明托管云服务漏洞、公开披露与在野利用均为否，且已在服务侧完全缓解、客户无需操作。云上运维智能体的授权失败开始进入与传统云 CVE 同等的透明度轨道；价值在于用官方时间线核对租户内角色与异常 API，而非等待本地补丁包。",
+      "action": "本周在 Azure 租户内核查 SRE Agent 及相关运维智能体角色分配，对照 10 月 8 日前后异常权限、配置变更与非常规 API 调用日志，确认服务侧缓解后无残留高权限委托。"
+    },
+    {
+      "title": "Plano / LLMGateway / MCP Kotlin SDK：管理口、视频回调与 WebSocket 帧限制同日成密钥与可用性面",
+      "insight": "NVD/VulnCheck 于 10 月 11 日收录三条开源面缺陷：Katanemo Plano ≤0.4.37 将无认证 Envoy 管理口绑到全接口 9901，未认证方可经 /config_dump 明文读出模型供应商 API 密钥；LLMGateway ≤1.20.0 视频回调 callback_url 绕过 assertSafeWebhookTarget，持钥调用方可打内网/云元数据形成盲 SSRF；MCP Kotlin SDK ≤0.15.0 未设 maxFrameSize，数条连接即可内存耗尽。公开标签均仍在受影响区间且未见正式修复版本。",
+      "action": "本周扫描 Plano 等部署是否对外暴露 9901/Envoy admin 并立即隔离、轮换已加载模型密钥；对 LLMGateway ≤1.20.0 统一出站 webhook 白名单并禁用未校验的视频回调；对 MCP Kotlin SDK WebSocket 服务在反向代理限制帧大小与连接速率，跟踪上游修复后再升级。"
+    },
+    {
+      "title": "Trinity 智能体密钥可改人类 Telegram 绑定；mcp-remote 设备码流程可不强制 HTTPS",
+      "insight": "Abilityai Trinity ≤0.9.5（CVE-2026-108756）中本应仅限人类所有者的 Telegram 绑定增删改，可被智能体作用域 MCP API 密钥调用；典型路径是提示注入控制代理后劫持 bot token 或替换绑定——根因是人类专属授权与 agent 令牌未分轨。mcp-remote 0.8.0–0.14.3（CVE-2026-108716）在 --device-code OAuth 中不强制 HTTPS，非回环明文端点上的中间人可截获 client secret 与访问/刷新令牌。二者均尚无公开正式修复版本。",
+      "action": "本周审查 Trinity 类平台「人类绑定/渠道管理」接口是否接受智能体 MCP 密钥，并将提示注入可触达工具从绑定变更面剥离；禁止 mcp-remote 等客户端解析非 HTTPS 设备授权/令牌端点，对曾用明文端点的会话立即轮换 client secret 与令牌。"
+    }
+  ],
+  "classifications": {
+    "2026-10-12-brief-2384101a20d3#4": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}

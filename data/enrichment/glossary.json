@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-11",
+  "updatedAt": "2026-10-12",
   "terms": [
     {
       "term": "提示注入",
@@ -924,6 +924,20 @@
       "definition": "Rust 编写的恶意软件即服务信息窃取程序。Gen Threat Labs 称其自 2026 年 8 月起在地下论坛推广，v1.9 起正式采集 Claude、Codex、Grok、Cursor 等编码助手/智能体的访问与刷新令牌、MCP 配置凭据、提示历史与会话库；企业宜把编码代理本地目录与异常 MCP 凭据读取纳入与浏览器凭据同级的终端狩猎。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "人类—智能体授权分轨",
+      "en": "Human-Agent Authorization Separation",
+      "definition": "将仅人类所有者可执行的绑定/渠道管理等敏感操作，与智能体作用域令牌（如 MCP API 密钥）在授权面上彻底隔离。Abilityai Trinity CVE-2026-108756 显示：人类专属 Telegram 绑定增删改若可被 agent 密钥调用，提示注入控制代理后即可劫持 bot token 或替换绑定；缓解须禁止 agent 令牌触达人类专属接口。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "设备码明文传输",
+      "en": "Device Code Cleartext Transmission",
+      "definition": "OAuth 设备码流程中授权与令牌端点未强制 HTTPS，使非回环明文 HTTP 路径上的中间人可截获 client secret 及访问/刷新令牌。mcp-remote 0.8.0–0.14.3（CVE-2026-108716）的 --device-code 路径即属此类；缓解须拒绝非 HTTPS 发现端点，并对曾用明文端点的会话立即轮换密钥与令牌。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
     }
   ]
 }
