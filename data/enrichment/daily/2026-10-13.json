@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-13",
+  "headline": "MCP 正在把「第二套写入口」做成默认可绕过人机校验的攻击面：多库租户未绑定、REST 黑名单未接到工具路径、OAuth 只发码不认人、拒绝钩子只扫首字段",
+  "execSummary": [
+    {
+      "title": "obsidian-tc：任意有效令牌可跨 vault 读写，环回 HTTP 缺 Origin 防护可被浏览器驱动接管",
+      "insight": "NVD 于 10 月 12 日收录 CVE-2026-77366（CVSS 9.9）：面向 Obsidian 库的 MCP 服务 obsidian-tc 在 1.3.1 之前，工具分发未将调用方受控的 input.vault 与调用者绑定库比对，JWT 亦无 vault 声明，文件夹 ACL 为全局共享，持任意有效令牌即可指定其他已配置库名读写删其内容。同日 CVE-2026-77363（CVSS 8.8）指出 Streamable HTTP 在 auth.mode: none 环回默认下缺少 Host/Origin 与 DNS 重绑定防护，恶意网页可驱动本机 MCP 端点获得完整库权限。官方已在 v1.3.1 修复。",
+      "action": "本周盘点 obsidian-tc 及同类多库 MCP 服务，低于 1.3.1 的立即升级；生产禁用 auth.mode: none 的 HTTP 环回暴露，并确认令牌/JWT 声明绑定具体 vault。"
+    },
+    {
+      "title": "Nginx UI MCP 写配置绕过 REST 黑名单；Unla 网关 OAuth 可不认证资源所有者自签令牌",
+      "insight": "NVD 于 10 月 12 日收录 Nginx UI CVE-2026-84317/84318（CVSS 8.8）：REST 写路径会调用 ValidateConfigFile 拦截危险指令，但 MCP 工具 nginx_config_add 直接落盘并 reload，已认证 MCP 调用方（或经提示注入诱导的智能体）可写入 perl、load_module、user root 等被阻断指令，已在 v2.4.1 修复。同窗口 AmoyLab Unla ≤0.10.0（CVE-2026-108865，CVSS 约 8.8）OAuth2 从不认证资源所有者，未认证方可注册客户端、换取有效访问令牌并触及被代理上游凭据；公开发布标签仍为受影响版本。",
+      "action": "本周核查 Nginx UI 是否启用 MCP，低于 2.4.1 的升级或暂时关闭 nginx_config_add，并审计近期经 MCP 写入的 nginx 配置与 reload 记录；对 Unla 等自托管 MCP 网关确认 /authorize 是否可无登录换令牌，未修复前隔离公网入口并轮换已代理上游凭据。"
+    },
+    {
+      "title": "编码代理 PreToolUse 拒绝规则只匹配首字段，提示注入可旁路硬门禁写入 webshell",
+      "insight": "NVD 于 10 月 12 日收录 Network-AI CVE-2026-109331（CVSS 约 7.4）：5.14.0 至 5.15.2 之前，ClaudeHookBridge PreToolUse 钩子仅用候选字段列表中第一个出现的字段匹配 denyPatterns。提示注入控制的智能体可将危险载荷放在 Write.content 或 MCP script 等非首位字段，同时保留无害的 file_path/command，从而绕过运营者硬拒绝规则。修复起点为 5.15.2，npm latest 已至 5.15.4。同期 mac-shell-mcp 白名单可被元字符绕过、EdgeEver 经 MCP 植入存储 XSS，共同指向「策略引擎必须覆盖完整工具入参与渲染面」。",
+      "action": "本周清点 IDE/编码代理中的 deny/allow 钩子，验证是否对完整工具入参（含 content、script）匹配；受影响 Network-AI 升级至 ≥5.15.2，并对 EdgeEver ≤1.112.0 暂停不可信 MCP 令牌直至正式修复版发布。"
+    }
+  ],
+  "classifications": {
+    "2026-10-13-brief-08eef3e6f9e1#6": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}

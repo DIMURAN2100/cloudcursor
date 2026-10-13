@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-12",
+  "updatedAt": "2026-10-13",
   "terms": [
     {
       "term": "提示注入",
@@ -938,6 +938,20 @@
       "definition": "OAuth 设备码流程中授权与令牌端点未强制 HTTPS，使非回环明文 HTTP 路径上的中间人可截获 client secret 及访问/刷新令牌。mcp-remote 0.8.0–0.14.3（CVE-2026-108716）的 --device-code 路径即属此类；缓解须拒绝非 HTTPS 发现端点，并对曾用明文端点的会话立即轮换密钥与令牌。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
+    },
+    {
+      "term": "MCP路径漏检",
+      "en": "MCP Path Validation Bypass",
+      "definition": "人机/REST 写路径已落实的校验、黑名单或鉴权，未同步到 MCP 工具调用路径，使智能体或提示注入场景可整段绕过既有控制。Nginx UI CVE-2026-84317/84318 中 REST 会调用 ValidateConfigFile，但 MCP 工具 nginx_config_add 直接落盘并 reload，即可写入被阻断的危险指令；缓解须让 MCP 写操作与人机 API 共用同一校验函数并纳入变更门禁。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "拒绝规则首字段旁路",
+      "en": "First-Field Deny Bypass",
+      "definition": "PreToolUse 等硬拒绝钩子只匹配候选字段列表中第一个出现的字段，攻击者可将危险载荷放在非首位参数（如 Write.content、MCP script），同时保留无害的 file_path/command 以通过 denyPatterns。Network-AI CVE-2026-109331 属此模式；缓解须对完整工具入参做策略匹配，而非只扫首字段。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }
