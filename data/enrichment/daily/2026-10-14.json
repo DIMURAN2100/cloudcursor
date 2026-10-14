@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-14",
+  "headline": "研发智能体「看起来像策略」的控制面集中失效：平台侧指令拼装、本地自动批准的命令解析不同步，与默认工具 URL/配置门禁洗白同日见报；MCP 契约级模糊测试开始规模化出洞",
+  "execSummary": [
+    {
+      "title": "GitLab Duo Agent：对话上下文未中和即可指令注入，同批还有治理令牌绕过",
+      "insight": "GitLab 于 10 月 12 日发布 EE 补丁 19.4.2 / 19.3.5 / 19.2.8，NVD 可见 CVE-2026-96893（CVSS 7.3）：Duo Agent Platform 构造 AI 对话上下文时未正确中和特殊元素，已认证用户可向智能体指令注入特制内容，使非预期命令以其他用户名义执行。同批 CVE-2026-105458（CVSS 4.3）允许持特定细粒度权限者获取绕过治理控制的 Duo Agent 令牌。GitLab.com 已修，自管实例需升级；未见在野利用通报。企业级编码智能体已进入与传统产品同级的补丁通道。",
+      "action": "本周将自管 GitLab EE 升级至 19.4.2 / 19.3.5 / 19.2.8 及以上，并复核 Duo Agent Platform 相关令牌与治理策略是否仍按预期生效。"
+    },
+    {
+      "title": "Roo Code 自动审批与真实 shell 解析脱节，间接提示注入即可本机落命令",
+      "insight": "NVD/VulnCheck 于 10 月 13 日收录 CVE-2026-110202 至 CVE-2026-110206（CVSS 均为 7.7）：VS Code 编码代理 Roo Code 至 3.54.0，在 getCommandDecision()/parseCommandLine() 等自动审批路径上存在重定向剥离、引号掩码、函数替换误判、通配符旁替换丢弃等多类解析不同步。间接提示注入可将拒绝名单命令伪装成允许前缀（如 echo）并在开发者本机自动批准执行。公开最新正式标签仍为 v3.54.0，advisory 未给出已修复版本。",
+      "action": "本周盘点开发机 Roo Code 版本；在官方给出修复版前关闭或收紧 shell 自动批准，并对间接提示可达的仓库内容做来源隔离。"
+    },
+    {
+      "title": "Crawl4AI 配置门禁可被 dict 包装洗白；PraisonAI 默认搜索工具把 SSRF 挂在模型参数上",
+      "insight": "NVD 于 10 月 12 日收录 Crawl4AI CVE-2026-109237（CVSS 约 8.6）：0.9.0–0.9.3 的 Docker API 虽用 UNTRUSTED_ALLOWED_TYPES 拦 LLMConfig，但把禁止类型包进 {\"type\":\"dict\",\"value\":...} 即可绕过，经 /config/dump 可读 SECRET_KEY 与供应商密钥并伪造管理员 JWT，修复版 0.9.4。同日 PraisonAI CVE-2026-57143（CVSS 8.8）：默认 searxng_search/search_web 将模型可控 searxng_url 直传 requests.get，提示注入可达内网与云元数据；修复起点约 praisonaiagents 1.6.62（advisory 记 1.6.61）。共性是门禁/工具参数只做了半套信任边界。",
+      "action": "本周清点 Crawl4AI Docker API 是否对外暴露，受影响实例升级至 ≥0.9.4 并轮换可能泄露的 SECRET_KEY 与模型密钥；核查 PraisonAI 是否启用默认 SearxNG 搜索，升级至修复版本并禁止模型参数直连内网与云元数据。"
+    }
+  ],
+  "classifications": {
+    "2026-10-14-brief-82684c982989#2": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-10-14-brief-82684c982989#4": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-10-14-brief-82684c982989#5": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    }
+  }
+}

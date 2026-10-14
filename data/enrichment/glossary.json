@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-13",
+  "updatedAt": "2026-10-14",
   "terms": [
     {
       "term": "提示注入",
@@ -952,6 +952,20 @@
       "definition": "PreToolUse 等硬拒绝钩子只匹配候选字段列表中第一个出现的字段，攻击者可将危险载荷放在非首位参数（如 Write.content、MCP script），同时保留无害的 file_path/command 以通过 denyPatterns。Network-AI CVE-2026-109331 属此模式；缓解须对完整工具入参做策略匹配，而非只扫首字段。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "命令解析不同步",
+      "en": "Command Parse Desync",
+      "definition": "自动审批/拒绝名单按字符串前缀或简化解析做决策，却与真实 shell 对重定向、引号、函数替换、通配符的解析不一致，使危险命令可伪装成允许前缀并获自动批准。Roo Code ≤3.54.0（CVE-2026-110202 等）即属此类；缓解须按 AST/真实 shell 语义做审批，或在官方修复前关闭自动批准。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "ToFu",
+      "en": "ToFu (Tool Fuzzing)",
+      "definition": "宾夕法尼亚州立大学等提出的 LLM–编排层–工具信任边界模糊测试方法：把工具元数据声称的安全契约编译成可执行预言机，对路径、网络与命令侧做覆盖引导验证。论文对 273 个开源 MCP 服务器验证多类契约违背，并演示 Repeat-After-Me（诱导模型复述工具调用格式即可被编排层当可执行调用）；防御侧应在执行边界强制路径根、出站目标与命令白名单，而非只信工具描述。",
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
     }
   ]
 }
