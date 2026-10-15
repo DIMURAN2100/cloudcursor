@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-15",
+  "headline": "IDE Copilot 的配置文件保护败给操作系统路径规范化；ATT&CK v20 把提示注入与 AI 外泄收进企业技战术对象；自托管网关与 WebUI 默认可信边界继续扩大会话与内网暴露面",
+  "execSummary": [
+    {
+      "title": "Visual Studio / SSMS Copilot：尾点路径绕过可改 .mcp.json 并落 RCE",
+      "insight": "微软 10 月 13 日修复 CVE-2026-103572（CVSS 8.8）：`Microsoft.VisualStudio.Copilot.Core.dll` 用字符串相等保护 MCP/设置文件，却未处理 Windows 会剥离的文件名尾点，智能体可写 `.mcp.json.` / `settings.json.` 绕过保护并改配置执行命令；可与间接提示注入结合，需用户与 Copilot 交互。补丁含 VS 2022 17.14.42、VS 2026 18.10.4 等，未见在野利用。配置面校验若与 OS 规范化语义不一致，会把「受保护写操作」变成与传统路径漏洞同级的 RCE 入口。",
+      "action": "本周将已启用 Copilot 的 Visual Studio 2022/2026 与 SSMS 升级到含该 CVE 修复的构建，并开启对开发机 `.mcp.json` / 设置文件变更的审计。"
+    },
+    {
+      "title": "ATT&CK v20：提示注入与 AI 辅助外泄进入可映射检测对象",
+      "insight": "MITRE 于 10 月 13 日发布 ATT&CK v20 为当前正式版，显著扩展 AI 相关与 AI 赋能技法；公开解读指出新增直接提示注入（T1699）、间接提示注入（T1698）、AI 辅助外泄（T1700）等，并扩充 IDE/开发代理供应链子技术。对已落地 ATT&CK 映射的 SOC，可用与传统横向移动相同的检测语言描述智能体被操控后的行为，而非另起无法对齐的 LLM 告警词典。",
+      "action": "本周将 ATT&CK 内容包与检测映射更新到 v20，至少覆盖 T1698/T1699/T1700，并把近期 Copilot/网关/WebUI 类事件回填到新对象。"
+    },
+    {
+      "title": "Portkey 网关默认可打本机；Open WebUI 跨源消息可偷会话 JWT",
+      "insight": "NVD/VulnCheck 收录 Portkey AI Gateway CVE-2026-110719（CVSS 7.2）：1.14.0–1.15.2 在未设 `TRUSTED_CUSTOM_HOSTS` 时默认信任 localhost/`host.docker.internal`，未认证调用者可经 `x-portkey-custom-host` 回源本机或 Docker 宿主机；公开材料未见高于 1.15.2 的修复版。同窗口 Open WebUI CVE-2026-109286（CVSS 约 8.1–8.6）：0.7.0 至 0.11.4 前 `SyncStatsModal` 对跨源 `verify:chat` 校验不足，恶意页可重定向统计导出并取回 JWT；修复版 0.11.4。自托管调试便利默认值正在变成会话与内网暴露面。",
+      "action": "本周盘点 Portkey 是否落在 1.14.0–1.15.2，设置收紧的 `TRUSTED_CUSTOM_HOSTS` 并限制未认证客户端对 `/v1` 的可达性；将 Open WebUI 升级至 ≥0.11.4 并轮换可能暴露的会话令牌。"
+    }
+  ],
+  "classifications": {
+    "2026-10-15-brief-19e697689129#1": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-10-15-brief-19e697689129#6": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}
