@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-16",
+  "headline": "智能体高危面从单工具校验上移到控制面默认无身份、MCP 校验进主进程与官方 SDK 传输层无资源上限；行业侧 ADG 2.0 用运行时卡点回应 Agent 越界，但仍须落到具体版本与绑定策略",
+  "execSummary": [
+    {
+      "title": "Archon / Flyto2 / n8n：默认开放的智能体控制面可接管工作流与宿主机动作",
+      "insight": "NVD/GitHub Advisory 窗口内，Archon 0.2.13–0.11.1（CVE-2026-111322，约 9.3–9.8）默认不启认证且绑定 0.0.0.0，未认证调用者可启工作流、注入会话消息、批准暂停操作并改提供商密钥；Flyto2 Core 2.26.2–2.26.4 前（CVE-2026-55786，8.4）HTTP MCP `tools/call` 无认证即可转到 `sandbox.execute_shell`；n8n 2.41.4/2.42.1 前（CVE-2026-110842，7.7）MCP 校验解释器在主进程评估并允许原型污染，持 `workflow:read` 即可抬升至所有者。共性是把 MCP/Agent 控制协议当内部调试面却以网络服务交付。",
+      "action": "本周盘点 Archon、Flyto2 Core、n8n 实例级 MCP 与自建 MCP HTTP 服务：禁止 `0.0.0.0` 暴露变更类 API，强制认证；n8n 升至 ≥2.41.4/2.42.1 并为所有者启用 MFA；Flyto2 升至 ≥2.26.4。"
+    },
+    {
+      "title": "官方 MCP Python/Java SDK：无上游限流即可撑爆内存与会话",
+      "insight": "NVD 收录 Python SDK CVE-2026-109527（7.5）与会话不回收 CVE-2026-59951（6.9），以及 Java mcp-core CVE-2026-108395（7.5）：Streamable HTTP/SSE 等路由完整缓冲请求体或无会话上限时，可达端点的未认证客户端可用合法协议流量打垮 Agent 网关。stdio 与已做上游限流的部署影响有限；修复线含 Python 1.29.1+/1.30.0、2.1.0/2.2.0 与 Java mcp-core 0.18.4/1.1.4/2.0.1。",
+      "action": "本周将官方 MCP Python/Java SDK 升到含请求体限制与会话回收的修复线，并在反向代理强制请求体上限后再向不完全可信客户端暴露 MCP HTTP。"
+    },
+    {
+      "title": "EC-Council ADG 2.0：用 ADMIT–COMMIT 运行时卡点对照多法域，但不构成监管豁免",
+      "insight": "EC-Council 于 10 月 14 日发布 Adopt, Defend, Govern（ADG）框架 2.0，将控制扩展为 12 个控制族、180 余项，并免费向政府与标准组织开放与 90 余项法规/标准的对照表，映射 NIST AI RMF、ISO/IEC 42001、EU AI Act 等，提出 ADMIT/DECIDE/EMIT/COMMIT 运行时治理点与分级自主级别。此为行业协会框架与开放许可，非强制性法规；可加速多法域对照，但企业仍须按其适用法域单独评估合规效力，并把卡点落到 MCP 网关、工作流与编码智能体的变更证据链。",
+      "action": "本周下载 ADG 2.0 对照表，选取本组织已用的 MCP 网关/工作流/编码智能体各 1 条变更路径，试映射到 ADMIT–COMMIT 证据点，并标出尚无人工审批留痕的动作。"
+    }
+  ],
+  "classifications": {
+    "2026-10-16-brief-724de3d8762e#7": {
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    }
+  }
+}

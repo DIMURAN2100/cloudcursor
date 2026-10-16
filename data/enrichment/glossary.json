@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15",
+  "updatedAt": "2026-10-16",
   "terms": [
     {
       "term": "提示注入",
@@ -980,6 +980,13 @@
       "definition": "Anthropic Frontier Red Team 评测的一类能力：小模型在简化网络条件下于 IoT/边缘设备上完成找目标、获执行、部署推理并继续传播的「权重复制」闭环。研究称约 9B 模型可在多数白牌硬件上完成推理部署，并警示若提升速率持续或于 2026 年底前后逼近端到端复制；属能力边界预警，作者声明未见野外此类蠕虫。",
       "theme": "ai-self",
       "dimension": "eval-redteam"
+    },
+    {
+      "term": "ADG 2.0",
+      "en": "Adopt, Defend, Govern (ADG) 2.0",
+      "definition": "EC-Council 于 2026-10-14 发布的 AI 治理框架，将控制扩展为 12 个控制族、180 余项，并免费向政府与标准组织提供与 90 余项法规/标准的对照；提出 ADMIT/DECIDE/EMIT/COMMIT 运行时治理卡点与分级自主级别，映射 NIST AI RMF、ISO/IEC 42001、EU AI Act 等。属行业协会框架与开放许可，非强制性法规，企业可用于多法域对照但仍须按适用法域单独评估。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
     }
   ]
 }
