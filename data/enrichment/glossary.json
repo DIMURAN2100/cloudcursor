@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16",
+  "updatedAt": "2026-10-17",
   "terms": [
     {
       "term": "提示注入",
@@ -987,6 +987,20 @@
       "definition": "EC-Council 于 2026-10-14 发布的 AI 治理框架，将控制扩展为 12 个控制族、180 余项，并免费向政府与标准组织提供与 90 余项法规/标准的对照；提出 ADMIT/DECIDE/EMIT/COMMIT 运行时治理卡点与分级自主级别，映射 NIST AI RMF、ISO/IEC 42001、EU AI Act 等。属行业协会框架与开放许可，非强制性法规，企业可用于多法域对照但仍须按适用法域单独评估。",
       "theme": "governance",
       "dimension": "standards-frameworks"
+    },
+    {
+      "term": "合规推定",
+      "en": "Presumption of Conformity",
+      "definition": "在欧盟协调标准被官方公报引用后，符合该标准所覆盖要求的产品/体系可被推定满足相应法规义务。委员会实施决定 (EU) 2026/2274 将 EN 18286:2026（高风险 AI 系统提供商质量管理体系）列入引用清单，使对照 EU AI Act 第 17 条 QMS 义务获得具有法律确定性的自愿技术路线；标准本身仍非强制，高风险义务适用时点以法案及修订为准。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    },
+    {
+      "term": "CLI参数注入",
+      "en": "CLI Argument Injection",
+      "definition": "将不可信字符串作为独立 argv 传给子进程时，以 - 开头的值会被 CLI 解析为额外标志。Claude Agent SDK for Python <0.2.121（CVE-2026-96620）把 resume 会话 ID 如此传给 Claude CLI，攻击者可注入 --mcp-config 定义 stdio MCP 并绕过 SDK 权限；修复改为用 = 连接的单一参数。缓解须禁止不可信输入进入会话恢复标识，并对子进程参数做严格分隔。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }
