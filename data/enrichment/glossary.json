@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17",
+  "updatedAt": "2026-10-18",
   "terms": [
     {
       "term": "提示注入",
@@ -1001,6 +1001,20 @@
       "definition": "将不可信字符串作为独立 argv 传给子进程时，以 - 开头的值会被 CLI 解析为额外标志。Claude Agent SDK for Python <0.2.121（CVE-2026-96620）把 resume 会话 ID 如此传给 Claude CLI，攻击者可注入 --mcp-config 定义 stdio MCP 并绕过 SDK 权限；修复改为用 = 连接的单一参数。缓解须禁止不可信输入进入会话恢复标识，并对子进程参数做严格分隔。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "哈希钉扎",
+      "en": "Hash Pinning",
+      "definition": "安装插件或依赖时把版本钉到固定 commit SHA/摘要，并在检出后校验 HEAD 是否等于该摘要，防止上游仓库被替换。Claude Code <2.1.179（CVE-2026-86063）对钉扎 SHA 执行 git checkout 后未核 HEAD，允许“SHA 形分支名”的托管上可静默检出到攻击者分支尖端；缓解须升级至 ≥2.1.179，并在安装后强制校验钉扎摘要。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "出口前临时登记",
+      "en": "Pre-export Temporary Registration",
+      "definition": "商务部、科技部就修订《中国禁止出口限制出口技术目录》发布征求意见时，自公告日起对附件所列技术实施的出口前临时登记措施。2026 年第 48 号公告拟将大模型、智能体、算力集群等相关 AI 技术列入禁止或限制出口示例，并区分开源公共领域、海外本地化部署与 API/SaaS 调用；属监管征求意见阶段的临时管理，非正式定稿。",
+      "theme": "governance",
+      "dimension": "regulation"
     }
   ]
 }
