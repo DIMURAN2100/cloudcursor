@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-19",
+  "headline": "编码与运维 Agent 的控制系统静默失败：钩超时放行、项目级权限放行、压缩摘要继承外部指令",
+  "execSummary": [
+    {
+      "title": "OneUptime：集群 AI 动作仅按项目级权限判定，可越权测连、重置 Agent 与批准 kubectl 计划",
+      "insight": "CVE-2026-112047（约 Medium）确认 OneUptime 14.0.2–14.0.68 对 Kubernetes「AI 连通性测试」「重置 AI Agent」与批准含 kubectl 的 AI 计划等接口只做项目级授权，未校验目标集群标签、属主与阻止规则；事件侧 AI 对话还可对调用方不可见的关联集群发起只读 kubectl/基础设施命令，泄露 Agent/Runner RBAC 能力或批准越权变更。官方已在 14.0.69 改为按目标集群/资源的编辑或查看权限判定；未见在野利用通报。",
+      "action": "本周将 OneUptime 升至 14.0.69+，并按集群标签/属主复核项目成员对 AI 测连、Agent 重置与 kubectl 计划批准的细粒度权限。"
+    },
+    {
+      "title": "控制面静默失败：DeepSeek 压缩摘要持久继承注入，dcg 钩超时失败开放",
+      "insight": "两条同属「防护/记忆层放行」：DeepSeek Harness（CVE-2026-95183）把对话压成模型生成的 <compacted-summary> 并要求 verbatim 复述主请求与待办，外部间接提示注入因缺信任标记可写入摘要、恢复会话后当既定任务继承；destructive_command_guard <0.6.6（CVE-2026-77474，约 High）对嵌套/未闭合 $( 预处理指数级耗时，钩超时后多数编码 Agent 失败开放并继续执行原命令。dcg 已修于 0.6.6；Harness 公开材料未见正式补丁。均未见在野利用通报。",
+      "action": "本周盘点编码 Agent 的 PreToolUse/命令防护钩，确认超时策略为失败关闭并升级 dcg 至 0.6.6+（若在用）；对上下文压缩/记忆层区分用户意图与工具输出，禁止 verbatim 继承外部指令。"
+    },
+    {
+      "title": "MCP/CLI 工具链：Wheels shell 注入、Archon 发行版回载 .env、DoubleScale 任意上传",
+      "insight": "三起把不可信输入或工作区状态直接交给 Agent 工具面：Wheels CLI 4.0.0–4.1.1（CVE-2026-111451，约 High）将部署版本/包名等插进远程 shell，且多条命令以 MCP 暴露；Archon v0.12.0 发行版二进制启动 provider 插件时重新加载工作区 .env/bunfig.toml，抵消密钥剥离（修于 0.12.1，独立于仍未宣告关闭的控制面缺认证 CVE-2026-111322）；DoubleScale ≤1.5.1（CVE-2026-111311，CVSS 8.8）在 Helpdesk 启用时对未识别扩展名 fail-open，订阅者即可上传可执行文件。修复分别为 4.1.2、0.12.1、1.6.0；均未见在野利用通报。",
+      "action": "本周审计暴露给 Agent 的部署/包管理 MCP 与 CLI，Wheels 升至 4.1.2+；Archon 发行版用户升至 0.12.1 并重配 provider、排查工作区 .env；WordPress DoubleScale 升至 1.6.0+ 或禁用 Helpdesk 上传端点。"
+    }
+  ],
+  "classifications": {
+    "2026-10-19-brief-265efad6738f#3": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-10-19-brief-265efad6738f#7": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    }
+  }
+}
