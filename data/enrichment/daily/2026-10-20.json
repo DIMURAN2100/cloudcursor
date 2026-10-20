@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-20",
+  "headline": "多智能体网格与工具链的控制面失守：默认过宽入网、平行入口未鉴权、提示注入/Webhook 直打 SSRF 与动作流水线",
+  "execSummary": [
+    {
+      "title": "Google Agent Mesh：自助入网通配工具 + /libp2p-http 旁路直调后端（双 Critical）",
+      "insight": "NVD / GitHub Advisory 披露 CVE-2026-103091 与 CVE-2026-102503（CVSS 4.0 均约 9.3 Critical）：Agent Mesh（原 SAM）alpha.1–alpha.8 中 MCP 代理对任意有效 OIDC 令牌自动注册且默认把 authenticated 绑到通配服务/目标，可获后端 MCP/工具读写执行；alpha.1–alpha.2 的 /libp2p-http 平行入口在 MCP 流已做 Biscuit 校验时未验证令牌或入网状态，未认证对等方可直达命令/stdio MCP、A2A 与推理端点。官方要求升至含失败关闭默认策略的 0.1.0-alpha.9+（旁路修复起点为 alpha.3）。属已确认授权/认证缺陷；未见在野利用通报。",
+      "action": "本周盘点是否部署 Agent Mesh/SAM：升至 0.1.0-alpha.9+，关闭公开自助注册，并确认 /libp2p-http 等旁路入口与 MCP 流共用同一套能力令牌校验。"
+    },
+    {
+      "title": "工具与 IM 入口被当可信指令：CrewAI 抓取 SSRF、LangBot 飞书 Webhook 可伪造",
+      "insight": "两条把外部污染接到 Agent 动作面：crewai-tools ≤1.15.28 的 SeleniumScrapingTool（CVE-2026-112308，约 High）未接已有 validate_url，提示注入可驱动无头 Chrome 打回环/RFC1918/云元数据；LangBot ≤4.11.0（CVE-2026-112265）在 Lark/飞书 Webhook 模式未校验事件签名，知 bot UUID 即可伪造消息/卡片事件驱动 LLM、工具与审批。CrewAI 修复 PR 尚未并入发行；LangBot 已合并签名校验但正式含修复标签需跟进。均未见在野利用通报。",
+      "action": "本周禁用或移除 SeleniumScrapingTool，对 URL 类工具统一强制私网/元数据拒绝；LangBot 飞书 Webhook 在含签名校验的正式版发布前暂停公网暴露或仅放行平台源 IP。"
+    },
+    {
+      "title": "推理与知识面：Answer MCP 越权读非公开答复、SGLang 分离面 SSRF/OOM、BentoML/Omnigent 构建与子 Agent 逃逸",
+      "insight": "四起扩大 Agent/推理部署暴露面：Apache Answer ≤2.0.2（CVE-2026-71563）MCP 答复检索仅凭全局 API 密钥可读隐藏/已删除/待审内容（另有密钥写日志 CVE-2026-64943，升 2.0.3）；SGLang ≤0.5.22 分离模式下客户端可控 bootstrap 触发 SSRF 并阻塞调度（CVE-2026-112267），Mooncake 后端还有未认证注册/超大分配致 Prefill OOM；BentoML ≤1.4.39（CVE-2026-112264）containerize 时 docker.env 键换行注入 Dockerfile；Omnigent <0.14.0（CVE-2026-112015）子智能体 os_env.cwd 路径穿越逃逸工作区。SGLang/BentoML 公开材料未见标明修复的正式发行；Answer/Omnigent 分别修于 2.0.3、0.14.0。均未见在野利用通报。",
+      "action": "本周将 Answer 升至 2.0.3+ 并轮换曾写日志的 API 密钥；SGLang 分离部署改服务端配置引导地址并隔离 Prefill/Decode 网络；Omnigent 升至 0.14.0；BentoML 暂停信任外部 bentofile/归档的 containerize，跟踪标明修复版本。"
+    }
+  ],
+  "classifications": {
+    "2026-10-20-brief-a98544b76f29#3": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-19",
+  "updatedAt": "2026-10-20",
   "terms": [
     {
       "term": "提示注入",
@@ -1029,6 +1029,20 @@
       "definition": "上下文压缩把对话历史替换为模型生成的摘要，并要求 verbatim 复述「主请求/意图」与待办时，外部内容中的间接提示注入若缺少信任标记，可被原样写入摘要并在恢复会话后作为既定任务继承。DeepSeek Harness（CVE-2026-95183）即属此路径；缓解须在压缩/记忆层区分用户意图与工具/外部输出，拒绝 verbatim 继承未标记指令。",
       "theme": "ai-self",
       "dimension": "prompt-injection"
+    },
+    {
+      "term": "失败关闭",
+      "en": "Fail-Closed",
+      "definition": "安全控制在无法完成判定、缺省策略或异常时默认拒绝放行，避免「入网即可通配调用」一类过宽信任。Google Agent Mesh（原 SAM）0.1.0-alpha.9 将默认策略改为失败关闭，并要求显式策略绑定与封禁检查，以修复先前 authenticated 角色绑定通配服务/目标的 Critical 授权缺陷。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "平行入口未鉴权",
+      "en": "Unauthenticated Parallel Ingress",
+      "definition": "主协议路径已做能力令牌或入网校验，但平行传输/HTTP 入口未共用同一套鉴权，使攻击者绕过网格准入直达后端。Agent Mesh 早期 alpha 的 /libp2p-http 入口在 MCP 流启用 Biscuit 校验时未验证令牌或入网状态（CVE-2026-102503），未认证对等方可调用已注册 MCP/A2A/推理端点；缓解须让旁路通道与主协议共用能力令牌校验。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }
