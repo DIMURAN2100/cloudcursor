@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-21",
+  "headline": "聊天/工具 API 缺认证且默认挂载 shell，叠加审批门恒放行与 MCP 会话状态横向风险",
+  "execSummary": [
+    {
+      "title": "piflow / Langchain-Chatchat：未认证聊天与 /tools/call 直达 shell RCE（双 Critical）",
+      "insight": "NVD / VulnCheck 同日确认 CVE-2026-109442 与 CVE-2026-75128（CVSS 3.1 均约 9.8 Critical）：piflow 2.0.0—2.0.1 的 DeepAgents `POST /chat`（及 stream）缺认证即可驱动 `exec_shell`；Langchain-Chatchat ≤0.3.1.3 暴露未认证 `POST /tools/call`，默认注册的 shell 工具使单次请求即可执行系统命令（Docker 常以 root 运行）。公开材料均未见正式修复版本；未见在野利用通报。",
+      "action": "本周立即盘点公网是否暴露上述聊天或 /tools/call 入口：下线或加反向认证，禁用默认 shell/exec 工具，并轮换可能泄露的 LLM 与数据库密钥。"
+    },
+    {
+      "title": "OpenSRE / LangAlpha / Aix-DB：审批门空转与间接注入把消息/网页/文档变成主机命令",
+      "insight": "三条把控制面缺口与不可信输入连成利用链：OpenSRE（CVE-2026-109444）无头 presenter 的 `execution_allowed()` 恒返回 True，Slack/告警提示注入即可跑 `shell_run`（v0.1.2026.10.20 仍未修）；LangAlpha（CVE-2026-109440/109441）间接提示注入叠加无白名单 Bash/ExecuteCode，并可经默认 bridge 跨租户读 vault；Aix-DB 1.2.4（CVE-2026-77926）把 deepagents `execute` 对认证非管理员开放，聊天与恶意文档即可驱动主机命令。均未见在野利用通报。",
+      "action": "本周对带 shell/execute 的 Agent：切断 Slack/告警自动执行与文档驱动代码执行，或仅允许隔离只读角色；核实无头路径审批门是否真实生效，而非恒返回 True。"
+    },
+    {
+      "title": "MCP 面：官方 TS SDK 跨会话 task 读写，ContextForge OAuth URL 漏检 SSRF；LangBot 签名补丁正式发行",
+      "insight": "基础设施与入口补丁并行：`@modelcontextprotocol/sdk` 1.24.0—1.31.0（CVE-2026-111767）共享 `InMemoryTaskStore` 未绑定会话，可跨客户端列举/读/取消任务（修于 1.32.0）；IBM ContextForge ≤1.0.5（CVE-2026-8355）OAuth `token_url` 等附属 URL 未做与 `gateway.url` 同等 SSRF 校验（升 1.0.6+）；LangBot v4.11.1 将飞书 `X-Lark-Signature` 校验带入正式发行（CVE-2026-112265）。均属已确认缺陷或补丁进展。",
+      "action": "本周将启用 taskStore 的 MCP HTTP 服务升至 SDK 1.32.0+ 或移除共享存储；ContextForge 升至 1.0.6+ 并收回不可信角色的 gateways.create；LangBot 公网飞书 Webhook 升至 4.11.1+ 后再恢复回调。"
+    }
+  ],
+  "classifications": {
+    "2026-10-21-brief-9eceb512bfc1#3": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-10-21-brief-9eceb512bfc1#5": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20",
+  "updatedAt": "2026-10-21",
   "terms": [
     {
       "term": "提示注入",
@@ -1043,6 +1043,20 @@
       "definition": "主协议路径已做能力令牌或入网校验，但平行传输/HTTP 入口未共用同一套鉴权，使攻击者绕过网格准入直达后端。Agent Mesh 早期 alpha 的 /libp2p-http 入口在 MCP 流启用 Biscuit 校验时未验证令牌或入网状态（CVE-2026-102503），未认证对等方可调用已注册 MCP/A2A/推理端点；缓解须让旁路通道与主协议共用能力令牌校验。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "恒放行审批门",
+      "en": "Always-Allow Approval Gate",
+      "definition": "危险工具本应经人工/策略审批，但无头或自动化路径上的门控函数恒返回允许，使审批形同虚设。OpenSRE（CVE-2026-109444）中无头 presenter 的 execution_allowed() 恒为 True，提示注入即可经告警/Slack 驱动 shell_run；缓解须让 headless 路径与交互路径共用真实审批，禁止硬编码放行。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "会话未绑定任务存储",
+      "en": "Session-Unbound Task Store",
+      "definition": "共享内存型任务存储未把任务归属绑定到创建会话，使同进程多客户端可横向列举、读取或取消彼此任务。官方 MCP TypeScript SDK 1.24.0—1.31.0 的实验性 InMemoryTaskStore（CVE-2026-111767）即属此缺陷；1.32.0 起按会话绑定，亦可停用已弃用实验任务机制或改为每会话实例。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
     }
   ]
 }
