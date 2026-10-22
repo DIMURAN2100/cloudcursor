@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-21",
+  "updatedAt": "2026-10-22",
   "terms": [
     {
       "term": "提示注入",
@@ -1057,6 +1057,20 @@
       "definition": "共享内存型任务存储未把任务归属绑定到创建会话，使同进程多客户端可横向列举、读取或取消彼此任务。官方 MCP TypeScript SDK 1.24.0—1.31.0 的实验性 InMemoryTaskStore（CVE-2026-111767）即属此缺陷；1.32.0 起按会话绑定，亦可停用已弃用实验任务机制或改为每会话实例。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
+    },
+    {
+      "term": "Mock鉴权",
+      "en": "Mock Authentication",
+      "definition": "用占位/测试身份函数代替真实鉴权，把每位调用者视为特权用户，使「有鉴权形态」失去边界。DB-GPT ≤0.8.2（CVE-2026-77932）的 mock get_user_from_headers 将所有调用者授为 admin，未认证即可驱动未沙箱 code/shell 解释器；缓解须用真实身份源替换 mock，并默认禁用宿主机解释器。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "自声明租户头",
+      "en": "Self-Declared Tenant Header",
+      "definition": "API 信任调用方自报的 user_id/租户头作为授权主体，攻击者可改头冒充其他租户读写智能体与记忆。Letta ≤0.16.8（CVE-2026-77937）即便开启 LETTA_SERVER_SECURE 仍可如此跨租户；缓解须以服务端会话/令牌绑定租户，拒绝客户端自声明身份头作为授权依据。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-22",
+  "headline": "身份假定与部署默认值失控：聊天 Agent 缺真实鉴权直达解释器，MCP/工件面空密钥与 fail-open 扩大横向面",
+  "execSummary": [
+    {
+      "title": "DB-GPT：mock 鉴权把所有调用者变 admin，未认证即可驱动未沙箱 code/shell 解释器（Critical）",
+      "insight": "NVD / VulnCheck 确认 CVE-2026-77932（CVSS 3.1 约 9.8 Critical）：DB-GPT ≤0.8.2 的 `/api/v1/chat/react-agent` 依赖 mock `get_user_from_headers` 授予 admin，未认证攻击者可向 ReAct 智能体投递提示，驱动未沙箱化的 `code_interpreter` / `shell_interpreter` 以 web 容器 root 执行任意 Python/bash，并可能触达捆绑数据库默认凭据。截至核验仍为 v0.8.2、未见标明修复版本；未见在野利用通报。",
+      "action": "本周立即盘点公网或内网暴露的 DB-GPT chat/react-agent：下线或前置强认证，禁用未沙箱 code/shell interpreter，并轮换可能暴露的数据库与模型密钥。"
+    },
+    {
+      "title": "Vibe-Trading / Langflow：间接注入与会话消息劫持把文档/网页/他人消息升级为主机命令通道",
+      "insight": "Vibe-Trading（CVE-2026-114107/114106）在智能体处理的文档或网页中植入间接提示注入后，`BashTool`/`BackgroundRunTool` 以 `shell=True` 无白名单与审批执行命令，`read_document` 缺沙箱可外泄密钥（修于 0.1.7+）。Langflow OSS（CVE-2026-107366 等）消息接口未校验资源所有权，认证用户可覆写他人消息注入恶意提示或劫持会话；IBM 建议升至 1.12.5 并启用 MCP interpreter hardening。均属已确认缺陷。",
+      "action": "本周将 Vibe-Trading 升至 0.1.7+ 或切断文档/网页驱动的 shell 工具；Langflow OSS 升至 1.12.5+，核对消息/会话所有权校验，并按公告启用 MCP interpreter hardening。"
+    },
+    {
+      "title": "MCP/工件/部署默认值：Trigger.dev 全网卡无认证、D365 空 API Key、ADK 路径穿越、A2A 任务授权 fail-open",
+      "insight": "开发便利默认值成为横向风险源：`trigger.dev` CLI（CVE-2026-114090）`trigger dev --mcp` 绑定全部网卡且缺认证，LAN 可借开发者令牌调任务（修于 4.5.4+）；D365 F&O MCP（CVE-2026-114123）一键部署空 `apiKey` 时中间件放行公网只读工具（修于 1.11.0）；Google ADK `@google/adk`（CVE-2026-105772）`FileArtifactService` 可经 userId/sessionId 路径穿越（升 0.6.0+）；A2A Java SDK（CVE-2026-111764 等）默认任务授权 fail-open（主修 1.3.0.Final）。另 Letta（CVE-2026-77937）自声明 `user_id` 头可跨租户冒充，截至 0.16.8 未见正式修复。",
+      "action": "本周将 trigger.dev CLI 升至 4.5.4+ 并避免共享局域网暴露 `--mcp`；核对 D365/Azure 部署 API Key 非空与网络隔离；ADK 升 0.6.0+ 或改回内存工件；A2A Java SDK 升 1.3.0+/1.3.2.Final；Letta 未修前限制仅受信网络并禁用可伪造的租户头信任。"
+    }
+  ],
+  "classifications": {
+    "2026-10-22-brief-6e2d9fa9b5f7#3": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}
