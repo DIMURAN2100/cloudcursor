@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-23",
   "terms": [
     {
       "term": "提示注入",
@@ -1071,6 +1071,20 @@
       "definition": "API 信任调用方自报的 user_id/租户头作为授权主体，攻击者可改头冒充其他租户读写智能体与记忆。Letta ≤0.16.8（CVE-2026-77937）即便开启 LETTA_SERVER_SECURE 仍可如此跨租户；缓解须以服务端会话/令牌绑定租户，拒绝客户端自声明身份头作为授权依据。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "加密上下文混用",
+      "en": "Cryptographic Context Mixing",
+      "definition": "将静态密钥密封与会话令牌签发等不同语义放进同一密码学上下文，使一种用途产出的密文可被另一用途当作可信令牌解密。LiteLLM（CVE-2026-114612）中 internal_user 可借此把伪造管理员凭据写入 metadata 再回放为 proxy_admin，并经 MCP stdio 达主机命令执行；缓解须分离密钥域与会话域，并升级至厂商修复线。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "图查询注入",
+      "en": "Graph Query Injection",
+      "definition": "不可信实体/关系字符串经错误转义顺序拼入图数据库查询（如 Cypher），可提前闭合字面量并改写图数据或外泄查询结果。Flexible GraphRAG（CVE-2026-114510）在 LangChain+FalkorDB 路径上，摄入文档中间接提示注入可驱动抽取模型产出恶意图元素；缓解须参数化查询、审计转义顺序，并升级至含修复的版本。",
+      "theme": "ai-self",
+      "dimension": "data-model"
     }
   ]
 }

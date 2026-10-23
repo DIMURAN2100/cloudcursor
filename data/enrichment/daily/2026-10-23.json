@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-23",
+  "headline": "控制面设计失误主导高危面：密钥/会话加密上下文混用与 A2A 会话未隔离，叠加 ARTEX 供应链机器速度滥用",
+  "execSummary": [
+    {
+      "title": "LiteLLM：静态密钥加密与会话令牌共用密码学上下文，internal_user 可提权至 proxy_admin 并经 MCP 主机 RCE（Critical）",
+      "insight": "NVD 于 10 月 22 日公开 CVE-2026-114612（CVSS 3.1 约 9.9 Critical，GHSA-7hp6-4w63-5g45）：LiteLLM 自 1.87.0 起将静态密钥加密与会话令牌签发放进同一加密上下文，认证 internal_user 可在申请 API Key 时把伪造管理员凭据写入 metadata，再把返回密文当 Bearer 回放冒充 proxy_admin，经 MCP stdio 执行任意命令。1.91.0+ 默认可利用；修复线为 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1 / 1.104.0-rc.2。属已确认提权至主机命令执行；未见在野利用通报。",
+      "action": "本周将 LiteLLM 升至对应修复线（≥1.100.4 或同线更新），盘点 internal_user 与 MCP stdio 暴露面，并轮换可能被伪造回放的会话/管理员相关密钥。"
+    },
+    {
+      "title": "Strands A2A / Flexible GraphRAG：会话未按调用方隔离与图写入错误转义，使跨租户串扰与文档驱动 Cypher 注入成立",
+      "insight": "AWS 公告 2026-146-AWS / CVE-2026-115419（约 High）：Strands Agents SDK（Python <1.43.0、TypeScript <1.5.0）A2A 服务端未按调用方隔离会话，认证远程用户可经不同 context_id 读他人对话历史并写入持久指令；升级前只能单租户独占实例。Flexible GraphRAG（CVE-2026-114510）：FalkorDB 适配器先转义引号再转义反斜杠，LangChain+FalkorDB 组合下摄入文档中间接提示注入可产出恶意图元素并注入 Cypher（修于 0.8.2）。共性是不可信内容进入会话态或结构化执行面。",
+      "action": "本周将 Strands 升至 Python 1.43.0+ / TypeScript 1.5.0+，升级前停止向多租户暴露同一 A2A 实例；若使用 Flexible GraphRAG 的 LangChain+FalkorDB，升至 0.8.2+ 并审查摄入来源与图写入参数化/转义。"
+    },
+    {
+      "title": "vLLM 多模态请求面 RCE/可用性打击，与 Storm-0940 借 ARTEX 加速供应链应用身份滥用并行",
+      "insight": "vLLM <0.31.0：启用 trust_remote_code 时未认证客户端可经 mm_processor_kwargs.code_revision 拉取恶意处理器代码致 API 进程 RCE（CVE-2026-114053 Critical）；即便未开远程代码信任，伪造多模态缓存身份或超大 mm_processor_kwargs 亦可打垮共享实例（CVE-2026-114050/114055）。微软威胁情报称 Storm-0940 自约 2026-09 将 ARTEX 嵌入进攻工作流，与 ConnectWise 云备份相关多租户应用供应链事件相关，获滥用应用身份后以机器速度对超 2,250 个租户尝试登录（峰值约每分钟 2,900 次）并经 Graph 扩权；属厂商归因观测，非司法裁定。另 Royal MCP <1.5.7 预览令牌可升级为站点接管（CVE-2026-111958）。",
+      "action": "本周将公网/共享 vLLM 升至 0.31.0+，关闭非必要 trust_remote_code，对多模态入口启用鉴权并限制 mm_processor_kwargs；按微软公告以应用 ID 审查 Entra 中相关第三方应用与服务主体登录/Graph 写操作；Royal MCP 升至 1.5.7+ 并作废已外发预览令牌。"
+    }
+  ],
+  "classifications": {
+    "2026-10-23-brief-570c6e25e399#3": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-10-23-brief-570c6e25e399#5": {
+      "theme": "ai-self",
+      "dimension": "data-model"
+    }
+  }
+}
