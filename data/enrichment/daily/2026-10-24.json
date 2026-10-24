@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-24",
+  "headline": "AI 控制面从便利中间件升格为凭据爆破面：LiteLLM 发行管道投毒与客户端 TLS/MCP 边界缺口并行，AI 辅助发现同步压缩基础运行时披露窗",
+  "execSummary": [
+    {
+      "title": "LiteLLM 1.107.0 经被攻破的发行管道进入 PyPI/容器仓库，恶意制品窃取云与模型密钥并加载远程代码",
+      "insight": "官方确认 10 月 21 日发布流水线失守后，恶意版本 litellm==1.107.0 进入 PyPI（约 11:39–13:23 UTC）及 Docker Hub/GHCR 的 v1.107.0/latest/main-latest/main-stable 等标签；载荷为凭据窃取与可按小时拉取的远程代码加载器。调查指向工程师被盗用的 GitHub CLI OAuth 令牌，并怀疑公网暴露部署日志中出现令牌。Wiz 等观测约 4.9 万次下载，并在窃密后约 4.5 小时见到以失窃 AWS 凭据查询 Bedrock 等活动。GitHub 源码标签本身不含恶意文件；企业私有发行未受影响；无单独 CVE。与昨日 LiteLLM 加密上下文混用 CVE 为独立事件。",
+      "action": "本周在软件库、CI 与镜像仓库检索并隔离 litellm==1.107.0 及当日拉取的浮动标签，固定至 1.106.2 或经核验安全版本，轮换云/Git/模型提供商密钥，并关闭开发者 OAuth 写入可被读取的网关日志与响应字段。"
+    },
+    {
+      "title": "PHP2Shell：AI 辅助研究把引擎级内存缺陷收敛为可复现 RCE，披露前已出现利用尝试与扫描",
+      "insight": "PHP 于 10 月 21 日紧急修复 CVE-2026-109618 / CVE-2026-109619（PHP 侧 CVSS 约 9.2）：OOM/longjmp 与跨请求残留等路径上的内存破坏，默认可致未认证 RCE 或类 Heartbleed 内存泄露。Wiz、Calif（报道称使用 OpenAI 模型）与 OpenAI Codex Security 等独立路径参与发现与复现；补丁含 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35。公开报道称 Amazon MadPot 等在正式披露前已观测到利用尝试。属 AI 加速发现与攻防时间窗压缩的已确认事实；漏洞本体为传统 PHP 运行时。",
+      "action": "本周将对外 PHP 运行时升至含上述修复的版本，并把「披露前异常扫描」纳入 SOC 假设，缩短高影响力边缘运行时的盘点与补丁 SLA。"
+    },
+    {
+      "title": "ReqLLM/Uni-CLI 与 HF Datasets、MLflow：流式客户端、本机 MCP 与数据/评测工件面继续暴露凭据与代码执行通道",
+      "insight": "ReqLLM 1.9.0–1.28.0 WebSocket 默认 insecure、丢弃调用方 TLS 配置，路径攻击者可窃 Bearer 并篡改流式响应与工具调用（CVE-2026-107685，修于 1.29.0）。Uni-CLI <0.225.2 遗留 MCP HTTP 口未校验浏览器 Origin，恶意网页可向本机 /mcp 投递 tools/call（CVE-2026-58497）。HF Datasets ≤5.1.0 废弃 pandas 构建器经 read_pickle 加载不可信数据可 RCE（CVE-2026-57845，修复 PR 尚未合并）。MLflow <3.17.0 未认证 scorer/GenAI evaluate 在可选 trulens-providers-litellm 下可 SSRF（CVE-2026-115886）。AWS 托管 MCP run_script 沙箱列表不全（CVE-2026-115845）已由服务侧修复。",
+      "action": "本周将 req_llm 升至 1.29.0+、Uni-CLI 升至 0.225.2+；自建 MLflow 升至 3.17.0+ 并关闭未认证访问；数据流水线禁用 datasets 的 pandas/pickle 加载不可信文件，待官方合并修复后再评估升级。"
+    }
+  ],
+  "classifications": {
+    "2026-10-24-brief-9d70c5123334#1": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-10-24-brief-9d70c5123334#4": {
+      "theme": "infra-cve",
+      "dimension": "model-supply"
+    }
+  }
+}

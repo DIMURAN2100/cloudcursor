@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23",
+  "updatedAt": "2026-10-24",
   "terms": [
     {
       "term": "提示注入",
@@ -1085,6 +1085,20 @@
       "definition": "不可信实体/关系字符串经错误转义顺序拼入图数据库查询（如 Cypher），可提前闭合字面量并改写图数据或外泄查询结果。Flexible GraphRAG（CVE-2026-114510）在 LangChain+FalkorDB 路径上，摄入文档中间接提示注入可驱动抽取模型产出恶意图元素；缓解须参数化查询、审计转义顺序，并升级至含修复的版本。",
       "theme": "ai-self",
       "dimension": "data-model"
+    },
+    {
+      "term": "发行管道投毒",
+      "en": "Compromised Release Pipeline",
+      "definition": "官方构建/发布流水线令牌失守后，恶意制品进入 PyPI、容器仓库等受信分发面，而源码标签本身可仍干净。LiteLLM 1.107.0（2026-10-21）即属此类：恶意 wheel/镜像窃取云与模型密钥并加载远程代码；缓解须固定版本、阻断异常新包，并审计发布 OAuth 与公网网关日志中的令牌落点。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    {
+      "term": "传输策略漂移",
+      "en": "Transport Policy Drift",
+      "definition": "同一产品并存两套传输/入口时，安全守卫（如浏览器 Origin 校验）只落在新路径，遗留路径仍对网页开放。Uni-CLI <0.225.2（CVE-2026-58497）遗留 JSON-RPC-over-HTTP MCP 口即因此可被恶意网页向本机 /mcp 投递 tools/call；缓解须把边界策略前置到共用守卫，避免双轨策略长期分叉。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }
