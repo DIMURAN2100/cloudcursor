@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-25",
+  "headline": "身份仍按「本人登录」设计、代理却已大规模入场：银行紧急阻断第三方 AI Agent，与 LiteLLM 启动钩子窃密、PaaS 环境变量跳板、本地 Agent 开发面通配 Origin 同构暴露委托边界",
+  "execSummary": [
+    {
+      "title": "美大型银行收紧第三方 AI 代理入账：用户授权凭证仍违「须由本人登录」条款",
+      "insight": "Axios 援引知情人士称，多家美国大行在客户账户中检测到未经机构核验的第三方 AI 代理活动，常见路径是用户主动授予登录凭据后由代理代访，亦有代理拨打客服或尝试越权。摩根士丹利已开始阻断第三方代理接入，摩根大通、美国银行与花旗等亦在收紧，多数更倾向先开放只读类第三方访问；摩根士丹利发言人表示未观测到「流氓 AI 代理」进入其平台。属媒体与厂商回应并存的已公开事实，尚非单一漏洞公告，但说明生产金融系统尚未把 Agent 当作一等公民身份。",
+      "action": "本周盘点网银、券商与支付类账户的第三方 AI 助手/浏览器 Agent 接入策略，禁止共享主密码式登录，改为官方只读 API 或明确拒绝，并同步更新客户与内部使用条款。"
+    },
+    {
+      "title": "微软拆解 LiteLLM 1.107.0：.pth/sitecustomize 启动钩子可在未 import 时窃密；Railway 环境变量泄露指向推理提供商跳板",
+      "insight": "微软确认恶意 wheel 经 `_cook.pth`/`cook.py` 与 `sitecustomize.py` 等 Python 启动钩子在解释器初始化阶段执行，无需 import litellm 即可激活，覆盖开发者与 AI 工具凭据、云与工作负载身份、浏览器数据，并可尝试读取代理库中的密钥与模型配置；关键处置是隔离后从干净主机调查，禁止在嫌疑环境内运行 python/pip，删除应用目录不够，须重建环境并轮换密钥。Railway 同期披露存储客户环境变量的系统异常，未授权方可能已取得部分解密内容（可含 API/数据库/镜像仓凭据），官方判断属针对平台公司、旨在进一步危害 AI 推理提供商的攻击序列之一。",
+      "action": "本周在软件库、CI、镜像与开发者工作站检索 LiteLLM 1.107.0 及 cook.pth/sitecustomize.py IoC，隔离后从干净主机取证并重建 Python 环境；若使用 Railway 或同类 PaaS 托管推理相关工作负载，立即轮换全部环境变量与私有仓库凭据并审计近几日对模型提供商 API 的异常调用。"
+    },
+    {
+      "title": "ADK Java 开发服默认通配 Origin 可跨站控 Agent；Agent Zero 聊天 XSS 经 CISA 协调通告",
+      "insight": "CVE-2026-107858（CVSS 约 7.2）：Google ADK for Java 开发 Web 服务在 1.13.0 之前对 /run_live WebSocket 与 REST 默认允许任意 Origin 且无认证，开发者本地跑 agent 时若打开恶意网页，攻击者可跨源驱动工具调用、读写会话与制品；绑定 localhost 不能防护。1.13.0 将 CORS/WebSocket 默认改为同源并拒绝经回环的 DNS 重绑定。CISA 另以 CSAF/VEX 公开 Agent Zero Web UI <1.15 聊天/上传 XSS（CVE-2026-97635，CVSS 约 8.1），恶意内容可在已登录会话执行 JavaScript。",
+      "action": "本周将 Google ADK for Java 开发组件升级至 1.13.0+，禁止在生产或半可信网络暴露未加固的 adk web 开发服务；使用 Agent Zero 的团队升级至 1.15+ 并复核控制台输入净化。"
+    }
+  ],
+  "classifications": {
+    "2026-10-25-brief-520ff22755d0#2": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}

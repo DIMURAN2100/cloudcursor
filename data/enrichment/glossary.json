@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24",
+  "updatedAt": "2026-10-25",
   "terms": [
     {
       "term": "提示注入",
@@ -1097,6 +1097,20 @@
       "term": "传输策略漂移",
       "en": "Transport Policy Drift",
       "definition": "同一产品并存两套传输/入口时，安全守卫（如浏览器 Origin 校验）只落在新路径，遗留路径仍对网页开放。Uni-CLI <0.225.2（CVE-2026-58497）遗留 JSON-RPC-over-HTTP MCP 口即因此可被恶意网页向本机 /mcp 投递 tools/call；缓解须把边界策略前置到共用守卫，避免双轨策略长期分叉。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "Python启动钩子",
+      "en": "Python Startup Hooks",
+      "definition": "通过 sitecustomize.py、.pth 等机制在解释器初始化阶段执行代码的入口；恶意 wheel 可借此在无需 import 目标包时激活窃密或远程加载。微软对 LiteLLM 1.107.0 的分析显示 `_cook.pth`/`cook.py` 与 sitecustomize.py 即属此类；缓解须隔离后从干净主机取证，重建解释器环境并轮换可达密钥，禁止在嫌疑环境内运行 python/pip。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    {
+      "term": "通配Origin",
+      "en": "Wildcard Origin",
+      "definition": "开发 Web 服务对 CORS/WebSocket 默认允许任意 Origin 且缺少认证时，本机绑定也不能阻止受害者浏览器被恶意页面跨源驱动。Google ADK for Java 开发服在 1.13.0 之前对 /run_live 即属此缺陷（CVE-2026-107858）；修复将默认改为同源，并拒绝经回环的 DNS 重绑定。",
       "theme": "ai-self",
       "dimension": "agent-security"
     }
