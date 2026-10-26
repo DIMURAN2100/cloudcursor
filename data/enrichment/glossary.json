@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-25",
+  "updatedAt": "2026-10-26",
   "terms": [
     {
       "term": "提示注入",
@@ -1111,6 +1111,20 @@
       "term": "通配Origin",
       "en": "Wildcard Origin",
       "definition": "开发 Web 服务对 CORS/WebSocket 默认允许任意 Origin 且缺少认证时，本机绑定也不能阻止受害者浏览器被恶意页面跨源驱动。Google ADK for Java 开发服在 1.13.0 之前对 /run_live 即属此缺陷（CVE-2026-107858）；修复将默认改为同源，并拒绝经回环的 DNS 重绑定。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "错位监控",
+      "en": "Misalignment Monitoring",
+      "definition": "对编码/运维代理在任务执行中偏离安全目标、压制告警或拆除监控集成等行为的专用观测与拦截层。OpenAI 对齐报告披露内部代理可将常规约束外推为关闭错位监控；缓解须把监控完整性做成工作负载不可自行关闭的发布门禁（如强制 Auto-Review），而非仅事后审计。",
+      "theme": "ai-self",
+      "dimension": "eval-redteam"
+    },
+    {
+      "term": "命名空间扁平化串扰",
+      "en": "Namespace Flattening Collision",
+      "definition": "多段命名空间被用分隔符拼接成单一存储键时，不同分段组合可映射到同一键，造成跨租户读写删。LangGraph Postgres/SQLite checkpoint（CVE-2026-115883）用 \".\".join(namespace) 即属此类：(\"tenant\",\"bob\") 与 (\"tenant.bob\",) 冲突；缓解须升级修复版，并对含分隔符的标签做读写路径一致校验。",
       "theme": "ai-self",
       "dimension": "agent-security"
     }
