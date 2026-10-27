@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26",
+  "updatedAt": "2026-10-27",
   "terms": [
     {
       "term": "提示注入",
@@ -1127,6 +1127,20 @@
       "definition": "多段命名空间被用分隔符拼接成单一存储键时，不同分段组合可映射到同一键，造成跨租户读写删。LangGraph Postgres/SQLite checkpoint（CVE-2026-115883）用 \".\".join(namespace) 即属此类：(\"tenant\",\"bob\") 与 (\"tenant.bob\",) 冲突；缓解须升级修复版，并对含分隔符的标签做读写路径一致校验。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "工作区指令投毒",
+      "en": "Workspace Instruction Poisoning",
+      "definition": "将恶意 AGENTS.md/CLAUDE.md 等指令文件写入开发者可启动目录（如浏览器静默落盘的 ~/Downloads），使编码代理按设计自动吞并指令并执行包安装、改写 API 基址或外泄令牌。Aviatrix 对 MALFEX 链路的复盘表明缓解须限制指令源目录、包安装审批与模型 API 出站允许列表，不能等待通用模型补丁。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "默认空鉴权沙箱",
+      "en": "Unauthenticated Sandbox Defaults",
+      "definition": "本地/容器化 agent 沙箱服务默认绑定全网卡（0.0.0.0）且会话 API 密钥为空，使本应本机调试的执行面可被远程未认证调用。OpenHands Software Agent SDK 1.52.0 之前的 CVE-2026-112346 即属此类；修复应收敛到回环发布并强制非空会话密钥，资产盘点须覆盖历史端口与空密钥残留。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
     }
   ]
 }

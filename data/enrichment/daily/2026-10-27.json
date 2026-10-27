@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-27",
+  "headline": "编码代理默信 Downloads 等落盘指令文件，正与「默认空鉴权沙箱 / 低代码 AI 接口缺对象鉴权」合流，把本机调试与站点 LLM 密钥变成可远程打穿的供应链与额度盗用面",
+  "execSummary": [
+    {
+      "title": "AGENTS.md 可经浏览器静默写入 Downloads，编码代理启动即吞并并安装恶意 npm",
+      "insight": "Forever Security / Aviatrix 复盘显示：恶意 AGENTS.md（及同类指令）可无交互落入 ~/Downloads，Codex、Claude Code 等从该目录启动时会自动信任工作区指令，进而安装 MALFEX 相关包（如 function-color）、链式拉 Windows 载荷或改写 API 基址窃取 OAuth/会话令牌。根因是代理「信任工作区指令文件」的设计，而非单一模型 CVE；厂商暂无通用补丁，控制面须收紧启动目录、包安装与出站基址。",
+      "action": "本周盘点 Codex/Claude Code 等代理的启动目录，禁止从 Downloads 等浏览器落盘路径自动加载 AGENTS.md/CLAUDE.md，并对包安装与模型 API 出站启用允许列表，告警异常 npm 注册表与提供商基址重定向。"
+    },
+    {
+      "title": "OpenHands 沙箱默认绑 0.0.0.0 且空 session_api_keys，未认证即可 root RCE",
+      "insight": "CVE-2026-112346（CVSS 9.8）指出：Software Agent SDK 1.52.0 之前，DockerWorkspace/Apptainer 将沙箱 agent 服务发布到全网卡，且默认空会话密钥关闭认证；能触达已发布端口即可经 HTTP/WebSocket 以沙箱 root 执行命令、读写挂载工作区并读明文密钥。修复将发布面收敛到回环并传播会话密钥——说明 agent 调试端口的网络绑定与空鉴权残留，已与提示注入同等优先。",
+      "action": "本周将 OpenHands Software Agent SDK 升至 1.52.0+，扫描历史容器是否仍把 agent 端口发布到非回环地址或残留空 session_api_keys，并立即收敛暴露面。"
+    },
+    {
+      "title": "Frappe Builder：improve_prompt 越权刷 LLM 额度，同日 SSRF/写文件可组链",
+      "insight": "CVE-2026-115718：任意已登录非 Guest（含无 Builder 权限的 Website User）可调 improve_prompt，经站点 AI 提供商密钥（常见 OpenRouter）发起补全，把站点变成免费 LLM 代理并消耗所有者额度。同日 CVE-2026-115717/115720 允许经 convert_to_webp 拉内网并写文件，且远程拉取 SSRF 防护可被重定向与 DNS rebinding 绕过——低代码 AI 构建面缺少对象级鉴权时，传统 Web 缺陷会放大密钥与智能体暴露半径。",
+      "action": "本周将 Frappe Builder 升至 1.36.0（并满足对应 Frappe 版本），或临时移除 Builder AI 提供商密钥；核查 LLM 额度异常，并复查提示/转换/远程拉取接口的对象级授权与出站 URL 策略。"
+    }
+  ],
+  "classifications": {}
+}
