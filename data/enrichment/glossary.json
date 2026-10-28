@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27",
+  "updatedAt": "2026-10-28",
   "terms": [
     {
       "term": "提示注入",
@@ -1141,6 +1141,20 @@
       "definition": "本地/容器化 agent 沙箱服务默认绑定全网卡（0.0.0.0）且会话 API 密钥为空，使本应本机调试的执行面可被远程未认证调用。OpenHands Software Agent SDK 1.52.0 之前的 CVE-2026-112346 即属此类；修复应收敛到回环发布并强制非空会话密钥，资产盘点须覆盖历史端口与空密钥残留。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
+    },
+    {
+      "term": "资源混淆",
+      "en": "Resource Confusion",
+      "definition": "令牌校验止于签名/签发方/过期、不绑定受众（aud）或应用身份时，同租户内颁发给其他应用的合法令牌可被 MCP 等资源服务器接受，形成 confused-deputy。AWS API MCP（CVE-2026-115413）即属此类；缓解须升级并强制配置 AUTH_AUDIENCE/AUTH_CLIENT_ID，或降级到 stdio 并限制本机访问。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "恶意GGUF解析",
+      "en": "Malicious GGUF Parsing",
+      "definition": "本地推理栈在加载不可信 GGUF 时因分词器/缓冲区解析缺陷发生越界写，可致崩溃乃至代码执行。llama.cpp（CVE-2026-116816）在 plamo2 tokenizer 将负值 BYTE token 写入 bytes_ 即属此类；缓解须升级修复版，并对第三方 GGUF 做签名/哈希校验与非特权沙箱加载。",
+      "theme": "infra-cve",
+      "dimension": "model-supply"
     }
   ]
 }
