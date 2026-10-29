@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28",
+  "updatedAt": "2026-10-29",
   "terms": [
     {
       "term": "提示注入",
@@ -1155,6 +1155,20 @@
       "definition": "本地推理栈在加载不可信 GGUF 时因分词器/缓冲区解析缺陷发生越界写，可致崩溃乃至代码执行。llama.cpp（CVE-2026-116816）在 plamo2 tokenizer 将负值 BYTE token 写入 bytes_ 即属此类；缓解须升级修复版，并对第三方 GGUF 做签名/哈希校验与非特权沙箱加载。",
       "theme": "infra-cve",
       "dimension": "model-supply"
+    },
+    {
+      "term": "跨租户密钥注入",
+      "en": "Cross-Tenant Key Injection",
+      "definition": "多租户 AI 网关在 payload 处理阶段按客户端可控的租户/模型标识从共享凭据存储取出提供商 API 密钥并注入请求，却未在进程内完成授权校验；若仅依赖网关 AuthPolicy 且扩展处理端口可被直连，隔离即失效。CVE-2026-117574（ai-gateway-payload-processing）属已确认 Critical 缺陷；缓解须补路径级授权与进程内二次校验，并轮换可能被注入过的密钥。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "模型可控掩码",
+      "en": "Model-Controllable Masking",
+      "definition": "工具默认对疑似密钥的环境变量做掩码，但掩码开关暴露在可供大模型调用的工具 schema 中，特制提示可诱导模型关闭掩码并以明文回传云凭据。strands-agents-tools（CVE-2026-115415）在 0.8.6 前即属此类；修复方向是安全属性仅由操作者钉死，模型不可覆写，并轮换曾暴露环境中的凭据。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }
