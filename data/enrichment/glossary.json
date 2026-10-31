@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-29",
+  "updatedAt": "2026-10-31",
   "terms": [
     {
       "term": "提示注入",
@@ -1167,6 +1167,20 @@
       "term": "模型可控掩码",
       "en": "Model-Controllable Masking",
       "definition": "工具默认对疑似密钥的环境变量做掩码，但掩码开关暴露在可供大模型调用的工具 schema 中，特制提示可诱导模型关闭掩码并以明文回传云凭据。strands-agents-tools（CVE-2026-115415）在 0.8.6 前即属此类；修复方向是安全属性仅由操作者钉死，模型不可覆写，并轮换曾暴露环境中的凭据。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "跨步检测",
+      "en": "Cross-Step Detection",
+      "definition": "在完整 Agent 轨迹（多轮对话、工具调用、MCP 交互）上匹配可疑动作序列，识别单步看似合法、仅在跨步组合后才显现的恶意意图或越权。Cisco 开源的 Project Quarry 以神经符号规则语言承担此类检测，可作运行时护栏与事后分析的共享策略层。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "模型可控反射",
+      "en": "Model-Controllable Reflection",
+      "definition": "Agent 工具用模型输出的字符串经 getattr 等反射机制选择可调用对象并传入模型可控参数，使提示注入可直接落到反序列化或任意函数执行。Agno PandasTools（CVE-2026-119050）经 pandas.read_pickle 等路径实现主机 RCE 即属此类；缓解须白名单化工具名，禁止模型任意反射/反序列化入口。",
       "theme": "ai-self",
       "dimension": "agent-security"
     }

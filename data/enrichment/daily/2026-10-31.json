@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-31",
+  "headline": "Agent 安全同时向跨步检测语言与身份/租户授权硬化两端推进；模型可控工具反射与 pickle 门禁的模块来源信任，继续把隔离缺口推到工具层而非权重层",
+  "execSummary": [
+    {
+      "title": "Cisco 开源 Quarry：用神经符号规则做 Agent 跨步检测",
+      "insight": "Project Quarry 把机器学习判定与精确规则结合，覆盖多轮对话、工具调用与 MCP 轨迹，专门识别“单步合法、序列恶意”的越权模式，并可作运行时护栏、事后分析与 SIEM 联动策略层。说明仅靠单次提示/单次工具授权门禁，已无法覆盖合法权限下的跨步滥用。",
+      "action": "本周盘点 Agent/MCP 审计日志是否已保留完整工具调用轨迹，并评估将 Quarry 类跨步规则接入现有 SIEM/运行时护栏，优先覆盖敏感文件读写与出站组合序列。"
+    },
+    {
+      "title": "WordPress AI Engine MCP 动态客户端注册恒真（CVE-2026-110732）",
+      "insight": "至 3.8.6 的 MCP OAuth 2.1 Dynamic Client Registration 端点 permission_callback 为 __return_true，未认证者可注册攻击者控制 redirect URI 的活跃客户端；管理员一旦在同意页批准，即可拿到绑定管理员身份的 MCP 令牌并执行用户创建、选项更新等操作。认证完成后的同意一步，成为把整面 MCP 工具面交出的关键环节。",
+      "action": "本周清点已启用 MCP OAuth/动态客户端注册的 WordPress AI Engine 及其他站点侧 MCP 宿主，升级至含 3.8.7 相关修复的版本线，并审计近期 OAuth 客户端注册与管理员同意记录。"
+    },
+    {
+      "title": "Agno PandasTools 把模型字符串映射为反射入口（CVE-2026-119050）",
+      "insight": "Agno 至 3.1.11 用模型可控字符串经 getattr(pd, …) 选择 pandas 可调用对象并传入模型可控参数；提示注入可诱导调用 pandas.read_pickle 等对攻击者路径反序列化，落到代理主机 RCE。根因是“工具名选择权交给模型”，与单次提示注入防护不是同一控制层。",
+      "action": "本周盘点 Agno 等将模型输出直接映射为 getattr/反序列化工具名的项目，禁用或白名单化 PandasTools 类反射入口，并隔离代理主机权限与长寿命密钥。"
+    }
+  ],
+  "classifications": {
+    "2026-10-31-brief-8bde97549b7c#4": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-10-31-brief-8bde97549b7c#5": {
+      "theme": "infra-cve",
+      "dimension": "model-supply"
+    },
+    "2026-10-31-brief-8bde97549b7c#6": {
+      "theme": "governance",
+      "dimension": "standards-frameworks"
+    }
+  }
+}
