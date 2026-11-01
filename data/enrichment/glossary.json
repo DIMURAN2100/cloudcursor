@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-31",
+  "updatedAt": "2026-11-01",
   "terms": [
     {
       "term": "提示注入",
@@ -1183,6 +1183,20 @@
       "definition": "Agent 工具用模型输出的字符串经 getattr 等反射机制选择可调用对象并传入模型可控参数，使提示注入可直接落到反序列化或任意函数执行。Agno PandasTools（CVE-2026-119050）经 pandas.read_pickle 等路径实现主机 RCE 即属此类；缓解须白名单化工具名，禁止模型任意反射/反序列化入口。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "Agent栖息地",
+      "en": "Agent Habitat",
+      "definition": "企业为智能体划定的受控运行环境，覆盖身份、执行、权限、数据流、出站连接、审批与恢复。Replit《Agent Habitat Architecture》要求安全逻辑在模型域外强制执行，以凭证 Broker 作为对外唯一通路，并用可测试原则与成熟度量表凭证据自评。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "任务运行器隔离",
+      "en": "Task Runner Isolation",
+      "definition": "工作流平台把用户代码限制在独立任务运行器中执行的边界。n8n 弃用的 Function/Function Item（vm2）与 LangChain Code（主进程）节点，可被有工作流改权的用户用来在隔离外执行任意 JavaScript（CVE-2026-119408）；缓解须升级修复线，并禁止设置 N8N_DEPRECATED_NODES_BLOCK=false。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
     }
   ]
 }

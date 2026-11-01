@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-01",
+  "headline": "编排与 ML 平台高危面集中在默认暴露的代码节点、制品拉取与权重反序列化；Agent 栖息地架构把安全逻辑外置为可审计基线",
+  "execSummary": [
+    {
+      "title": "Langflow 多漏洞簇：认证缺口叠加 MCP/Agent 代码执行",
+      "insight": "IBM 通报 Langflow OSS 1.0.0–1.12.8 同时存在认证控制不完整、第三方库智能体代码执行、运维注入导致 API 密钥暴露，以及经 MCP 工具枚举路径的未认证 RCE；对应 CVE-2026-93680/110186/110193，修复线为 1.13.0。说明低代码编排一旦把 MCP 工具面与 Agentic Assistant 代码生成面默认开放，主机沦陷成本由认证强度直接决定。",
+      "action": "本周将自建 Langflow OSS 升级至 1.13.0，关闭或鉴权隔离自动登录、Agentic Assistant 与对外 MCP 工具枚举，并轮换可能暴露过的 API 密钥。"
+    },
+    {
+      "title": "n8n 弃用节点可逃出任务运行器隔离（CVE-2026-119408）",
+      "insight": "已弃用的 Function/Function Item（vm2）与 LangChain Code（主进程）节点，可被拥有工作流改权的认证用户用来在任务运行器隔离之外执行任意 JavaScript；修复线 2.42.6/2.43.3/2.44.0/3.0.1 默认拦截新增与修改，但既有工作流仍可运行，且 N8N_DEPRECATED_NODES_BLOCK=false 会恢复脆弱行为。同日 MCP OAuth 动态客户端注册开放重定向与昨日 WordPress AI Engine 身份面形成对照。",
+      "action": "本周清点 n8n 版本与工作流中的 Function/Function Item/LangChain Code 节点，升级至修复线并确认未设置 N8N_DEPRECATED_NODES_BLOCK=false，同时限制 /mcp-oauth/register 未认证可达性。"
+    },
+    {
+      "title": "Kubeflow 制品 SSRF 与空命名空间上传构成跨租户写入",
+      "insight": "继昨日跨租户读制品之后，同批次公开未认证 SSRF（CVE-2026-88980/88981）与多用户模式下空命名空间流水线上传跳过 SubjectAccessReview（CVE-2026-77596，Critical 9.6），低权限租户可替换其他租户将执行的镜像与命令；统一修复线 2.18.0。独立部署假设下的“内网可信”前端，正在变成共享流水线的供应链写入点。",
+      "action": "本周将 kfp-frontend 与 kfp-api-server 升至 2.18.0，关闭默认空命名空间共享上传，并抽测制品 HTTP/S3 端点不可指向 IMDS/内网。"
+    }
+  ],
+  "classifications": {
+    "2026-11-01-brief-31202e744dcb#6": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    }
+  }
+}
