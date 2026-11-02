@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01",
+  "updatedAt": "2026-11-02",
   "terms": [
     {
       "term": "提示注入",
@@ -1197,6 +1197,20 @@
       "definition": "工作流平台把用户代码限制在独立任务运行器中执行的边界。n8n 弃用的 Function/Function Item（vm2）与 LangChain Code（主进程）节点，可被有工作流改权的用户用来在隔离外执行任意 JavaScript（CVE-2026-119408）；缓解须升级修复线，并禁止设置 N8N_DEPRECATED_NODES_BLOCK=false。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
+    },
+    {
+      "term": "远程信任代码",
+      "en": "Trust Remote Code",
+      "definition": "模型加载库在拉取仓库时执行仓库内 Python（如 Hugging Face 的 trust_remote_code=True 经 config.json auto_map）的开关。Pluto「Load/Mine」显示攻击者可借此在权重落地前以调用方权限植入挖矿/后门；缓解须默认关闭远程信任，并对已拉取仓库做 auto_map 与旁路脚本审查。",
+      "theme": "infra-cve",
+      "dimension": "model-supply"
+    },
+    {
+      "term": "扩展市场冒用",
+      "en": "Extension Marketplace Impersonation",
+      "definition": "在 IDE/编辑器扩展市场复用官方扩展 ID 或品牌标识分发恶意包，使宿主在模块加载瞬间获得与开发者同等本机权限。Cursor 市场短暂分发冒用 Anthropic 标识的 Claude Code 扩展即属此类；卸载扩展不足以清除独立持久化工件，须核验来源哈希并清查 SSH 公钥与计划任务。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
     }
   ]
 }

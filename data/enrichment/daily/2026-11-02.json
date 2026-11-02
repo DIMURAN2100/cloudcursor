@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-02",
+  "headline": "AI 软件供应链同时击穿开发者扩展市场与模型枢纽；研究模型已把跨平台利用链拼装压到可协调披露的节奏",
+  "execSummary": [
+    {
+      "title": "Cursor 市场冒用 Anthropic 标识分发恶意 Claude Code 扩展",
+      "insight": "10 月 29 日约太平洋时间 02:27–13:35，Cursor 扩展市场短暂分发冒用官方扩展 ID 的 Anthropic.claude-code 2.1.312/2.1.313；包在模块加载时执行注入 JS，可写 SSH 公钥、持久化与外传主机信息，估计最多约 5,000 名用户受影响。微软确认 VS Marketplace 与 npm 官方包未波及。卸载扩展不足以清除独立持久化工件，扩展市场身份冒用已与传统供应链投毒同级。",
+      "action": "本周盘点 10 月 29 日窗口内安装或更新过上述版本的终端，按 Cursor 通告运行检查脚本，清查 authorized_keys、LaunchAgent/计划任务与反向隧道，必要时重建主机并轮换凭据。"
+    },
+    {
+      "title": "Hugging Face「Load/Mine」经 trust_remote_code 分发挖矿后门",
+      "insight": "Pluto 追踪到 7 个账户、31 个恶意仓库经 HF/ModelScope 分发，下载量合计超约 32,000 次（下载≠失陷）；载荷伪装小型 Qwen2 测试检查点，依赖 trust_remote_code=True 在权重落地前执行 auto_map 引用的仓库 Python，瞄准自托管推理与租用 GPU/CI。权重扫描与杀软签名覆盖不了建模 Python 行为，下架后换号复现要求持续狩猎。",
+      "action": "本周审计 ML/推理与 CI 中所有 trust_remote_code=True 及等价路径，对近 60 天自 HF/ModelScope 拉取的小型「测试」检查点审查 auto_map 与旁路 .py，默认改为不信任远程代码。"
+    },
+    {
+      "title": "Anthropic 研究模型在受控条件下拼装跨平台利用链",
+      "insight": "Frontier Red Team 用未发布内部模型在实验室发现并拼接面向 Chrome、Safari、Android、Windows 与 Linux 的可工作利用链（含近零交互 RCE、同源策略绕过等），均经协调披露且厂商已修补。材料定性为受控研究能力与负责任披露，不应等同已观测大规模在野自动化利用，但会进一步压缩浏览器/内核补丁响应窗口。",
+      "action": "本周让浏览器与内核安全责任人核对 Chrome/Safari/Android/Windows/Linux 近两周高危补丁是否已覆盖生产基线，并写入「模型辅助漏洞研究加速披露」的响应预案。"
+    }
+  ],
+  "classifications": {
+    "2026-11-02-brief-b58c1c66b01f#1": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    },
+    "2026-11-02-brief-b58c1c66b01f#2": {
+      "theme": "infra-cve",
+      "dimension": "model-supply"
+    },
+    "2026-11-02-brief-b58c1c66b01f#3": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    "2026-11-02-brief-b58c1c66b01f#5": {
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
+    }
+  }
+}
