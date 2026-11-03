@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02",
+  "updatedAt": "2026-11-03",
   "terms": [
     {
       "term": "提示注入",
@@ -1211,6 +1211,20 @@
       "definition": "在 IDE/编辑器扩展市场复用官方扩展 ID 或品牌标识分发恶意包，使宿主在模块加载瞬间获得与开发者同等本机权限。Cursor 市场短暂分发冒用 Anthropic 标识的 Claude Code 扩展即属此类；卸载扩展不足以清除独立持久化工件，须核验来源哈希并清查 SSH 公钥与计划任务。",
       "theme": "infra-cve",
       "dimension": "dev-supply"
+    },
+    {
+      "term": "请求头透传",
+      "en": "Header Passthrough",
+      "definition": "MCP/OpenAPI 管理面把调用方请求中的 Authorization、Cookie、X-Api-Key 等头原样复制到指向外部 URL 的出站请求。MCPHub（CVE-2026-120323）的 passthroughHeaders 即属此类；低权限用户可注册恶意 OpenAPI 服务器、诱使高权限用户调工具以窃取会话凭据。缓解须升级修复线并对认证头实施拒绝列表。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "模型驱动受害人估价",
+      "en": "Model-Driven Victim Appraisal",
+      "definition": "窃密木马在采集凭据与资产后，将结构化证据包提交给大模型，要求以情报分析角色输出变现价值与 OPSEC 评估，从而对受害人排序。Cisco Talos 对 VOLTA-AUTODOXER 的分析显示其经 OpenRouter 多模型拒答回落，并可盗用受害者自有 API 密钥；检测须把异常 LLM API 出站与窃密行为关联。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
     }
   ]
 }

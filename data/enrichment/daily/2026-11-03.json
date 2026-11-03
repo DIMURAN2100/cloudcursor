@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-03",
+  "headline": "MCP 工具链仍按传统 Web API 惯性设计权限边界；大模型同时成为窃密后处理劳动力与企业应急加固手段",
+  "execSummary": [
+    {
+      "title": "AWS Serverless MCP 项目名路径穿越可读写部署状态外 JSON",
+      "insight": "awslabs.aws-serverless-mcp-server 在 v0.2.1 前对项目名路径限制不当（CVE-2026-116635 / GHSA-r6mm-377j-qg8m），能影响 MCP 智能体的攻击者可目录穿越或用绝对路径读取甚至覆盖预定目录外的 JSON；AWS 评 CVSS 6.1 且无变通方案。同日 LaraDashboard SendEmailTool 只读权限可发任意邮件、MCPHub passthroughHeaders 透传认证头，说明 MCP 工具描述与鉴权元数据错配会直接落到文件、邮件通道与会话凭据。",
+      "action": "本周清点开发机与 CI 中的 awslabs.aws-serverless-mcp-server，升级至 v0.2.1+，关闭不必要的 --enable-write，并核查近期项目名参数是否含 ../ 或绝对路径。"
+    },
+    {
+      "title": "VOLTA 窃密木马经 OpenRouter 让大模型按变现价值给受害人排序",
+      "insight": "Cisco Talos 确认 VOLTA-AUTODOXER 在采集浏览器凭据、会话与钱包后，把结构化证据包提交给 Claude Opus（拒答则回落 Kimi/Gemini），以「法医情报分析师」角色输出价值与 OPSEC 评估；还可扫环境变量盗用 OPENAI_API_KEY（LLMjacking），且疑似面向买家的 builder、无自建 C2。检测不能只盯静态 IOC，须把异常 LLM API 出站与窃密行为关联。",
+      "action": "本周在终端与代理层增加对 openrouter.ai/chat/completions 异常出站、Chrome 非白名单 --headless 启动，以及成对出现的身份报告/AI 分析产物的狩猎规则。"
+    },
+    {
+      "title": "ChatGPT 公开分享链接可跨 Preview 沙箱在已登录会话执行 JS",
+      "insight": "Parameter 披露：恶意分享链接可在打开者已登录会话中枚举对话、读取未分享私聊并外传；Preview 沙箱内代码经未校验来源的 MathLive postMessage 写入主站，再调认证 API。OpenAI 已于 10 月 26 日前修复两套 Web 前端并升至 P1，用户无本地补丁面。消费级 AI「无害功能组合」在消息来源校验缺失时可拼出账户接管链。",
+      "action": "本周确认企业版/团队工作区 Web 前端已随 OpenAI 10 月 26 日修复线更新；将「未知分享链接一键 Preview」列入高风险交互培训，并审计近期异常对话枚举或外联。"
+    }
+  ],
+  "classifications": {
+    "2026-11-03-brief-837c2fd0dda9#2": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-11-03-brief-837c2fd0dda9#3": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-11-03-brief-837c2fd0dda9#5": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    }
+  }
+}
