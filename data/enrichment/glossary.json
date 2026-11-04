@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03",
+  "updatedAt": "2026-11-04",
   "terms": [
     {
       "term": "提示注入",
@@ -1225,6 +1225,20 @@
       "definition": "窃密木马在采集凭据与资产后，将结构化证据包提交给大模型，要求以情报分析角色输出变现价值与 OPSEC 评估，从而对受害人排序。Cisco Talos 对 VOLTA-AUTODOXER 的分析显示其经 OpenRouter 多模型拒答回落，并可盗用受害者自有 API 密钥；检测须把异常 LLM API 出站与窃密行为关联。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "LLMJacking",
+      "en": "LLMJacking",
+      "definition": "用暴露或窃取的云身份、会话令牌与模型 API 密钥劫持企业大模型/云推理资源，造成账单尖峰并可能转售未授权额度。Google Mandiant/GTIG 确认地下「LLM Mixer」分工与对 LiteLLM 等路由中间件的提权利用；缓解须小时级用量告警并轮换 IAM/PAT/API 密钥。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "MCPhantom",
+      "en": "MCPhantom",
+      "definition": "编码智能体按训练记忆自动选定已归档、不再提供安全更新的早期 MCP 参考服务器的行为模式。Glow Labs 称约 98% 案例由模型自行补全包名；废弃 Puppeteer 服务器可经提示注入把浏览权限拉成主机命令执行，npm 弃用标记无法阻止 npx 安装。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }

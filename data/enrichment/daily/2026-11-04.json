@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-04",
+  "headline": "模型调用额度被地下 Mixer 产业化收割，编码代理又按训练记忆装上废弃 MCP，推理账单与工具选择同步变成核心资产",
+  "execSummary": [
+    {
+      "title": "Google 确认 LLMJacking 已成地下转售生态",
+      "insight": "Mandiant/GTIG 指出攻击者凭暴露或窃取的云身份、GitHub PAT 与模型 API 密钥劫持企业推理资源，可在数小时内打出账单尖峰（个案单日逾 10 万美元、累计约百万才被切断）；地下「LLM Mixer」把入口入侵与下游网关转售额度分工，并出现对 LiteLLM 等路由中间件的提权利用。企业为攻击者的代理与推理工作负载买单，且可能连带暴露密钥管理与横向路径。",
+      "action": "本周对云账单与模型 API 用量建立小时级尖峰告警，盘点并轮换可能暴露的 IAM / Service Account / GitHub PAT / LLM API 密钥，并核查是否存在未经批准的网关 Virtual Key 或 PROXY_ADMIN 类提权痕迹。"
+    },
+    {
+      "title": "MCPhantom：编码代理自行装上已归档 MCP 参考服务器",
+      "insight": "Glow Labs 发现约 98% 案例由模型按训练记忆补全包名，装上 Anthropic 早期已归档、不再提供安全更新的 MCP 参考服务器；Puppeteer 服务器可经提示注入把「浏览网页」拉成任意命令执行，npm 弃用标记也挡不住 npx。漏洞无 CVE、SCA 看不见、EDR 只看到可信 Node 装公共包，代理的安装决策本身构成供应链。",
+      "action": "本周清点开发者机与 CI 中的 MCP 配置，移除指向 @modelcontextprotocol 已归档参考服务器或 npm 弃用包的条目，改为服务方官方 MCP，并将 npm 弃用状态纳入安装批准条件。"
+    },
+    {
+      "title": "Chainstack / WorkOS 通报遭 ARTEX 类进攻型智能体战役波及",
+      "insight": "Chainstack 确认攻击经第三方组件进入开发环境并扩至部分生产，暴露组织名、持有人姓名、成员邮箱与密码哈希，节点凭据按已暴露处理要求轮换；WorkOS 同步通报同类自治进攻型智能体框架侵入 GTM 系统。进攻型智能体框架已从研究叙事进入多家厂商事件通报，第三方入口与客户身份数据成为优先轮换面。",
+      "action": "本周对照 Chainstack / WorkOS 通报检查自身是否依赖同类第三方组件入口；若在 ARTEX 战役公开受害画像内，优先轮换客户身份类数据相关密钥并加强钓鱼监测。"
+    }
+  ],
+  "classifications": {
+    "2026-11-04-brief-2a76a1027a32#1": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-11-04-brief-2a76a1027a32#2": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-11-04-brief-2a76a1027a32#3": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-11-04-brief-2a76a1027a32#5": {
+      "theme": "governance",
+      "dimension": "national-strategy"
+    }
+  }
+}
