@@ -13,6 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadBriefings, themes } from '../src/lib/briefings.ts';
+import { corpusSource, loadAnalyses, requirementKinds } from '../src/lib/compliance.ts';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
@@ -71,7 +72,52 @@ if (fs.existsSync(enrichDir)) {
   }
 }
 
-console.log(`\n检查结果：${briefings.length} 期简报`);
+const analyses = loadAnalyses();
+for (const doc of analyses) {
+  if (doc.review.status !== 'passed') {
+    errors.push(`${doc.id}: 审查状态不是 passed，不能发布`);
+  }
+  const source = corpusSource(doc.corpus_id);
+  if (!source) errors.push(`${doc.id}: 找不到语料 data/compliance/corpus/${doc.corpus_id}/source.md`);
+  for (const item of doc.security_analysis) {
+    if (!requirementKinds.includes(item.kind)) {
+      errors.push(`${doc.id}#${item.id}: 未知要求类型 ${item.kind}`);
+    }
+    if (item.kind === '分析推导') {
+      errors.push(`${doc.id}#${item.id}: 条款分析里不能使用分析推导，请放到 enterprise_guidance`);
+    }
+    if (!item.quote || !source.includes(item.quote)) {
+      errors.push(`${doc.id}#${item.id}: 原文依据不在语料中`);
+    }
+    if (item.kind === '指导建议' && /必须|强制/.test(item.response)) {
+      warnings.push(`${doc.id}#${item.id}: 指导建议的企业应对里出现“必须/强制”，请人工确认没有写成义务`);
+    }
+  }
+  for (const task of doc.enterprise_guidance) {
+    if (!requirementKinds.includes(task.basis_kind)) {
+      errors.push(`${doc.id}: 建设任务「${task.item}」的 basis_kind 无效`);
+    }
+    if (task.basis_kind === '分析推导' && task.basis !== '办法未作规定' && task.basis !== '文件未作规定') {
+      warnings.push(`${doc.id}: 分析推导「${task.item}」的依据应写明文件未作规定`);
+    }
+  }
+  for (const item of doc.compliance_checklist) {
+    if (item.kind === '分析推导') {
+      errors.push(`${doc.id}: 检查清单含分析推导「${item.question}」，应与合规项分开`);
+    }
+  }
+  const blob = JSON.stringify(doc.enterprise_guidance);
+  if (/MCP|提示词注入|智能体/.test(blob)) {
+    const inferred = doc.enterprise_guidance.filter((task) => /MCP|提示词注入|智能体/.test(`${task.item}${task.purpose}`));
+    for (const task of inferred) {
+      if (task.basis_kind !== '分析推导') {
+        errors.push(`${doc.id}: 「${task.item}」涉及智能体/MCP/提示词注入，但没有标成分析推导`);
+      }
+    }
+  }
+}
+
+console.log(`\n检查结果：${briefings.length} 期简报，${analyses.length} 份合规分析`);
 console.log(`  errors:   ${errors.length}`);
 console.log(`  warnings: ${warnings.length}`);
 if (warnings.length) {

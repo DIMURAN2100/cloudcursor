@@ -1,5 +1,6 @@
 import type { APIContext } from 'astro';
 import { loadBriefings } from '../lib/briefings';
+import { loadAnalyses } from '../lib/compliance';
 import { themes, regions, standards } from '../lib/taxonomy';
 import { absUrl, u } from '../lib/urls';
 
@@ -20,6 +21,7 @@ export function GET(context: APIContext) {
   const urls: string[] = [
     ...STATIC_PAGES.map((p) => absUrl(u(p))),
     ...briefings.map((b) => absUrl(u(`briefings/${b.slug}/`))),
+    ...loadAnalyses().map((doc) => absUrl(u(`governance/docs/${doc.id}/`))),
     ...themes.map((t) => absUrl(u(`themes/${t.slug}/`))),
   ];
 

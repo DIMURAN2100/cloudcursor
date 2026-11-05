@@ -2,8 +2,10 @@
 import { u } from '../../lib/urls';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadBriefings } from '../../lib/briefings';
+import { loadAnalyses } from '../../lib/compliance';
 
 const briefings = loadBriefings();
+const complianceCount = loadAnalyses().length;
 
 // 构建搜索索引：每期每条 highlight 一条记录
 type SearchDoc = {
@@ -38,7 +40,11 @@ for (const b of briefings) {
   <section class="page-hero page-hero--compact">
     <div class="container">
       <h1>搜索</h1>
-      <p>在 {docs.length} 条简报要点中检索。纯前端，不依赖第三方服务。</p>
+      <p>
+        在 {docs.length} 条简报要点
+        {complianceCount > 0 && <>和 {complianceCount} 份合规文件</>}
+        中检索。纯前端，不依赖第三方服务。
+      </p>
     </div>
   </section>
 

@@ -439,6 +439,37 @@
   color: var(--muted);
 }
 
+/* ---------- compliance requirement kinds ---------- */
+.req-kind {
+  display: inline-block;
+  padding: 0.12rem 0.45rem;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.req-kind[data-kind='明确义务'] {
+  color: var(--signal-dark);
+  border-color: rgba(12, 143, 104, 0.45);
+  background: var(--signal-dim);
+}
+.req-kind[data-kind='条件性义务'] {
+  color: var(--warn);
+  border-color: rgba(184, 92, 46, 0.4);
+  background: rgba(184, 92, 46, 0.08);
+}
+.req-kind[data-kind='指导建议'] {
+  color: var(--ink);
+  background: rgba(15, 31, 26, 0.04);
+}
+.req-kind[data-kind='分析推导'] {
+  color: var(--accent-gov);
+  border-color: rgba(124, 77, 204, 0.35);
+  background: rgba(124, 77, 204, 0.08);
+}
+
 /* ---------- governance region ---------- */
 .region-card {
   padding: clamp(1.2rem, 3vw, 2rem);
