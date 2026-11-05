@@ -1,0 +1,271 @@
+---
+import { u } from '../../../lib/urls';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { loadAnalyses, statusText, type ComplianceAnalysis, type RequirementKind } from '../../../lib/compliance';
+
+export function getStaticPaths() {
+  return loadAnalyses().map((doc) => ({ params: { id: doc.id }, props: { doc } }));
+}
+
+interface Props {
+  doc: ComplianceAnalysis;
+}
+
+const { doc } = Astro.props;
+const profile = doc.document_profile;
+const fileBacked = doc.enterprise_guidance.filter((item) => item.basis_kind !== '分析推导');
+const inferred = doc.enterprise_guidance.filter((item) => item.basis_kind === '分析推导');
+const domains = [...new Set(doc.security_analysis.map((item) => item.domain))];
+
+const priorityOrder: Record<string, number> = { 高: 0, 中: 1, 低: 2 };
+const tasks = [...fileBacked].sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+---
+
+<BaseLayout title={profile.title} description={doc.executive_summary[0]}>
+  <section class="page-hero">
+    <div class="container">
+      <p class="section__eyebrow"><a href={u('governance/#cn-compliance')}>中国 · 法规与安全合规</a></p>
+      <h1>{profile.title}</h1>
+      <p>
+        {profile.doc_type} · {statusText(profile.status)} · 施行 {profile.effective_at}
+      </p>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container compliance-doc">
+      <dl class="compliance-profile">
+        <div><dt>发文主体</dt><dd>{profile.issuers.join('、')}</dd></div>
+        <div><dt>发文字号</dt><dd>{profile.doc_number}</dd></div>
+        <div><dt>成文 / 发布 / 施行</dt><dd>{profile.issued_at} / {profile.published_at} / {profile.effective_at}</dd></div>
+        <div><dt>效力</dt><dd>{statusText(profile.status)}。{profile.status_note}</dd></div>
+        <div><dt>适用地域与对象</dt><dd>{profile.territory}。{profile.subjects.join('；')}</dd></div>
+        <div><dt>不适用</dt><dd>{profile.not_applicable}</dd></div>
+        <div>
+          <dt>官方文本</dt>
+          <dd>
+            <a href={profile.source_url}>{profile.source_url}</a>
+            {profile.status_check_url && (
+              <>
+                <br />
+                效力核验：<a href={profile.status_check_url}>{profile.status_check_url}</a>
+              </>
+            )}
+          </dd>
+        </div>
+      </dl>
+
+      <h2>文件在说什么</h2>
+      <ul>
+        {doc.executive_summary.map((line) => <li>{line}</li>)}
+      </ul>
+      <div class="compliance-qa">
+        {doc.core_contents.map((item) => (
+          <article>
+            <h3>{item.question}</h3>
+            <p>{item.answer}</p>
+          </article>
+        ))}
+      </div>
+
+      <h2>安全条款</h2>
+      <p class="section__desc">每一条都能回到原文。性质标签决定它能不能写进合规差距。</p>
+      {domains.map((domain) => (
+        <section class="compliance-domain">
+          <h3>{domain}</h3>
+          {doc.security_analysis.filter((item) => item.domain === domain).map((item) => (
+            <article class="compliance-clause">
+              <header>
+                <span class="req-kind" data-kind={item.kind as RequirementKind}>{item.kind}</span>
+                <span>{item.location}</span>
+                <span>{item.binding}</span>
+              </header>
+              <blockquote>{item.quote}</blockquote>
+              <p><strong>目的。</strong>{item.purpose}</p>
+              <p><strong>适用。</strong>{item.subjects}</p>
+              <p><strong>企业应对。</strong>{item.response}</p>
+              <p><strong>可以拿来验收的材料。</strong>{item.evidence}</p>
+            </article>
+          ))}
+        </section>
+      ))}
+
+      <h2>办法没有规定的 AI 技术</h2>
+      <p>文件直接写到的，限于：{doc.ai_security_analysis.covered.join('、')}。</p>
+      <ul>
+        {doc.ai_security_analysis.not_in_document.map((item) => (
+          <li>{item}：未出现在正文中，不能写成本办法的要求。</li>
+        ))}
+      </ul>
+
+      <h2>企业建设</h2>
+      <p class="section__desc">下表只列入能追溯到条款的任务。优先级表示建议的处理顺序，不改变义务性质。</p>
+      {tasks.map((task) => (
+        <article class="compliance-task">
+          <header>
+            <span class="req-kind" data-kind={task.basis_kind}>{task.basis_kind}</span>
+            <span>优先级 {task.priority}</span>
+            <h3>{task.item}</h3>
+          </header>
+          <p><strong>依据。</strong>{task.basis}</p>
+          <p><strong>目的。</strong>{task.purpose}</p>
+          <p><strong>适用。</strong>{task.condition}</p>
+          <p><strong>责任。</strong>{task.owner}</p>
+          <ul>
+            {task.measures.map((step) => <li>{step}</li>)}
+          </ul>
+          <p><strong>形成的材料。</strong>{task.artifacts.join('、')}</p>
+        </article>
+      ))}
+
+      {inferred.length > 0 && (
+        <>
+          <h2>延伸建议，不是合规缺口</h2>
+          {inferred.map((task) => (
+            <article class="compliance-task">
+              <header>
+                <span class="req-kind" data-kind="分析推导">分析推导</span>
+                <h3>{task.item}</h3>
+              </header>
+              <p>{task.purpose}</p>
+              <ul>
+                {task.measures.map((step) => <li>{step}</li>)}
+              </ul>
+              <p><strong>适用。</strong>{task.condition}</p>
+            </article>
+          ))}
+        </>
+      )}
+
+      <h2>检查清单</h2>
+      <div class="compliance-table-wrap">
+      <table class="instrument-table">
+        <thead>
+          <tr>
+            <th>检查</th>
+            <th>性质</th>
+            <th>条款</th>
+            <th>材料</th>
+          </tr>
+        </thead>
+        <tbody>
+          {doc.compliance_checklist.map((item) => (
+            <tr>
+              <td>{item.question}</td>
+              <td><span class="req-kind" data-kind={item.kind}>{item.kind}</span></td>
+              <td>{item.location}</td>
+              <td>{item.evidence}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      </div>
+
+      <h2>行业</h2>
+      {doc.industry_impact.map((item) => (
+        <article class="compliance-task">
+          <h3>{item.industry}</h3>
+          <p><strong>场景。</strong>{item.scenarios}</p>
+          <p><strong>风险。</strong>{item.risks}</p>
+          <p><strong>责任边界。</strong>{item.duties}</p>
+          <p><strong>能力。</strong>{item.capabilities}</p>
+        </article>
+      ))}
+
+      <h2>关联文件</h2>
+      <p class="section__desc">只记录本办法正文里点名的文件。未核对其现行全文，不建立替代或从属关系。</p>
+      <ul>
+        {doc.related_documents.map((item) => (
+          <li>
+            <strong>{item.title}</strong>：{item.relation}。{item.note}
+          </li>
+        ))}
+      </ul>
+
+      <h2>给管理层</h2>
+      <ul>
+        <li><strong>监管重点。</strong>{doc.management_insights.regulatory_focus}</li>
+        <li><strong>企业责任。</strong>{doc.management_insights.enterprise_duty}</li>
+        <li><strong>安全建设。</strong>{doc.management_insights.security_build}</li>
+        <li><strong>不要误报。</strong>{doc.management_insights.leadership}</li>
+      </ul>
+
+      <h2>待核实</h2>
+      <ul>
+        {doc.uncertainty_and_review.map((item) => <li>{item}</li>)}
+      </ul>
+      <p class="section__desc">审查状态：{doc.review.status === 'passed' ? '已通过条款回链检查' : '需要人工复核'}。{doc.review.notes.join('')}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .compliance-profile {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+  }
+  .compliance-profile div {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr);
+    gap: 0.8rem;
+    align-items: start;
+  }
+  .compliance-profile dt {
+    color: var(--signal);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .compliance-profile dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  .compliance-table-wrap {
+    overflow-x: auto;
+  }
+  .compliance-doc h2 {
+    margin: 2.4rem 0 0.8rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+  }
+  .compliance-doc h3 {
+    margin: 0.3rem 0;
+    font-size: 1.05rem;
+  }
+  .compliance-qa {
+    display: grid;
+    gap: 0.8rem;
+  }
+  .compliance-clause,
+  .compliance-task,
+  .compliance-qa article {
+    margin-top: 0.8rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line);
+  }
+  .compliance-clause header,
+  .compliance-task header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.8rem;
+    align-items: center;
+    margin-bottom: 0.6rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .compliance-clause blockquote {
+    margin: 0 0 0.8rem;
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--accent-gov);
+    color: var(--ink);
+  }
+  .compliance-domain h3 {
+    margin-top: 1.4rem;
+  }
+  @media (max-width: 700px) {
+    .compliance-profile div {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>

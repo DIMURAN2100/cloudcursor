@@ -4,18 +4,95 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import HighlightItem from '../../components/HighlightItem.astro';
 import { regions, standards } from '../../lib/taxonomy';
 import { regionIntel, standardIntel, countMatches } from '../../lib/briefings';
+import { kindCounts, loadAnalyses, statusText } from '../../lib/compliance';
+
+const complianceDocs = loadAnalyses();
 ---
 
 <BaseLayout
   title="全球治理"
-  description="各国 AI 安全政策、法规与标准框架，配套简报中的最新动态。"
+  description="各国 AI 安全政策、法规与标准框架。中国合规知识库把官方文件拆成明确义务、条件性义务、指导建议和分析推导。"
 >
   <section class="page-hero">
     <div class="container">
       <h1>全球治理地图</h1>
       <p>
-        政策法规看「义务从哪来、何时生效」，标准框架看「控制项怎么落」。每个条目下自动挂接简报里的相关动态。
+        政策法规看「义务从哪来、何时生效」，标准框架看「控制项怎么落」。中国部分进一步把官方文件拆到条款：哪些是必须做的，哪些只是鼓励，哪些是安全实践推导。
       </p>
+    </div>
+  </section>
+
+  <section class="section pt-0" id="cn-compliance">
+    <div class="container">
+      <h2 class="section__title" style="font-size:1.8rem">中国 · 法规与安全合规</h2>
+      <p class="section__desc">
+        面向企业安全负责人和 AI 建设负责人。原文与解读分开存放。文件没有写到的技术，不会被标成法定义务。
+      </p>
+      <ol class="compliance-layers">
+        <li><strong>文件识别</strong><span>法律、规章、标准、政策、指引、白皮书，先分清类型和效力。</span></li>
+        <li><strong>条款提取</strong><span>只抽取与网络安全、数据安全、人工智能安全有关的原文。</span></li>
+        <li><strong>安全解读</strong><span>说明适用主体、风险和义务，并标出约束性质。</span></li>
+        <li><strong>企业建设</strong><span>转成可检查的任务；推导项与合规项分开列出。</span></li>
+      </ol>
+      <div class="kind-legend">
+        <span class="req-kind" data-kind="明确义务">明确义务</span>
+        <span>原文有应当、不得或依法履行的要求。</span>
+        <span class="req-kind" data-kind="条件性义务">条件性义务</span>
+        <span>满足主体、场景或“发现后”等条件才适用。</span>
+        <span class="req-kind" data-kind="指导建议">指导建议</span>
+        <span>鼓励、推动、推荐，不是强制义务。</span>
+        <span class="req-kind" data-kind="分析推导">分析推导</span>
+        <span>文件没写，只作为安全实践，不能汇报成法定要求。</span>
+      </div>
+
+      {complianceDocs.length === 0 ? (
+        <p class="section__desc">合规知识库还没有完成审查的文件。</p>
+      ) : (
+        <div class="compliance-index">
+          {complianceDocs.map((doc) => {
+            const counts = kindCounts(doc);
+            const duties = doc.security_analysis.filter((item) => item.kind === '明确义务' || item.kind === '条件性义务');
+            return (
+              <article class="compliance-card">
+                <header class="compliance-card__head">
+                  <p class="compliance-card__type">{doc.document_profile.doc_type}</p>
+                  <h3>
+                    <a href={u(`governance/docs/${doc.id}/`)}>{doc.document_profile.title}</a>
+                  </h3>
+                  <p class="compliance-card__meta">
+                    {statusText(doc.document_profile.status)} · 施行 {doc.document_profile.effective_at} · 公布 {doc.document_profile.issued_at}
+                  </p>
+                </header>
+                <p>{doc.executive_summary[0]}</p>
+                <p class="compliance-card__counts">
+                  明确义务 {counts.明确义务} · 条件性义务 {counts.条件性义务} · 指导建议 {counts.指导建议} · 分析推导 {counts.分析推导}
+                </p>
+                <table class="instrument-table">
+                  <thead>
+                    <tr>
+                      <th>条款</th>
+                      <th>性质</th>
+                      <th>企业需要判断的事</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {duties.slice(0, 6).map((item) => (
+                      <tr>
+                        <td>{item.location}</td>
+                        <td><span class="req-kind" data-kind={item.kind}>{item.kind}</span></td>
+                        <td>{item.response}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p class="compliance-card__more">
+                  <a href={u(`governance/docs/${doc.id}/`)}>查看条款原文、检查清单和不宜写成义务的内容 <span>→</span></a>
+                </p>
+              </article>
+            );
+          })}
+        </div>
+      )}
     </div>
   </section>
 
@@ -50,6 +127,12 @@ import { regionIntel, standardIntel, countMatches } from '../../lib/briefings';
                 </summary>
                 <div class="region-card__body">
                   <p class="region-card__stance">{region.stance}</p>
+                  {region.slug === 'cn' && complianceDocs.length > 0 && (
+                    <p class="region-card__stance">
+                      <a href="#cn-compliance">中国合规知识库</a>
+                      已按条款区分强制义务、条件性义务和指导建议，不把白皮书或安全实践写成法定义务。
+                    </p>
+                  )}
                   <table class="instrument-table">
                     <thead>
                       <tr>
@@ -133,6 +216,72 @@ import { regionIntel, standardIntel, countMatches } from '../../lib/briefings';
 </BaseLayout>
 
 <style>
+  .compliance-layers {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.8rem;
+    margin: 0 0 1.2rem;
+    padding: 0;
+    list-style: none;
+  }
+  .compliance-layers li {
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line);
+    background: rgba(124, 77, 204, 0.04);
+  }
+  .compliance-layers strong,
+  .compliance-layers span {
+    display: block;
+  }
+  .compliance-layers span {
+    margin-top: 0.35rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  .kind-legend {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.45rem 0.8rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+    font-size: 0.86rem;
+  }
+  .compliance-card {
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    border: 1px solid var(--line);
+  }
+  .compliance-card__type,
+  .compliance-card__meta,
+  .compliance-card__counts {
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  .compliance-card__type {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+  }
+  .compliance-card h3 {
+    margin: 0.25rem 0;
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+  }
+  .compliance-card h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .compliance-card__more {
+    margin: 1rem 0 0;
+  }
+  @media (max-width: 800px) {
+    .compliance-layers,
+    .kind-legend {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .gov-tabs {
     position: sticky;
     top: var(--header-h);
