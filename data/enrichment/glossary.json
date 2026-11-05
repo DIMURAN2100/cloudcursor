@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04",
+  "updatedAt": "2026-11-05",
   "terms": [
     {
       "term": "提示注入",
@@ -1239,6 +1239,20 @@
       "definition": "编码智能体按训练记忆自动选定已归档、不再提供安全更新的早期 MCP 参考服务器的行为模式。Glow Labs 称约 98% 案例由模型自行补全包名；废弃 Puppeteer 服务器可经提示注入把浏览权限拉成主机命令执行，npm 弃用标记无法阻止 npx 安装。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "提示广告",
+      "en": "Prompt Adware",
+      "definition": "以越狱/增强包改写编码代理的全局指令与 Skills，把第三方 LLM 网关广告持久注入后续会话回复，并可把广告域名标为“受保护基础设施”禁止进攻测试。Check Point Research 对 Haiou（海鸥）的分析将其与可执行文件供应链投毒区分；缓解须清点并移除未审批的 Skills/越狱包。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "映射地址策略绕过",
+      "en": "IPv4-Mapped Address Policy Bypass",
+      "definition": "出站 URL 策略未正确识别 IPv4 映射的 IPv6 地址（如 ::ffff:7f00:1），把本应禁止的回环/私网/云元数据端点误判为公网，导致 SSRF。germondai/trawl 在启用 MCP 时的 CVE-2026-122140 即属此类；缓解须升级修复线并对连接做数值化子网判定与公网出口强制。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
     }
   ]
 }
