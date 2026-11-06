@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05",
+  "updatedAt": "2026-11-06",
   "terms": [
     {
       "term": "提示注入",
@@ -1253,6 +1253,20 @@
       "definition": "出站 URL 策略未正确识别 IPv4 映射的 IPv6 地址（如 ::ffff:7f00:1），把本应禁止的回环/私网/云元数据端点误判为公网，导致 SSRF。germondai/trawl 在启用 MCP 时的 CVE-2026-122140 即属此类；缓解须升级修复线并对连接做数值化子网判定与公网出口强制。",
       "theme": "infra-cve",
       "dimension": "ai-runtime"
+    },
+    {
+      "term": "CRAFTY FALCON",
+      "en": "CRAFTY FALCON",
+      "definition": "印度 CERT-In 在严重级通报 CIAD-2026-0058 中命名、并称仍在继续的金融业攻击活动。通报称该行为体使用 ARTEX、PentAGI、Cairn、CyberStrikeAI 等公开进攻工具，对非银金融、数字借贷、金融科技、支付与加密资产服务商做侦察，并调用受害方自身的支付与代付接口；已有修复不完整后再次被攻击的报告。详细指标在受限通报中。狩猎应覆盖非生产到生产的凭据通路、云管理面变更和代付接口异常。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "停更镜像植入",
+      "en": "Post-Abandonment Image Implant",
+      "definition": "上游宣布停更并撤下仓库后，沿用原工具名的第三方容器镜像被加入额外执行逻辑。BadByte 对 ARTEX 的分析显示 tomicdd/artex 与 congdonglinux/artex 可在登录校验前、未经认证即以 root 执行请求中的命令；镜像仓库下架不清除已拉取副本、第三方镜像站，以及仍指向旧镜像名的 compose。缓解须按镜像名和 compose 引用清查，停止使用这些构建并轮换控制台接触过的密钥。",
+      "theme": "infra-cve",
+      "dimension": "dev-supply"
     }
   ]
 }
