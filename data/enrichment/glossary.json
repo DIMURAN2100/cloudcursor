@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06",
+  "updatedAt": "2026-11-07",
   "terms": [
     {
       "term": "提示注入",
@@ -1267,6 +1267,20 @@
       "definition": "上游宣布停更并撤下仓库后，沿用原工具名的第三方容器镜像被加入额外执行逻辑。BadByte 对 ARTEX 的分析显示 tomicdd/artex 与 congdonglinux/artex 可在登录校验前、未经认证即以 root 执行请求中的命令；镜像仓库下架不清除已拉取副本、第三方镜像站，以及仍指向旧镜像名的 compose。缓解须按镜像名和 compose 引用清查，停止使用这些构建并轮换控制台接触过的密钥。",
       "theme": "infra-cve",
       "dimension": "dev-supply"
+    },
+    {
+      "term": "ThisBash",
+      "en": "ThisBash",
+      "definition": "把已登录网页会话当成桌面代理的任务派发凭据：能在 claude.ai 上运行脚本的浏览器扩展，可把指令发给同机的 Claude Desktop，如同用户本人在派发。Forever Security 的演示在浏览器与桌面端同机条件下，经网页批准后由桌面代理安装了打开计算器的包；研究者称未见真实攻击，跨设备情形有描述、文中未展示。官方帮助页仍写明 Dispatch 对部分既有 Pro、Max、Ultra 用户开放、不对新用户开放，页面没有退役说明。缓解须关闭不需要的跨设备派发，并审查能在该网站运行脚本的扩展。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "Daybreak Red",
+      "en": "Daybreak Red",
+      "definition": "OpenAI 向部分经审核客户提供 GPT-6 Cyber 的授权档。厂商将该模型在 Preparedness Framework 的网络安全等级标为 Critical，高于 GPT-5.6 Cyber 的 High；先经 API 与 Codex 提供，API 默认要求 IP 允许名单。ExploitGym 等数字是厂商自有基准，不构成调用授权。未获准入的组织不要按公开分数安排调用。",
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
     }
   ]
 }
