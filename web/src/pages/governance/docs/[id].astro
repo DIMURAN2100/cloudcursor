@@ -24,7 +24,7 @@ const tasks = [...fileBacked].sort((a, b) => priorityOrder[a.priority] - priorit
 <BaseLayout title={profile.title} description={doc.executive_summary[0]}>
   <section class="page-hero">
     <div class="container">
-      <p class="section__eyebrow"><a href={u('governance/#cn-compliance')}>中国 · 法规与安全合规</a></p>
+      <p class="section__eyebrow"><a href={u('governance/#documents')}>中国法规政策与标准目录</a></p>
       <h1>{profile.title}</h1>
       <p>
         {profile.doc_type} · {statusText(profile.status)} · 施行 {profile.effective_at}
