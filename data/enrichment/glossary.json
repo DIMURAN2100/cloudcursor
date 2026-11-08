@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07",
+  "updatedAt": "2026-11-08",
   "terms": [
     {
       "term": "提示注入",
@@ -1281,6 +1281,20 @@
       "definition": "OpenAI 向部分经审核客户提供 GPT-6 Cyber 的授权档。厂商将该模型在 Preparedness Framework 的网络安全等级标为 Critical，高于 GPT-5.6 Cyber 的 High；先经 API 与 Codex 提供，API 默认要求 IP 允许名单。ExploitGym 等数字是厂商自有基准，不构成调用授权。未获准入的组织不要按公开分数安排调用。",
       "theme": "ai-defense",
       "dimension": "ai-vuln-hunting"
+    },
+    {
+      "term": "别再询问落盘",
+      "en": "Don't-Ask-Again Command Persistence",
+      "definition": "编码代理在用户选择“Yes, and don't ask again”后，把获准执行的命令原文写入项目内 `.claude/settings.local.json`，命令中的口令、令牌和连接串因此以明文留下。Claude Code 会把该文件加入用户电脑上的全局 git 排除，但不会写入仓库自己的 `.gitignore`，换机器、补建仓库或已经提交的副本不受这条排除保护。Apiiro 2026-11-05 的测量称这是厂商研究复现，不是在野攻击统计；删除当前文件不能消除历史和 fork。处置顺序是先轮换密钥，再清理副本，并把该路径写入组织级忽略模板。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "智能体终端",
+      "en": "Agent Terminal",
+      "definition": "工信厅信管〔2026〕42号将智能体终端界定为预置安装智能体的手机、平板、可穿戴设备等电信终端设备，并把智能体界定为具备自主感知、记忆、决策、交互与执行能力的智能系统。通知成文日期为 2026-10-24，网站发布日期为 2026-11-06，正文未见施行日期。点名对象包括智能体开发者、终端生产企业和应用分发平台。核对官方全文时要把成文日和发布日分开，不要把发布日写成生效日。",
+      "theme": "governance",
+      "dimension": "regulation"
     }
   ]
 }
