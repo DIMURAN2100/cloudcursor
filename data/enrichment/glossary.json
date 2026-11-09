@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08",
+  "updatedAt": "2026-11-09",
   "terms": [
     {
       "term": "提示注入",
@@ -1295,6 +1295,13 @@
       "definition": "工信厅信管〔2026〕42号将智能体终端界定为预置安装智能体的手机、平板、可穿戴设备等电信终端设备，并把智能体界定为具备自主感知、记忆、决策、交互与执行能力的智能系统。通知成文日期为 2026-10-24，网站发布日期为 2026-11-06，正文未见施行日期。点名对象包括智能体开发者、终端生产企业和应用分发平台。核对官方全文时要把成文日和发布日分开，不要把发布日写成生效日。",
       "theme": "governance",
       "dimension": "regulation"
+    },
+    {
+      "term": "礼节性拦截",
+      "en": "Courtesy Interception",
+      "definition": "厂商把某项隐私控制写成礼节性拦截而不是安全边界。Claude Code 2.1.317 起的内置隐私模块只拒绝在 Bash、PowerShell 或 Monitor 调用中同时出现账户邮箱和 User-Agent 字样的情况，不检查 WebFetch、WebSearch 与 MCP，也不覆盖脚本、变量和运行时拼接。2.1.319 的更新说明没有写把邮箱移出上下文。不能把该模块当成邮箱不会离开本机的保证。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }
