@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09",
+  "updatedAt": "2026-11-10",
   "terms": [
     {
       "term": "提示注入",
@@ -1300,6 +1300,20 @@
       "term": "礼节性拦截",
       "en": "Courtesy Interception",
       "definition": "厂商把某项隐私控制写成礼节性拦截而不是安全边界。Claude Code 2.1.317 起的内置隐私模块只拒绝在 Bash、PowerShell 或 Monitor 调用中同时出现账户邮箱和 User-Agent 字样的情况，不检查 WebFetch、WebSearch 与 MCP，也不覆盖脚本、变量和运行时拼接。2.1.319 的更新说明没有写把邮箱移出上下文。不能把该模块当成邮箱不会离开本机的保证。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "Office Party",
+      "en": "Office Party",
+      "definition": "AIR Security 命名、Dark Reading 于 2026-11-09 报道的研究：Claude 官方 docx、pptx、xlsx 技能在无法创建 Unix 套接字时，从系统临时目录的固定路径经 LD_PRELOAD 加载库，并且只检查文件是否存在。受影响的是阻止套接字的 Linux 环境，包括部分容器限制、加固的 systemd 单元和 Claude Code 沙箱；macOS 不在此列。公开材料把它写成研究演示，没有写成已经发生的在野攻击。Anthropic 认为相关代码只在沙箱内运行，因而位于其安全边界之外；anthropics/skills 中 soffice.py 最近一次提交仍是 7 月 17 日。Linux 上仍在使用这些技能时，应按代码依赖登记，并核对该文件是否仍停在这一提交。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "Control Room",
+      "en": "Control Room",
+      "definition": "OpenAI 于 2026-11-09 介绍的研究基础设施：跟踪模型作业，在作出停止决定后最多 35 秒内阻止继续生成，35 秒来自推理授权缓存。执行智能体推理的研究作业需要关联已批准的安全论证，推理引擎在每次取样前向该系统请求许可；服务中断或被停用时，前沿模型研究作业按已部署的失效关闭处理，其余研究作业计划在随后数日完成切换。外部模型服务栈不在这套新机制范围内，文本也没有宣布新的客户数据事件。自建训练或评测推理时，应核对停止决定是否作用在每次取样上，以及控制服务不可用时作业是否停止生成。",
       "theme": "ai-self",
       "dimension": "agent-security"
     }
