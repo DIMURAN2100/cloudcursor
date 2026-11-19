@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18",
+  "updatedAt": "2026-11-19",
   "terms": [
     {
       "term": "提示注入",
@@ -1407,6 +1407,20 @@
       "definition": "GitLab 于 2026 年 11 月 16 日发布的补丁说明中，CVE-2026-123142 写明：持有 MCP 范围 OAuth 令牌的已认证用户，在特定条件下可以越权更改议题和合并请求的状态，包括批准和合并。影响 CE/EE 自 18.4 起、低于 19.5.6、19.4.8 和 19.3.9 的版本。CVSS 3.1 为 4.3，向量为 CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N。发现者是 GitLab 团队成员，说明没有写在野利用。范围名称没有代替该令牌仍能执行的议题和合并动作。同日另两项编号的版本下限不同：CVE-2026-129253 自 EE 19.1 起，CVE-2026-128849 只覆盖 EE 19.5 中低于 19.5.6 的版本。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "Trigram",
+      "en": "Trigram",
+      "definition": "Stormshield 于 2026-11-17T11:24:57+00:00 发表的报告所命名的活动：约 50 个区块链和人工智能品牌被仿冒，招聘、会议邀请和包裹通知三类社工场景，加上软件供应链投递和带毒代码仓库，汇合到同一套基础设施和同一类载荷。报告自列的新内容包括操作后台的公开描述、把 Proofpoint、SafeDep 和 Genians 已经分开发表的研究连到同一基础设施，以及分析期间观察到的控制端轮换。SafeDep 对 antd-img-crop 仓库伪造提交的记录日期是 2026 年 11 月 3 日；报告写明 npm 包本身未受影响。与已被文献记录为与朝鲜相关的 UNK_DeadDrop 和 Kimsuky 的对应，报告写成技术重叠和相似性，这是该厂商的关联判断。约 50 个是报告对仿冒规模的量化，不是已确认的受害机构数。执行前与品牌的官方域名核对发件人和仓库所有者。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "假爬虫轮换",
+      "en": "Fake-Crawler Rotation",
+      "definition": "Tin Computer 研究员 Ege Demir 于 2026 年 11 月 18 日发表的观察里，名为 Octopus 的扫描特征：每次请求轮换 32 个人工智能爬虫名称，访问以路径 /z9x8c7v6b5-debug-trigger- 加主机名开始，随后在同一连接、数秒内换名，并请求大量密钥文件。样本来自该公司自己运行的 10 个网站，时间跨度从 2026 年 9 月下旬至 11 月 18 日；15 个区域的 97 台 Google Cloud 主机多数存活不到一小时。报告写明没有真实爬虫会这样做，操作者尚未证实。同一观察中的 Gecko 使用截断后的浏览器标识，请求 Claude Code、Codex、Cursor 和 Gemini CLI 存放密钥的路径，页面点名 /.claude/settings.json 和 /.cursor/mcp.json。这是对自有站点的测量，不是全网受害统计。不要把 User-Agent 本身当作放行依据。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
     }
   ]
 }
