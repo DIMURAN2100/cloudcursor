@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-06",
+  "updatedAt": "2026-08-07",
   "terms": [
     {
       "term": "提示注入",
@@ -7,6 +7,20 @@
       "definition": "攻击者把恶意指令混入模型处理的内容中，劫持模型行为。OWASP LLM Top 10 连续三年将其列为首位风险。",
       "theme": "ai-self",
       "dimension": "prompt-injection"
+    },
+    {
+      "term": "影子 AI",
+      "en": "Shadow AI",
+      "definition": "未经安全与 IT 登记、在业务侧自行接入的模型或代理。CTIMES 等产业分析将其与提示注入、东向 API 流量并列为 Agent 落地黑洞，需先发现资产再施加最小权限与审计。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "AI TRiSM",
+      "en": "AI Trust, Risk and Security Management",
+      "definition": "Gartner 提出的 AI 信任、风险与安全管理框架，覆盖运行时防护、隐私、治理与可靠性；产业评论常将其作为 Agent 权限与问责设计的「宪法层」参照。",
+      "theme": "governance",
+      "dimension": "standards-frameworks"
     },
     {
       "term": "间接提示注入",
