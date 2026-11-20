@@ -1,0 +1,86 @@
+{
+  "date": "2026-08-08",
+  "headline": "Black Hat 余波：AI 把开源挖洞与狩猎吞吐抬到新量级，编码助手与 LLM API 控制面进入常规狩猎假设",
+  "execSummary": [
+    {
+      "title": "NOVA 两月确认逾 1.4 万开源漏洞，语义/逻辑缺陷成主产区",
+      "insight": "Unit 42 称约 99.4% 此前未公开、约 92% 为难被传统模糊测试覆盖的语义类缺陷，并配套 PoC 与负责任披露。发现窗口被 AI 压缩后，依赖库补丁与披露协同将成为防御瓶颈。",
+      "action": "本周按语言/依赖生态抽出 Top 关键开源组件清单，对照近期披露节奏做优先复核与补丁窗口评估。"
+    },
+    {
+      "title": "AI agent 狩猎线索约为人工 2.5 倍，同期出现 LLM-jacking 与 AI 包投毒",
+      "insight": "CrowdStrike 报告显示狩猎吞吐被代理放大的同时，两分钟逾 20 万次 API 请求的模型滥用、一日投毒 131 个 AI 框架依赖，已把密钥/配额/包源变成事件响应对象。",
+      "action": "盘点企业 LLM API 密钥范围与突发配额告警，并为 AI 框架包启用签名/来源校验与投毒类供应链监测。"
+    },
+    {
+      "title": "合法编码助手被观测为武器平台，Vibe Coding 放大上线风险",
+      "insight": "Talos 在 Claude Code/Codex/Cursor/Gemini 等端点看到恶意工程、护栏规避与任务拆分；DEVCORE 指出「看起来能跑就上线」正在制造缺测试、凭证泄漏与未加密 Chatbot 历史等可复现问题。",
+      "action": "对 IDE/Agent 会话启用工作流级审计（仓库写权限、Secrets、工具调用），并将 AI 生成代码纳入与人工代码同等的强制安全门禁。"
+    }
+  ],
+  "classifications": {
+    "2026-08-08-brief-e2f71e98abd9#2": {
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    "2026-08-08-brief-e2f71e98abd9#3": {
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting"
+    },
+    "2026-08-08-brief-e2f71e98abd9#4": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-08-08-brief-e2f71e98abd9#5": {
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    "2026-08-08-brief-e2f71e98abd9#7": {
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    }
+  },
+  "entities": {
+    "regions": ["us"],
+    "standards": ["owasp-llm"],
+    "companies": [
+      "Palo Alto Networks",
+      "CrowdStrike",
+      "Phoenix Security",
+      "Cisco (Talos)",
+      "DEVCORE",
+      "OWASP GenAI",
+      "BeyondTrust",
+      "OpenAI",
+      "AWS",
+      "Anthropic",
+      "Google"
+    ]
+  },
+  "learningHooks": [
+    {
+      "highlightIndex": 1,
+      "theme": "ai-defense",
+      "dimension": "ai-vuln-hunting",
+      "takeaway": "评估 AI 挖洞产出时，要单独度量「语义/逻辑缺陷」占比与 PoC 验证闭环，而不是只看漏洞计数。"
+    },
+    {
+      "highlightIndex": 2,
+      "theme": "ai-defense",
+      "dimension": "detection-intel",
+      "takeaway": "把 LLM API 密钥、配额突发与 AI 依赖包源写入狩猎假设，与终端/身份告警同等优先级。"
+    },
+    {
+      "highlightIndex": 4,
+      "theme": "ai-self",
+      "dimension": "agent-security",
+      "takeaway": "编码助手滥用防护不能停在单条提示过滤，必须审计完整会话工作流与仓库/密钥写路径。"
+    },
+    {
+      "highlightIndex": 6,
+      "theme": "ai-self",
+      "dimension": "prompt-injection",
+      "takeaway": "按 OWASP LLM Top 10 2026，把提示注入当作持续运营风险：设计前提是模型无法可靠区分数据与指令。"
+    }
+  ]
+}
