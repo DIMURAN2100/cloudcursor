@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19",
+  "updatedAt": "2026-11-20",
   "terms": [
     {
       "term": "提示注入",
@@ -1421,6 +1421,20 @@
       "definition": "Tin Computer 研究员 Ege Demir 于 2026 年 11 月 18 日发表的观察里，名为 Octopus 的扫描特征：每次请求轮换 32 个人工智能爬虫名称，访问以路径 /z9x8c7v6b5-debug-trigger- 加主机名开始，随后在同一连接、数秒内换名，并请求大量密钥文件。样本来自该公司自己运行的 10 个网站，时间跨度从 2026 年 9 月下旬至 11 月 18 日；15 个区域的 97 台 Google Cloud 主机多数存活不到一小时。报告写明没有真实爬虫会这样做，操作者尚未证实。同一观察中的 Gecko 使用截断后的浏览器标识，请求 Claude Code、Codex、Cursor 和 Gemini CLI 存放密钥的路径，页面点名 /.claude/settings.json 和 /.cursor/mcp.json。这是对自有站点的测量，不是全网受害统计。不要把 User-Agent 本身当作放行依据。",
       "theme": "ai-defense",
       "dimension": "detection-intel"
+    },
+    {
+      "term": "原型继承会话",
+      "en": "Prototype-Inherited Session",
+      "definition": "研究者于 2026-11-17T21:04:55Z 在自己的分叉仓库发布的 supergateway 公告所写的 stdio 转 SSE 缺陷，对应 CVE-2026-131857：会话存放在普通对象中，原型链上继承的键会被当成会话，异步处理抛错后进程退出，已连接的 MCP 会话一并终止。研究者写明默认部署不需要会话或凭据，启用 --apiKey 时未认证请求返回 401。研究者把受影响范围写成不高于 4.2.2，且没有填写修复版本。VulnCheck 将拒绝服务写成 4.2.0 至 4.2.2，CVSS 4.0 为 8.7、CVSS 3.1 为 7.5。采集时 npm 的 latest 仍是 4.2.2，上传时间为 2026-11-10T09:22:54.490Z。上游 main 比 v4.2.2 超前的 4 个提交都落在 11 月 10 日，内容是测试基线和发布等待，不是这则公告的修复。页面没有写在野利用。--apiKey 是阻断条件，不是修复版本。同日另一则 CVE-2026-132121 是 stdio 转 WebSocket 的升级请求不检查 Origin，不要和这则原型链问题合成同一个缺陷，也不要和术语墙里 Google ADK 的通配Origin 合成同一个编号。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "截断前二次方清理",
+      "en": "Pre-truncation Quadratic Sanitizer",
+      "definition": "Pydantic 于 2026-11-18T00:04:44Z 发布的 pydantic-ai-harness 公告 GHSA-m4cr-m4qc-9hh3（CVE-2026-133161）所写的清理顺序：在 strip_ansi=True 时，清理工具输出中的 ANSI 转义序列会按单行长度呈二次方耗时，且该清理发生在输出被截断之前，因此能力自身的长度限制限制不住这一步。受影响范围为 0.4.0 至 0.69.0，该选项默认是 False；0.13.0 之前的名称是 OverflowingToolOutput。同一分钟的 GHSA-5m5q-5qj4-gx9h 尚未分配 CVE，是另一则：默认包含的 jwt 打码在 redact_secrets 和 secret_data() 中以二次方时间回退，下界是 0.16.0。两则都把修复版本写成 0.70.0，不共用触发条件。Pydantic AI v1 不能把 harness 升过 0.4.0，而 0.4.0 仍落在 ANSI 公告的范围内。NVD 将 CVE-2026-133161 的 CVSS 3.1 写成 7.5，向量为 AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H。公告没有写在野利用。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
     }
   ]
 }
