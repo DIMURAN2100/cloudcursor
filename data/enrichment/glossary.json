@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20",
+  "updatedAt": "2026-11-21",
   "terms": [
     {
       "term": "提示注入",
@@ -1435,6 +1435,20 @@
       "definition": "Pydantic 于 2026-11-18T00:04:44Z 发布的 pydantic-ai-harness 公告 GHSA-m4cr-m4qc-9hh3（CVE-2026-133161）所写的清理顺序：在 strip_ansi=True 时，清理工具输出中的 ANSI 转义序列会按单行长度呈二次方耗时，且该清理发生在输出被截断之前，因此能力自身的长度限制限制不住这一步。受影响范围为 0.4.0 至 0.69.0，该选项默认是 False；0.13.0 之前的名称是 OverflowingToolOutput。同一分钟的 GHSA-5m5q-5qj4-gx9h 尚未分配 CVE，是另一则：默认包含的 jwt 打码在 redact_secrets 和 secret_data() 中以二次方时间回退，下界是 0.16.0。两则都把修复版本写成 0.70.0，不共用触发条件。Pydantic AI v1 不能把 harness 升过 0.4.0，而 0.4.0 仍落在 ANSI 公告的范围内。NVD 将 CVE-2026-133161 的 CVSS 3.1 写成 7.5，向量为 AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H。公告没有写在野利用。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "标识拼进路径",
+      "en": "Identifier Concatenated into Path",
+      "definition": "MONAI Label 公告 GHSA-qc22-rmgc-vg94 所写的写入方式：调用方提供的图像标识被拼进本地路径后直接写文件，解析结果没有限制在数据目录内。默认配置 MONAI_LABEL_AUTH_ENABLE=False，能访问到服务的网络客户端即可触发；开启认证后，ANNOTATOR 角色仍然足够。受影响版本不高于 0.8.5。修复在拉取请求 1915，合并时间为 2026-10-19T13:37:36Z，公告写明将包含在下一版本。采集时 PyPI 的 latest 与 GitHub releases 的最新标签仍是 0.8.5，0.8.5 的上传时间是 2024-11-25T23:22:11.754849Z。NVD 于 2026-11-20T19:18:51.670Z 公开 CVE-2026-133968，CVSS 3.1 为 9.8，分值来自 MITRE 条目。公告写明可先启用认证、避免对不可信网络暴露、以受限权限运行。不要把 ANNOTATOR 写成启用认证后已经不可触发，也不要和 11 月 20 日 supergateway 停在 4.2.2 的两则公告合成同一个没有修复提交的情况：这里的拉取请求已被写成修复，缺的是下一发行版。",
+      "theme": "infra-cve",
+      "dimension": "ai-runtime"
+    },
+    {
+      "term": "PuzzleMask",
+      "en": "PuzzleMask",
+      "definition": "Check Point Research 于 2026-11-19T13:19:10+00:00 发表的文章里，PuzzleMask 一节所描述的研究演示，实验时间写在 2025 年末：外置的快速模型先做预检，再把原文交给后方模型；违规内容放在语言包装中时，资源更少的预检模型会判为良性。厂商写明，当后方模型具备高推理和代码解释器、而预检模型没有这些能力时，预检不会拦下该提示。手法是语言包装，不依赖表情符号、不可见字符或其他版式技巧，并且可以和越狱提示组合，但组合之后仍然只声称绕过外置预检。厂商称这一手法在 GPT-5.2-thinking-high 上通过了预检，并在同期被加到 Claude Opus 4.5 上的护栏拦住。作者写明它本身不是越狱，也不声称更能迫使目标模型违反内部护栏。模型名称和效果都出自这篇厂商文章，文中没有给出成功率，也没有产品 CVE。文章没有把它写成在野攻击通报。",
+      "theme": "ai-self",
+      "dimension": "prompt-injection"
     }
   ]
 }
