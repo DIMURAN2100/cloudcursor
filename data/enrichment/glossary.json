@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22",
+  "updatedAt": "2026-11-23",
   "terms": [
     {
       "term": "提示注入",
@@ -1461,6 +1461,20 @@
       "term": "解密后屏幕读取",
       "en": "Post-Decryption Screen Capture",
       "definition": "Signal 总裁 Meredith Whittaker 于 2026 年 11 月 20 日在官方博客所写的失效点：操作系统内置代理读取的是屏幕上已经显示、已经解密的内容，加密协议本身并没有被打破。博客点名 Android 上与 Google Gemini 集成的 Gemini Intelligence，以及 Apple 设备上 Siri AI 的 Onscreen Awareness。应用将在 iOS 27 阻止应用内截图，并在检测到人工智能助手读取屏幕时于 Android 打开 Screen security。这项补救并不完整：用户关闭该设置后，本人和联系人的内容会重新暴露；截图限制盖不住经由文件系统读取已经存在于设备上的内容；macOS 目前无法实施同等限制。博客另写 Meta Muse 一类第三方代理会使用安装时被鼓励授予的无障碍权限。不要把协议没有被打破写成屏幕内容仍然只留在 Signal 里，也不要把这条屏幕通道和 NebuSec 同日对 Muse 容器的实验室演示合成同一条路径。",
+      "theme": "ai-self",
+      "dimension": "agent-security"
+    },
+    {
+      "term": "提供商入口复制",
+      "en": "Provider-Ingress Copy",
+      "definition": "Dragos 在 2026 年 11 月 19 日的研究报告里对规模最大一起给出的复制位置：大约两百把 AWS 密钥，每把只放进发给同一家提供商的一条请求，全部落在 10 月下旬的几个短窗口，这些窗口里的每一条请求都被取走；部分密钥来自模型运行前就被提供商拒绝的请求，因此复制点被放在提供商入口，而不是推理栈更深处。另外两起中，部分被取走的请求带有零数据保留标记。诱饵密钥被用于数以万计的 AWS API 调用。2026 年 11 月 1 日，同一攻击者加入名为 ARTEX 的大模型驱动渗透测试框架，在 Dragos 的账户上只做了少量调用以确认密钥仍然有效；用户代理 artex-agent 和 artex-judge-r121 没有出现在他们查到的公开指标列表中。页面时间是 2026 年 11 月 19 日 08:00 AM，article:published_time 为 2026-11-19T13:00:00。这是研究机构对自建金丝雀的测量，不是带独立复测分数的检测产品。不要把入口复制写成 Novita 已经看到 AWS 测试密钥标记被使用，Novita 写明的是没有观察到这种使用；也不要把 Together 样本里的 5 个金丝雀写成同一次入口复制。不要和术语墙里金融机构活动或停更镜像的 ARTEX，以及 Cairn、CAIRN 的几则观察合成同一次活动。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "样本库凭据公开提交",
+      "en": "Sample-Repo Credential Committed Publicly",
+      "definition": "Together AI 于 2026 年 11 月 21 日由首席执行官 Vipul Ved Prakash 署名的说明所写的路径：无服务器推理在 2026 年 6 月和 7 月采集的一部分提示样本被未授权方下载。样本来自 MiniMax M3、GLM-5.2 和 Kimi K2.6，主要日期是 6 月 24 日、7 月 4 日、7 月 8 日和 7 月 14 日，存放在获授权用于例行测试的私有 Hugging Face 仓库。开发公开仓库 xorl 时，人工智能编码代理提交了能够访问该私有仓库的凭据，自动扫描发现后已撤回这次提交。下载方测试过的凭据里有 5 个是 Dragos 实验的金丝雀，因此样本库和该实验有交集，但根因是仓库凭据被代理提交，不是 OpenRouter 于 2026-11-22 公告里未点名的三家撤出名单。Together 写明已聘请外部取证机构并联系执法部门，尚未发现这一事件以外的提示泄漏，样本中是否含有敏感个人信息仍在核查；新账户的零数据保留已改为默认开启。这 5 个金丝雀不是提供商入口复制的规模。新账户默认开启只属于这项账户变更，不能写成已经恢复其他平台上被移出资格的端点。",
       "theme": "ai-self",
       "dimension": "agent-security"
     }
