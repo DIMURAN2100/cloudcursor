@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-25",
   "terms": [
     {
       "term": "提示注入",
@@ -1491,6 +1491,20 @@
       "definition": "sdcb Chats 公开问题单所写的读取路径，对应 NVD 于 2026-11-23T18:17:13Z 公开的 CVE-2026-135432：已被分配到某个 MCP 服务器的非管理员用户可以读取其他被分配用户的自定义请求头，其中可以包含发给下游 MCP 的 bearer 令牌。问题单开于 2026-11-21T21:42:55Z。NVD 写明受影响范围为 1.10.0 起、低于 1.17.1；问题单核对的版本是 1.17.0.772，版本区间以 NVD 为准。GitHub Advisory Database 把严重性标为 high，CVSS 3.1 基线分为 6.5，向量为 CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N。项目于 2026-11-22T03:06:36Z 发布 1.17.1（标签 1.17.1.799），查看已分配用户详情改为要求管理员或该 MCP 的所有者，详情和管理列表不再向非所有者、非管理员返回服务器 URL 和请求头。返回详情的接口原先沿用“能看到这台服务器”的可见性条件。问题单和发行说明都没有描述在野利用。这不是未认证访问者从公开聊天流读到令牌：调用者已经是被分配的非管理员，修复标签是 1.17.1.799。",
       "theme": "ai-self",
       "dimension": "agent-security"
+    },
+    {
+      "term": "Shirudo",
+      "en": "Shirudo",
+      "definition": "OpenAI 与 Cisco 于 2026 年 11 月 23 日公布的开源 Linux 运行时。OpenAI 页面的 publicationDateText 为 November 23, 2026，Cisco 新闻稿发布时间为 2026-11-23T21:20:00Z。OpenAI 写明用 eBPF 在不重启系统的情况下观察并施加防护，盾经过操作员批准后部署，安全团队可以先观察一道盾对应用的影响再改为强制执行，加载前做签名校验，并用 TPM 留下防护加载或移除的记录。Cisco 写明盾只在证据表明安全时上线，人保留权限并设定边界，且每道盾都有加密签名。签名校验两边都有，TPM 记录只出现在 OpenAI 的页面。许可证写明 BSD 2-Clause，BPF 程序同时以 BSD 和 GPL 双许可。仓库 shirudo-dev/shirudo 的许可证字段为 BSD-2-Clause，最近一次推送是 2026-11-24T21:57:55Z；仓库创建早于这两页，公开宣布的日期以 11 月 23 日的两份页面为准。效果都是厂商测试：OpenAI 写一次受控测试中 Codex 生成的盾在不重启的情况下挡住了针对正在运行的 Elasticsearch 的 Java4Shell 利用尝试；Cisco 写针对 Java4shell 和一处没有给出编号的 PHP 缺陷的测试挡住了利用尝试。不要把两家的上线条件合成同一句，也不要把厂商测试写成独立复测。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
+    },
+    {
+      "term": "入库分类打分",
+      "en": "Ingest Classification Score",
+      "definition": "Elastic Security Labs 文章（datePublished 2026-11-23T08:00:15.000Z）所写的检测位置：四个分类器在集群内的入库管道上给提示和响应打分，覆盖编码或散列字符串、混淆用词、英文的指令覆盖，以及英文的助手拒绝。文章写明它们不需要 GPU，作用是分诊并写入 security_ai 字段，没有写它们会拦住代理动作。技术预览将从 Elastic Stack 9.6 起提供，订阅为 Platinum 或 Trial，对接 AWS Bedrock 集成 2.2.0 及更高版本，以及包含 Codex 日志的 OpenAI ChatGPT Enterprise 集成。仅 AWS Bedrock 集成另有三个异常检测作业，看异常大的工具请求批次、少见的工具选择和高工具调用量，各配一条映射到 MITRE ATLAS 的预置规则，这些作业不依赖上述入库管道。指令覆盖和拒绝模型的早期版本针对英文。文章用的是“将提供”。不要把打分写成模型调用前的拦截，也不要把三个异常作业扩到 ChatGPT Enterprise 集成。这不是术语墙里“事后护栏”那条“检测必须前置到工具调用之前”的产品结论，也不是“智能体异常检测”里对推理轨迹做带外分析的那一项。",
+      "theme": "ai-defense",
+      "dimension": "detection-intel"
     }
   ]
 }
